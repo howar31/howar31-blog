@@ -1,0 +1,12 @@
+{
+  "main": "index.js",
+  "directories": {
+    "blog": "blog"
+  },
+  "scripts": {
+    "blog:build": "vuepress build blog;"
+  },
+  "dependencies": {
+    "vuepress": "^0.14.10"
+  }
+}
