@@ -8,6 +8,6 @@ pages:
     - npm run blog:build
   artifacts:
     paths:
-      - dist
+      - public
   only:
     - master
