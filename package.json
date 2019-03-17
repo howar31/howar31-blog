@@ -7,6 +7,7 @@
     "blog:build": "vuepress build blog;"
   },
   "dependencies": {
-    "vuepress": "^0.14.10"
+    "vuepress": "^0.14.10",
+    "yaml-front-matter": "^4.0.0"
   }
 }
