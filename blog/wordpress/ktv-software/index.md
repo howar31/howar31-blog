@@ -1,0 +1,40 @@
+---
+title: "鼎豐在線K歌系統，讓你的電腦變成免費KTV"
+date: "2010-01-09"
+---
+
+> Edit (2019-03-18): Due to ImageShack service issue, all images in this post were lost.
+
+[![](http://img682.imageshack.us/img682/5376/zrtn002p6bddc80dtn.jpg)](http://img682.imageshack.us/img682/4924/dfktv.png)  
+  
+三五好友想唱歌，但是時間或地點不方便到外面的KTV歡唱，或許在電腦前面一起同歡也是一個不錯的選擇。  
+  
+鼎豐在線K歌系統是一套全部使用Flash做的線上KTV系統，不需要下載、不需要安裝，只要一支麥克風、一個喇叭、然後連上網頁就可以盡情歡唱，系統介面簡潔、操作也簡單。進入網頁後最右上角可以選擇語言，目前支援「English」、「繁體中文」和「簡體中文」。  
+  
+  
+  
+  
+\[note\]  
+  
+
+- 中文名稱 鼎豐在線K歌系統
+- 英文名稱 DF KTV Online
+- 官方網站 [http://playinmel.com/](http://playinmel.com/)
+- 下載網址 [http://ktv.playinmel.com/](http://ktv.playinmel.com/)
+
+  
+\[/note\]  
+  
+鼎豐KTV提供十分完整的功能，歌單包含了港台大陸的男女歌手，歌曲也不算太舊。系統內的搜尋系統依照歌手排序，點選了歌手後選擇歌曲，歌曲選擇後系統會在網路上找到那首歌的KTV，只要選擇其中一個就可以開始播放。影片通常為分聲道製作，在影片下方點選「聲道」即可切換左右聲道來切換人聲。  
+  
+[![](http://img682.imageshack.us/img682/3963/zrtn003p5efab432tn.jpg)](http://img682.imageshack.us/img682/333/dfktv2.png)  
+  
+如果想要紀錄最愛的歌曲，可以免費申請帳號，就可以使用我的最愛功能。影片的播放按鈕下面有一個愛心按鈕，點擊那個按鈕就可以把歌曲加入我的最愛中。而愛心按鈕右邊的按鈕是將歌曲加入播放列表中，最右邊的綠色箭頭按鈕要登入帳號後才會出現，可以把影片下載回電腦！另外這個系統也可以換佈景，最右下角有一個下拉式選單，點下去後有幾個佈景可以選擇唷:D  
+  
+[![](http://img682.imageshack.us/img682/5319/zrtn004n4c9f4d89tn.jpg)](http://img682.imageshack.us/img682/2581/dfktv3.png)  
+  
+說到唱歌，當然要有麥克風啦，雖然說在電腦前面唱或許不用麥克風也很開心，但如果想用麥克風的話可以點選影片下面的「麥克風」按鈕，然後選擇「打開麥克風」，這時Flash會跳出警告視窗問你要不要讓這軟體存取你的麥克風，點選「允許(Allow)」就可以囉，按鈕旁的滑棒是調整麥克風音量的，不過這功能蠻陽春的，不能升降Key也沒有回音。＝\_\_\_＝  
+  
+[![](http://img682.imageshack.us/img682/9689/zrtn005p4130a8e8tn.jpg)](http://img682.imageshack.us/img682/997/dfktv4.png)  
+  
+喜歡唱歌又不想常常花錢跑去KTV的朋友可以試試看這款鼎豐在線K歌系統，不但省荷包又可以拉近親朋好友間的距離唷！:D
