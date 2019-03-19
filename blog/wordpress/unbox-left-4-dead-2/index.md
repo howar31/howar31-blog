@@ -3,7 +3,9 @@ title: "[開箱] Left 4 Dead 2 - 惡靈勢力2"
 date: "2010-01-14"
 ---
 
-> Edit (2019-03-18): Due to ImageShack service issue, all images in this post were lost.
+::: warning
+Edit (2019-03-18): Due to ImageShack service issue, all images in this post were lost.
+:::
 
 [![](http://img687.imageshack.us/img687/5303/zrtn001n4cef5af5tn.jpg)](http://img687.imageshack.us/img687/7895/20100114182000287.jpg)  
   

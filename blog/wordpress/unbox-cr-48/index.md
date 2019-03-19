@@ -3,7 +3,9 @@ title: "來自地球另一端，Google的聖誕禮物，CR-48開箱！"
 date: "2010-12-29"
 ---
 
-> Edit (2019-03-18): Due to Min.us service issue, some images in this post were lost.
+::: warning
+Edit (2019-03-18): Due to Min.us service issue, some images in this post were lost.
+:::
 
 ![](./images/download.jpg)
 

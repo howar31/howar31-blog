@@ -3,7 +3,9 @@ title: "鼎豐在線K歌系統，讓你的電腦變成免費KTV"
 date: "2010-01-09"
 ---
 
-> Edit (2019-03-18): Due to ImageShack service issue, all images in this post were lost.
+::: warning
+Edit (2019-03-18): Due to ImageShack service issue, all images in this post were lost.
+:::
 
 [![](http://img682.imageshack.us/img682/5376/zrtn002p6bddc80dtn.jpg)](http://img682.imageshack.us/img682/4924/dfktv.png)  
   

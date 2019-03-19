@@ -3,7 +3,9 @@ title: "經典冒險解謎遊戲Portal，5月24日以前免費取得！"
 date: "2010-05-13"
 ---
 
-> Edit (2019-03-18): Due to ImageShack service issue, all images in this post were lost.
+::: warning
+Edit (2019-03-18): Due to ImageShack service issue, all images in this post were lost.
+:::
 
 ![MWSnap 2010-05-13-07-39-37.png](http://img35.imageshack.us/img35/1478/mwsnap20100513073937.png)
 

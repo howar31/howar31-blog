@@ -3,7 +3,9 @@ title: "經典PC機甲遊戲，機甲爭霸戰4 MechWarrior4 開放免費下載"
 date: "2010-05-11"
 ---
 
-> Edit (2019-03-18): Due to ImageShack service issue, all images in this post were lost.
+::: warning
+Edit (2019-03-18): Due to ImageShack service issue, all images in this post were lost.
+:::
 
 ![MWSnap 2010-05-11-22-39-08.png](http://img156.imageshack.us/img156/5733/mwsnap20100511223908.png)
 

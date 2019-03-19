@@ -44,6 +44,11 @@ module.exports = {
     description: 'Web Developer from Taiwan',
     dest: 'public',
     themeConfig: {
+        logo: '/logo/Howar31_Avatar_2015.png',
+        nav: [
+            { text: 'Home', link: '/' },
+            { text: 'About', link: 'http://howar31.com' },
+        ],
         sidebarDepth: 1,    // extract to h2
         sidebar: [
             {

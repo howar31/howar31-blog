@@ -3,7 +3,9 @@ title: "從 AMD Athlon64 LE 1640 淺談多核心處理器"
 date: "2008-02-23"
 ---
 
-> Edit (2019-03-18): Due to image host service issue, some images in this post were lost.
+::: warning
+Edit (2019-03-18): Due to image host service issue, some images in this post were lost.
+:::
 
 [![](http://xs223.xs.to/xs223/08041/le1620352.gif)](http://xs223.xs.to/xs223/08041/le1620352.gif)  
   

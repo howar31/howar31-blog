@@ -3,7 +3,9 @@ title: "Goo.gl by Alexandre Gaigalas，在網頁上使用Google縮址服務"
 date: "2010-02-04"
 ---
 
-> Edit (2019-03-18): Due to ImageShack service issue, all images in this post were lost.
+::: warning
+Edit (2019-03-18): Due to ImageShack service issue, all images in this post were lost.
+:::
 
 ![googl.jpg](http://img708.imageshack.us/img708/636/googl.jpg)
 

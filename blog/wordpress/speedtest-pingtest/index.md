@@ -3,7 +3,9 @@ title: "SpeedTest、PingTest，測試你的網路品質與頻寬"
 date: "2010-04-14"
 ---
 
-> Edit (2019-03-18): Due to ImageShack service issue, all images in this post were lost.
+::: warning
+Edit (2019-03-18): Due to ImageShack service issue, all images in this post were lost.
+:::
 
 ![MWSnap 2010-04-14-22-17-46.png](http://img249.imageshack.us/img249/1644/mwsnap20100414221746.png)
 

@@ -3,7 +3,9 @@ title: "超高畫質 Full HD 俄羅斯方塊，螢幕有多大就有多大"
 date: "2010-01-26"
 ---
 
-> Edit (2019-03-18): Due to ImageShack service issue, all images in this post were lost.
+::: warning
+Edit (2019-03-18): Due to ImageShack service issue, all images in this post were lost.
+:::
 
 ![Full-HD-Tetris1.png](http://img707.imageshack.us/img707/6184/fullhdtetris1.png)  
   

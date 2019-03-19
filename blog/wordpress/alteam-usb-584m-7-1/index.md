@@ -3,7 +3,9 @@ title: "Alteam USB-584M 7.1聲道 耳機麥克風 開箱!"
 date: "2010-04-13"
 ---
 
-> Edit (2019-03-18): Due to ImageShack service issue, all images in this post were lost.
+::: warning
+Edit (2019-03-18): Due to ImageShack service issue, all images in this post were lost.
+:::
 
 [![](http://img297.imageshack.us/img297/8945/zrtn002p3432749atn.jpg)](http://img297.imageshack.us/img297/5012/20100412210400358.jpg)
 
