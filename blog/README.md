@@ -11,6 +11,8 @@ Blog is currently under construction.
 
 ## Recent Posts
 
-Just blog, no fancy.
+Here are the most recent 5 posts.
 
-<BlogIndex />
+<BlogIndex category="current" limit="5" />
+
+For more posts, please visit [All Posts](/all-post.md).

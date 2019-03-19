@@ -15,7 +15,7 @@
 .blog-index-list {
     display: table;
     width: 100%;
-    table-layout: fixed;
+    table-layout: auto;
 }
 .blog-index-list tr {
     transition: 0.3s;
@@ -31,7 +31,8 @@
     text-overflow: ellipsis;
 }
 .blog-index-list td:first-child {
-    width: 90px;
+    width: 1px;
+    white-space: nowrap;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 }
@@ -45,7 +46,13 @@
 
 <script>
 import moment from "moment"
+
 export default {
+    props: [
+        'category',
+        'limit',
+    ],
+
     methods: {
         formateDate(date, format = 'YYYY-MM-DD') {
             return moment(date).format(format)
@@ -53,9 +60,28 @@ export default {
     },
     computed: {
         posts() {
-            return this.$site.pages
-                .filter(x => !x.path.startsWith('/wordpress/') && !x.frontmatter.blog_index)
-                .sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
+            let posts = this.$site.pages.filter(post => !post.frontmatter.blog_index);
+
+            switch (this.category) {
+                case 'wordpress':
+                    posts = posts.filter(post => post.path.startsWith('/wordpress/'));
+                    break;
+
+                case 'current':
+                    posts = posts.filter(post => !post.path.startsWith('/wordpress/'));
+                    break;
+
+                default:
+                    break;
+            }
+
+            posts = posts.sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
+
+            if (this.limit > 0) {
+                posts = posts.slice(0, this.limit);
+            }
+
+            return posts;
         }
     }
 }

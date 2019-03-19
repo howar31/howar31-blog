@@ -9,18 +9,23 @@ const yamlFront = require('yaml-front-matter');
  * Generate sidebar array
  * @param {array} markdownPaths contains a array list of file paths
  * @param {bool} sort sort the output array by 'date' in YAML header descendantly or not
+ * @param {int} limit limit the returned results, 0 will return all results
  */
-function generateSidebar(markdownPaths, sort = true) {
+function generateSidebar(markdownPaths, sort = true, limit = 0) {
     let renderedPosts = new Array();
 
     if (sort) {
         markdownPaths.forEach(filePath => {
             fileContents = fs.readFileSync(filePath, 'utf8').toString();
             fileMeta = yamlFront.loadFront(fileContents);
+            if (fileMeta.blog_index == true) return;
             fileTimestamp = moment(fileMeta.date);
             renderedPosts.push(fileTimestamp + sortDelimiter + filePath);
         });
         renderedPosts = renderedPosts.sort().reverse();
+        if (limit > 0) {
+            renderedPosts = renderedPosts.slice(0, limit);
+        }
         renderedPosts.forEach((sortedPath, index, array) => {
             array[index] = sortedPath.substring(sortedPath.indexOf(sortDelimiter) + sortDelimiter.length + basePath.length, sortedPath.lastIndexOf('/')) + '/';
         });
@@ -33,11 +38,15 @@ function generateSidebar(markdownPaths, sort = true) {
 
 // Generate blog post sidebar
 let blogPaths = glob.sync(basePath + '/*/*.md');
-let blogPosts = generateSidebar(blogPaths);
+let blogPosts = generateSidebar(blogPaths, true, 5);
 
 // Generate archived Wordpress post sidebar
 let wordpressPaths = glob.sync(basePath + '/wordpress/*/*.md');
-let wordpressPosts = generateSidebar(wordpressPaths);
+let wordpressPosts = generateSidebar(wordpressPaths, true, 5);
+
+let generalSidebar = [
+    '/',
+];
 
 module.exports = {
     title: 'Howar31 Blog',
@@ -46,20 +55,41 @@ module.exports = {
     themeConfig: {
         logo: '/logo/Howar31_Avatar_2015.png',
         nav: [
-            { text: 'Home', link: '/' },
-            { text: 'About', link: 'http://howar31.com' },
+            { text: 'All Posts', link: '/all-post.md' },
+            { text: 'Archives', link: '/wordpress/' },
+            {
+                text: 'About', items: [
+                    {
+                        text: 'Author', items: [
+                            { text: 'howar31.com', link: 'http://howar31.com' },
+                            { text: 'GitLab', link: 'https://gitlab.com/howar31' },
+                        ],
+                    },
+                    {
+                        text: 'Blog', items: [
+                            { text: 'GitLab', link: 'https://gitlab.com/howar31/howar31-blog-vuepress/' },
+                        ],
+                    },
+                ]
+            }
         ],
         sidebarDepth: 1,    // extract to h2
-        sidebar: [
-            {
-                title: 'All Posts',
-                children: blogPosts
-            },
-            {
-                title: 'Archived Posts',
-                children: wordpressPosts
-            },
-        ],
+        sidebar: {
+            // wordpress archived
+            '/wordpress/': generalSidebar.concat([
+                {
+                    title: 'Archived Posts',
+                    children: wordpressPosts.concat([['/wordpress/', 'More...']]),
+                },
+            ]),
+            // fallback
+            '/': generalSidebar.concat([
+                {
+                    title: 'Recent Posts',
+                    children: blogPosts.concat([['/all-post.md', 'More...']]),
+                },
+            ]),
+        },
         lastUpdated: 'Last Updated',
     },
 }
