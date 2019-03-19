@@ -22,7 +22,8 @@ body {
 .navbar .site-name {
     color: #F4F4F3;
 }
-.nav-links a.router-link-active, .nav-links a:hover {
+.nav-links a.router-link-active,
+.nav-links a:hover {
     color: #FFFFFF;
 }
 .dropdown-wrapper .nav-dropdown .dropdown-item {
@@ -36,7 +37,26 @@ body {
     background-color: #F4F4F3;
     border-right: 0;
 }
+@media (max-width: 719px) {
+    .theme-container.sidebar-open .sidebar {
+        background-color: #272822;
+        color: #F4F4F3;
+    }
+    a.sidebar-link,
+    .sidebar .nav-links a,
+    .dropdown-wrapper .nav-dropdown .dropdown-item {
+        color: #F4F4F3;
+    }
 
+    .nav-links a.router-link-active,
+    .nav-links a:hover {
+        color: #FFFFFF;
+    }
+
+    .sidebar .nav-links {
+        border-bottom: 1px solid #000000;
+    }
+}
 /**
  * Page
  */
