@@ -5,7 +5,7 @@ prev: false
 next: false
 ---
 
-# Welcome to Howar31 Blog
+# Welcome
 
 Blog is currently under construction.
 

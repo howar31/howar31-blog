@@ -1,9 +1,15 @@
 @import "prism-monokai.styl"
 
+/**
+ * Site
+ */
 body {
     background-color: #F4F4F3;
 }
 
+/**
+ * Navbar
+ */
 .navbar {
     background-color: #272822;
     color: #F4F4F3;
@@ -23,7 +29,17 @@ body {
     color: #272822;
 }
 
+/**
+ * Sidebar
+ */
 .sidebar {
     background-color: transparent;
     border-right: 0;
+}
+
+/**
+ * Page
+ */
+.content:not(.custom) {
+    max-width: 900px;
 }

@@ -7,7 +7,7 @@ description:
 
 # Thanks Wordpress, Hello VuePress
 
-Welcome, Howar31 Blog moved again!  We are now on GitLab Pages + VuePress.
+Welcome, Howar31 Blog is moved again!  We are now on GitLab Pages + VuePress.
 
 ## New Blog in 2019
 
