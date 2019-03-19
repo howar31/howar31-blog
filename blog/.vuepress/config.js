@@ -49,6 +49,7 @@ let generalSidebar = [
 ];
 
 module.exports = {
+    ga: 'UA-8779590-7',
     title: 'Howar31 Blog',
     description: 'Web Developer from Taiwan',
     dest: 'public',
