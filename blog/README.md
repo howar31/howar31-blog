@@ -12,7 +12,7 @@ Howar31 Blog is currently under construction.
 
 ## Recent Posts
 
-Here are the most recent 5 posts.
+Here are the 5 most recent posts.
 
 <BlogIndex category="current" limit="5" />
 
