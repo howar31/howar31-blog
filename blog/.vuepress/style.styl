@@ -1,7 +1,7 @@
 @import "prism-monokai.styl"
 
 $whiteColor = #FFFFFF;
-$lightColor = #F4F4F3;
+$lightColor = #FFFFFF;
 $darkColor = #272822;
 $blackColor = #000000;
 
@@ -42,6 +42,9 @@ body {
     background-color: $lightColor;
     border-right: 0;
 }
+.sidebar ul.sidebar-group-items > li {
+    margin-bottom: 10px;
+}
 @media (max-width: 719px) {
     .theme-container.sidebar-open .sidebar {
         background-color: $darkColor;
@@ -62,6 +65,7 @@ body {
         border-bottom: 1px solid $blackColor;
     }
 }
+
 /**
  * Page
  */

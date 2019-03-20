@@ -40,7 +40,6 @@
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
-
 </style>
 
 
@@ -52,7 +51,6 @@ export default {
         'category',
         'limit',
     ],
-
     methods: {
         formateDate(date, format = 'YYYY-MM-DD') {
             return moment(date).format(format)

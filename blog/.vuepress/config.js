@@ -1,13 +1,14 @@
-const basePath = 'blog';  // VuePress generated path default is 'docs'
-const sortDelimiter = ';';
 const glob = require('glob');
 const fs = require('fs');
 const moment = require('moment');
 const yamlFront = require('yaml-front-matter');
 
+const basePath = 'blog';  // VuePress generated path default is 'docs'
+const sortDelimiter = ';';
+
 /**
  * Generate sidebar array
- * @param {array} markdownPaths contains a array list of file paths
+ * @param {array} markdownPaths contains an array list of file paths
  * @param {bool} sort sort the output array by 'date' in YAML header descendantly or not
  * @param {int} limit limit the returned results, 0 will return all results
  */
@@ -79,7 +80,7 @@ module.exports = {
                 ]
             }
         ],
-        sidebarDepth: 1,    // extract to h2
+        sidebarDepth: 2,    // extract to h3
         sidebar: {
             // wordpress archived
             '/wordpress/': generalSidebar.concat([
@@ -97,5 +98,8 @@ module.exports = {
             ]),
         },
         lastUpdated: 'Last Updated',
+    },
+    markdown: {
+        lineNumbers: true,
     },
 }

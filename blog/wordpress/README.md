@@ -3,6 +3,7 @@ title: "Wordpress Archives"
 blog_index: true
 prev: false
 next: false
+sidebarDepth: 0
 ---
 
 # Wordpress Archives
