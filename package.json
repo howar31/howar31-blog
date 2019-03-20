@@ -4,11 +4,11 @@
     "blog": "blog"
   },
   "scripts": {
-    "blog:build": "vuepress build blog;"
+    "blog:build": "vuepress build blog"
   },
   "dependencies": {
-    "moment": "^2.24.0",
     "vuepress": "^0.14.10",
+    "moment": "^2.24.0",
     "yaml-front-matter": "^4.0.0"
   }
 }

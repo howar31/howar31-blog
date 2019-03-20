@@ -50,8 +50,13 @@ let generalSidebar = [
 
 module.exports = {
     ga: 'UA-8779590-7',
+    head: [
+        ['link', { rel: 'icon', href: '/logo/Howar31_Avatar_2015.png' }],
+        ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1' }],
+        ['meta', { name: 'mobile-web-app-capable', content: 'yes' }],
+    ],
     title: 'Howar31 Blog',
-    description: 'Web Developer from Taiwan',
+    description: 'Howar31 Blog, dev notes and idea sharing.',
     dest: 'public',
     themeConfig: {
         logo: '/logo/Howar31_Avatar_2015.png',
