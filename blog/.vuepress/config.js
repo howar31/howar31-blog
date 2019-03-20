@@ -52,7 +52,7 @@
 module.exports = {
     ga: 'UA-8779590-7',
     head: [
-        ['link', { rel: 'icon', href: '/logo/Howar31_Avatar_2015.png' }],
+        ['link', { rel: 'icon', href: '/logo/Howar31_Avatar_2015_140px.png' }],
         ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1' }],
         ['meta', { name: 'mobile-web-app-capable', content: 'yes' }],
     ],
@@ -60,7 +60,7 @@ module.exports = {
     description: 'Dev Notes and Idea Sharing with ❤',
     dest: 'public',
     themeConfig: {
-        logo: '/logo/Howar31_Avatar_2015.png',
+        logo: '/logo/Howar31_Avatar_2015_140px.png',
         nav: [
             { text: 'Home', link: '/' },
             { text: 'All Posts', link: '/all-post.md' },
