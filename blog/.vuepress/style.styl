@@ -34,6 +34,19 @@ body {
 .dropdown-wrapper .nav-dropdown .dropdown-item {
     color: $darkColor;
 }
+@media (min-width: 719px) {
+    .nav-links a.router-link-active,
+    .nav-links a:hover {
+        color: $whiteColor;
+    }
+}
+@media (max-width: 719px) {
+    .nav-links a.router-link-active,
+    .nav-links a:hover {
+        color: $accentColor;
+    }
+}
+
 
 /**
  * Sidebar
@@ -51,16 +64,9 @@ body {
         color: $lightColor;
     }
     a.sidebar-link,
-    .sidebar .nav-links a,
     .dropdown-wrapper .nav-dropdown .dropdown-item {
         color: $lightColor;
     }
-
-    .nav-links a.router-link-active,
-    .nav-links a:hover {
-        color: $whiteColor;
-    }
-
     .sidebar .nav-links {
         border-bottom: 1px solid $blackColor;
     }

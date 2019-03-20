@@ -3,14 +3,22 @@ title: "Home"
 blog_index: true
 prev: false
 next: false
-sidebarDepth: 0
+sidebar: false
+home: true
+# heroImage: /hero.png
+# actionText: Recent Post →
+# actionLink: /#recent-posts
+# features:
+# - title: title
+#   details: details
+# - title: title
+#   details: details
+# - title: title
+#   details: details
+footer: Made with ❤ by Howar31 @ 2019
 ---
 
-# Welcome
-
-Howar31 Blog is currently under construction.
-
-## Recent Posts
+# Recent Posts
 
 Here are the 5 most recent posts.
 
