@@ -1,65 +1,72 @@
 @import "prism-monokai.styl"
 
+$whiteColor = #FFFFFF;
+$lightColor = #F4F4F3;
+$darkColor = #272822;
+$blackColor = #000000;
+
 /**
  * Site
  */
 body {
-    background-color: #F4F4F3;
+    background-color: $lightColor;
 }
 
 /**
  * Navbar
  */
 .navbar {
-    background-color: #272822;
-    color: #F4F4F3;
+    background-color: $darkColor;
+    color: $lightColor;
     border-bottom: 0;
-    box-shadow: 0 0 1px 0px #000000;
+    box-shadow: 0 0 1px 0px $blackColor;
 }
 .navbar .links {
-    background-color: #272822;
+    background-color: $darkColor;
 }
 .navbar .site-name {
-    color: #F4F4F3;
+    color: $lightColor;
 }
 .nav-links a.router-link-active,
 .nav-links a:hover {
-    color: #FFFFFF;
+    color: $whiteColor;
 }
 .dropdown-wrapper .nav-dropdown .dropdown-item {
-    color: #272822;
+    color: $darkColor;
 }
 
 /**
  * Sidebar
  */
 .sidebar {
-    background-color: #F4F4F3;
+    background-color: $lightColor;
     border-right: 0;
 }
 @media (max-width: 719px) {
     .theme-container.sidebar-open .sidebar {
-        background-color: #272822;
-        color: #F4F4F3;
+        background-color: $darkColor;
+        color: $lightColor;
     }
     a.sidebar-link,
     .sidebar .nav-links a,
     .dropdown-wrapper .nav-dropdown .dropdown-item {
-        color: #F4F4F3;
+        color: $lightColor;
     }
 
     .nav-links a.router-link-active,
     .nav-links a:hover {
-        color: #FFFFFF;
+        color: $whiteColor;
     }
 
     .sidebar .nav-links {
-        border-bottom: 1px solid #000000;
+        border-bottom: 1px solid $blackColor;
     }
 }
 /**
  * Page
  */
-.content:not(.custom) {
+.content:not(.custom),
+.page-edit,
+.page-nav {
     max-width: 900px;
 }

@@ -3,11 +3,12 @@ title: "Home"
 blog_index: true
 prev: false
 next: false
+sidebarDepth: 0
 ---
 
 # Welcome
 
-Blog is currently under construction.
+Howar31 Blog is currently under construction.
 
 ## Recent Posts
 
