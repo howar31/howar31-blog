@@ -28,10 +28,10 @@ I built my blog with these environment settings:
 
 - Macbook Air 2015 Early
 - macOS Mojave, 10.14.3
-- VSCode
+- Nginx 1.12.1
 - Node.js 11.11.0
 - npm 6.9.0
-- Nginx 1.12.1
+- VSCode 1.32.3
 
 and the following setup steps will base on this environment setup.
 
