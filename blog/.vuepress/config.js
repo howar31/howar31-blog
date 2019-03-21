@@ -92,7 +92,7 @@ module.exports = {
         sidebarDepth: 2,    // extract to h3
         sidebar: 'auto',
         lastUpdated: 'Last Updated',
-        searchMaxSuggestions: 10
+        searchMaxSuggestions: 10,
     },
     markdown: {
         lineNumbers: true,
