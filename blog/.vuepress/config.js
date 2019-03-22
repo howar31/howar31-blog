@@ -50,8 +50,10 @@
 // ];
 
 module.exports = {
+    serviceWorker: true,
     ga: 'UA-8779590-7',
     head: [
+        ['link', { rel: 'manifest', href: '/manifest.json' }],
         ['link', { rel: 'icon', href: '/logo/Howar31_Avatar_2015_140px.png' }],
         ['link', { rel: 'apple-touch-icon', href: `/logo/Howar31_Avatar_2015_140px.png` }],
         ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1' }],
