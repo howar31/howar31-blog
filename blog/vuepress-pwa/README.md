@@ -38,7 +38,7 @@ Let's see how to do this.  It's simple that can be done in minutes with followin
 
 ### Config Service Worker
 
-Edit `.vuepress/config.js` and add the line:
+To enable the service workder in VuePress, edit `.vuepress/config.js` and add the line:
 
 ```javascript {2}
 module.exports = {
@@ -52,7 +52,7 @@ After this config, VuePress will now generate a service worker while building th
 
 ### Config Manifest
 
-Edit `.vuepress/config.js` and add the line:
+PWA needs manifest and icon to work.  Edit `.vuepress/config.js` and add the line:
 
 ```javascript
 module.exports = {
