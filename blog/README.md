@@ -18,7 +18,7 @@ home: true
 footer: Made with ❤ by Howar31 @ 2019
 ---
 
-# Recent Posts
+## Recent Posts
 
 Here are the 5 most recent posts.
 

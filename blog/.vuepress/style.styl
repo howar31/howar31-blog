@@ -20,30 +20,37 @@ body {
     color: $lightColor;
     border-bottom: 0;
     box-shadow: 0 0 1px 0px $blackColor;
+
+    .links {
+        background-color: $darkColor;
+    }
+    .site-name {
+        color: $lightColor;
+    }
 }
-.navbar .links {
-    background-color: $darkColor;
-}
-.navbar .site-name {
-    color: $lightColor;
-}
-.nav-links a.router-link-active,
-.nav-links a:hover {
-    color: $whiteColor;
+.nav-links {
+    a.router-link-active,
+    a:hover {
+        color: $whiteColor;
+    }
 }
 .dropdown-wrapper .nav-dropdown .dropdown-item {
     color: $darkColor;
 }
 @media (min-width: 719px) {
-    .nav-links a.router-link-active,
-    .nav-links a:hover {
-        color: $whiteColor;
+    .nav-links {
+        a.router-link-active,
+        a:hover {
+            color: $whiteColor;
+        }
     }
 }
 @media (max-width: 719px) {
-    .nav-links a.router-link-active,
-    .nav-links a:hover {
-        color: $accentColor;
+    .nav-links {
+        a.router-link-active,
+        a:hover {
+            color: $accentColor;
+        }
     }
 }
 

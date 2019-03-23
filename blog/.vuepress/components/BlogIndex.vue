@@ -1,44 +1,55 @@
 <template>
-<div>
-    <table class = "blog-index-list">
-        <tbody>
-            <tr v-for="post in posts">
-                <td>{{ formateDate(post.frontmatter.date) }}</td>
-                <td><router-link :to="post.path">{{ post.frontmatter.title }}</router-link></td>
-            </tr>
-        </tbody>
-    </table>
+<div class = "blog-index-list">
+    <div class="list-item" v-for="post in posts">
+        <div class="list-item-title">
+            <div class="post-title"><router-link :to="post.path">{{ post.frontmatter.title }}</router-link></div>
+        </div>
+        <div class="list-item-content">
+            <span class="post-date">{{ formateDate(post.frontmatter.date) }}</span>
+            <span class="post-description" v-if="post.frontmatter.description">, {{ post.frontmatter.description }}</span>
+        </div>
+    </div>
 </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .blog-index-list {
-    display: table;
     width: 100%;
-    table-layout: auto;
-}
-.blog-index-list tr {
-    transition: 0.3s;
-    border-top: none;
-}
-.blog-index-list tr:hover {
-    transition: 0.3s;
-    background-color: #E2EFFB;
-}
-.blog-index-list td {
-    border: none;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-.blog-index-list td:first-child {
-    width: 1px;
-    white-space: nowrap;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-}
-.blog-index-list td:last-child {
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+
+    .list-item {
+        transition: 0.3s;
+        border-radius: 5px;
+        padding: 20px;
+
+        &:nth-child(2n) {
+            background-color: #FAFAFA;
+        }
+        &:hover {
+            transition: 0.3s;
+            background-color: #E2ECFC;
+        }
+
+        .list-item-title {
+            margin-bottom: 10px;
+
+            .post-title {
+                a {
+                    font-size: 1.1em;
+                }
+            }
+        }
+        .list-item-content {
+            color: #606354;
+        }
+    }
+
+    @media (max-width: 719px) {
+        .list-item {
+            padding: 15px 5px;
+        }
+    }
 }
 </style>
 
