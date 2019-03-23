@@ -99,7 +99,7 @@ Press Enter to Continue
 Waiting for verification...
 ```
 
-**DO NOT PRESS ENTER** for now, Let's Encrypt will have to verify you own the domain.  So you have to create a `TXT` record with value `sdfa81NrRvsI3afw8jFeULwefi81723n98FHEfwf813elwf` (your value may vary) in your DNS. (I assume you know how to do that since you own a domain)
+**DO NOT PRESS ENTER** for now, Let's Encrypt will have to verify you own the domain.  So you have to create a `TXT` record with name `_acme-challenge.example.com` and value `sdfa81NrRvsI3afw8jFeULwefi81723n98FHEfwf813elwf` (your value may vary) in your DNS. (I assume you know how to do that since you own a domain)
 
 After creating the record, you may use some online tools to see the `TXT` record is properly set or not.  Then get back to your terminal and press **ENTER** to continue.
 
