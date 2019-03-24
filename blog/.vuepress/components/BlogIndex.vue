@@ -6,7 +6,7 @@
         </div>
         <div class="list-item-content">
             <span class="post-date">{{ formateDate(post.frontmatter.date) }}</span>
-            <span class="post-description" v-if="post.frontmatter.description">, {{ post.frontmatter.description }}</span>
+            <span class="post-description" v-if="post.frontmatter.description"> | {{ post.frontmatter.description }}</span>
         </div>
     </div>
 </div>
