@@ -6,7 +6,7 @@ next: false
 sidebar: false
 ---
 
-# Wordpress Archives
+## Wordpress Archives
 
 These posts were created on Wordpress (or even before), and archived while moving to VuePress.
 

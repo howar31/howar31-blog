@@ -6,7 +6,7 @@ next: false
 sidebar: false
 ---
 
-# All Posts
+## All Posts
 
 All posts in this blog are listed below.
 
