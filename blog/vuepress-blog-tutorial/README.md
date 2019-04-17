@@ -87,7 +87,7 @@ Before continue to GitLab Pages setup, there are some configs to set for easy CI
 To change the built files destination, we must set it up in config file.  By default the config file is not exist, you may create a config file by yourself:
 
 ```bash
-vi .vuepress/config.js
+vi blog/.vuepress/config.js
 ```
 
 `config.js` file contains all the VuePress site-wide settings.  It will be loaded before parsing any Markdown pages.
@@ -108,7 +108,7 @@ The `dest` path is based on your file's root, that is, your built files will now
 We change the `dest` to `public` since GitLab Pages use `public` as artifacts folder.  Of course, you may change the GitLab Pages artifacts folder to `.vuepress/dist` instead, if you don't want to set the `dest` in VuePress here.
 
 ::: tip
-If you are hosting the blog other than root url, please set the base url `base: 'path/to/site'` in `config.js`.
+If you are hosting the blog other than root url, please set the base url `base: '/path/to/site/'` in `config.js`.
 :::
 
 This is the minimal `config.js` setting for VuePress.
