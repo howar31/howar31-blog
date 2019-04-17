@@ -129,11 +129,7 @@ These commands will later be used by GitLab CI/CD runner also.
 
 First of all, you have to create a GitLab account if you don't have one.  And then create a new repository to host your VuePress project.
 
-In the project view, where is a `Set up CI/CD` button, click it.
-
-![](./images/setup_cicd.png)
-
-or you can create a file `.gitlab-ci.yml` manually.  Edit the file with the content below:
+Create a file `.gitlab-ci.yml` manually, and edit the file with the content below:
 
 ```yaml
 image: node:latest
