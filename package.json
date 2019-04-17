@@ -10,7 +10,7 @@
     "moment": "^2.24.0",
     "node-sass": "^4.11.0",
     "sass-loader": "^7.1.0",
-    "vuepress": "^0.14.10",
+    "vuepress": "^1.0.0-alpha.47",
     "yaml-front-matter": "^4.0.0"
   }
 }
