@@ -6,7 +6,7 @@ description: Vuepress 0.14.11 + GitLab Pages, minimal setup on Ubuntu 18.04.1 LT
 
 # Setup VuePress with GitLab Pages on Ubuntu 18.04 LTS
 
-This is a lite version of setup tutorial about Vuepress docs on Ubuntu.  For detailed  tutorial I wrote, please visit [Create a docs with VuePress on GitLab Pages](/vuepress-docs-tutorial/).
+This is a lite version of setup tutorial about Vuepress docs on Ubuntu.  For detailed  tutorial I wrote, please visit [Create a docs with VuePress on GitLab Pages](/vuepress-blog-tutorial/).
 
 ## Environment
 
