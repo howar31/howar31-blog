@@ -4,6 +4,8 @@ blog_index: true
 prev: false
 next: false
 sidebar: false
+home: true
+footer: Made with ❤ by Howar31 @ 2019
 ---
 
 ## Wordpress Archives
