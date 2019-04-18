@@ -2,6 +2,11 @@
 title: Secure GitLab Pages with Let's Encrypt Wildcard Certificate
 date: 2019-03-23
 description: Secure the GitLab Pages with a free SSL/TSL wildcard certificate by Let's Encrypt once for all
+categories:
+  - Dev Notes
+tags:
+  - gitlab pages
+  - https
 ---
 
 # Secure GitLab Pages with Let's Encrypt Wildcard Certificate

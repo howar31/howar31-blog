@@ -2,6 +2,11 @@
 title: Setup VuePress with GitLab Pages on Ubuntu 18.04 LTS
 date: 2019-04-17
 description: Vuepress 0.14.11 + GitLab Pages, minimal setup on Ubuntu 18.04.1 LTS
+categories:
+  - Dev Notes
+tags:
+  - vuepress
+  - gitlab pages
 ---
 
 # Setup VuePress with GitLab Pages on Ubuntu 18.04 LTS

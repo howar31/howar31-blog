@@ -2,6 +2,11 @@
 title: Thanks Wordpress, Hello VuePress
 date: 2019-03-18 13:00:00
 description: Migrating my blog from Wordpress to VuePress
+categories:
+  - Talks
+tags:
+  - wordpress
+  - vuepress
 ---
 
 # Thanks Wordpress, Hello VuePress

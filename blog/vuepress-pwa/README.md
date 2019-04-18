@@ -2,6 +2,11 @@
 title: Enable PWA Support for VuePress
 date: 2019-03-22
 description: Enable progressive web app support for VuePress website
+categories:
+  - Dev Notes
+tags:
+  - vuepress
+  - pwa
 ---
 
 # Enable PWA Support for VuePress
