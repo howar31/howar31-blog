@@ -51,7 +51,6 @@
 
 module.exports = {
     serviceWorker: true,
-    ga: 'UA-8779590-7',
     head: [
         ['link', { rel: 'manifest', href: '/manifest.json' }],
         ['link', { rel: 'icon', href: '/logo/Howar31_Avatar_2015_140px.png' }],
@@ -101,5 +100,10 @@ module.exports = {
     },
     plugins: [
         '@vuepress/back-to-top',
+        [
+            '@vuepress/google-analytics', {
+                ga: 'UA-8779590-7'
+            }
+        ]
     ],
 }
