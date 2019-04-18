@@ -1,7 +1,7 @@
 // const glob = require('glob');
 // const fs = require('fs');
 // const moment = require('moment');
-// const yamlFront = require('yaml-front-matter');
+// const grayMatter = require('gray-matter');
 
 // const basePath = 'blog';  // VuePress generated path default is 'docs'
 // const sortDelimiter = ';';
@@ -18,8 +18,8 @@
 //     if (sort) {
 //         markdownPaths.forEach(filePath => {
 //             fileContents = fs.readFileSync(filePath, 'utf8').toString();
-//             fileMeta = yamlFront.loadFront(fileContents);
-//             if (fileMeta.blog_index == true) return;
+//             fileMeta = grayMatter(fileContents);
+//             if (fileMeta.data.blog_index == true) return;
 //             fileTimestamp = moment(fileMeta.date);
 //             renderedPosts.push(fileTimestamp + sortDelimiter + filePath);
 //         });
@@ -99,4 +99,7 @@ module.exports = {
     markdown: {
         lineNumbers: true,
     },
+    plugins: [
+        '@vuepress/back-to-top',
+    ],
 }
