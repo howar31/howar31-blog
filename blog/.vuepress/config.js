@@ -53,7 +53,8 @@ module.exports = {
     head: [
         ['link', { rel: 'manifest', href: '/manifest.json' }],
         ['link', { rel: 'icon', href: '/logo/Howar31_Avatar_2015_140px.png' }],
-        ['link', { rel: 'apple-touch-icon', href: `/logo/Howar31_Avatar_2015_140px.png` }],
+        ['link', { rel: 'apple-touch-icon', href: '/logo/Howar31_Avatar_2015_140px.png' }],
+        ['link', { rel: 'stylesheet', href: 'https://use.fontawesome.com/releases/v5.8.1/css/all.css', integrity: 'sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf', crossorigin: 'anonymous'}],
         ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1' }],
         ['meta', { name: 'mobile-web-app-capable', content: 'yes' }],
         ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],

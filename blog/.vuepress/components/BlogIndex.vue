@@ -2,11 +2,11 @@
 <div class = "blog-index-list">
     <div class="list-item" v-for="post in posts">
         <div class="list-item-title">
-            <div class="post-title"><router-link :to="post.path">{{ post.frontmatter.title }}</router-link></div>
+            <span class="post-title"><router-link :to="post.path">{{ post.frontmatter.title }}</router-link></span>
+            <span class="post-date"> <i class="far fa-clock"></i> {{ formateDate(post.frontmatter.date) }}</span>
         </div>
         <div class="list-item-content">
-            <span class="post-date">{{ formateDate(post.frontmatter.date) }}</span>
-            <span class="post-description" v-if="post.frontmatter.description"> | {{ post.frontmatter.description }}</span>
+            <span class="post-description" v-if="post.frontmatter.description">{{ post.frontmatter.description }}</span>
         </div>
     </div>
 </div>
@@ -38,6 +38,11 @@
                 a {
                     font-size: 1.1em;
                 }
+            }
+            .post-date {
+                color: #606354;
+                font-size: 0.8em;
+                padding-left: 10px;
             }
         }
         .list-item-content {
