@@ -50,7 +50,6 @@
 // ];
 
 module.exports = {
-    serviceWorker: true,
     head: [
         ['link', { rel: 'manifest', href: '/manifest.json' }],
         ['link', { rel: 'icon', href: '/logo/Howar31_Avatar_2015_140px.png' }],
@@ -98,12 +97,14 @@ module.exports = {
     markdown: {
         lineNumbers: true,
     },
-    plugins: [
-        '@vuepress/back-to-top',
-        [
-            '@vuepress/google-analytics', {
-                ga: 'UA-8779590-7'
-            }
-        ]
-    ],
+    plugins: {
+        '@vuepress/back-to-top': {},
+        '@vuepress/google-analytics': {
+            ga: 'UA-8779590-7'
+        },
+        '@vuepress/pwa': {
+            serviceWorker: true,
+            updatePopup: true
+        }
+    },
 }
