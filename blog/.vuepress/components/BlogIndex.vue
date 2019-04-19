@@ -31,11 +31,11 @@ $color-accent: #0F54C0;
         padding: 20px;
 
         &:nth-child(2n) {
-            background-color: lighten($color-base, 80%);
+            background-color: lighten($color-base, 83%);
         }
         &:hover {
             transition: 0.3s;
-            background-color: lighten($color-accent, 50%);
+            background-color: lighten($color-accent, 53%);
         }
 
         .list-item-title {
