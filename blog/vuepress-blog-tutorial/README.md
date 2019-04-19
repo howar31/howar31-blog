@@ -6,7 +6,7 @@ categories:
   - Dev Notes
 tags:
   - vuepress
-  - gitlab pages
+  - gitlab_pages
 ---
 
 # Create a Blog with VuePress on GitLab Pages

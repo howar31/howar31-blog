@@ -22,6 +22,6 @@ footer: Made with ❤ by Howar31 @ 2019
 
 Here are the 5 most recent posts.
 
-<BlogIndex category="current" limit="5" />
+<BlogIndex type="current" limit="5" />
 
 For more posts, please visit [All Posts](/all-post.md).

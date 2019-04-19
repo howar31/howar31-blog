@@ -6,7 +6,7 @@ categories:
   - Dev Notes
 tags:
   - vuepress
-  - gitlab pages
+  - gitlab_pages
 ---
 
 # Setup VuePress with GitLab Pages on Ubuntu 18.04 LTS

@@ -12,6 +12,6 @@ footer: Made with ❤ by Howar31 @ 2019
 
 All posts in this blog are listed below.
 
-<BlogIndex category="current" />
+<BlogIndex type="current" />
 
 Posts created before moving to VuePress here are listed in [Archived Posts](/wordpress/).

@@ -3,7 +3,11 @@
     <div class="list-item" v-for="post in posts">
         <div class="list-item-title">
             <span class="post-title"><router-link :to="post.path">{{ post.frontmatter.title }}</router-link></span>
+        </div>
+        <div class="list-item-meta">
             <span class="post-date"> <i class="far fa-clock"></i> {{ formateDate(post.frontmatter.date) }}</span>
+            <span class="post-categories" v-if="post.frontmatter.categories"> <i class="fas fa-cat"></i> {{ post.frontmatter.categories.join(', ') }}</span>
+            <span class="post-tags" v-if="post.frontmatter.tags"> <i class="fas fa-hashtag"></i> {{ post.frontmatter.tags.join(', ') }}</span>
         </div>
         <div class="list-item-content">
             <span class="post-description" v-if="post.frontmatter.description">{{ post.frontmatter.description }}</span>
@@ -13,6 +17,9 @@
 </template>
 
 <style lang="scss" scoped>
+$color-base: #272822;
+$color-accent: #0F54C0;
+
 .blog-index-list {
     width: 100%;
     overflow: hidden;
@@ -24,29 +31,33 @@
         padding: 20px;
 
         &:nth-child(2n) {
-            background-color: #FAFAFA;
+            background-color: lighten($color-base, 80%);
         }
         &:hover {
             transition: 0.3s;
-            background-color: #E2ECFC;
+            background-color: lighten($color-accent, 50%);
         }
 
         .list-item-title {
-            margin-bottom: 10px;
+            margin-bottom: 5px;
 
             .post-title {
                 a {
                     font-size: 1.1em;
                 }
             }
-            .post-date {
-                color: #606354;
-                font-size: 0.8em;
-                padding-left: 10px;
+        }
+        .list-item-meta {
+            margin-bottom: 10px;
+            color: lighten($color-base, 40%);
+            font-size: 0.8em;
+
+            & > * {
+                padding-right: 10px;
             }
         }
         .list-item-content {
-            color: #606354;
+            color: lighten($color-base, 25%);
         }
     }
 
@@ -64,7 +75,7 @@ import moment from "moment"
 
 export default {
     props: [
-        'category',
+        'type',
         'limit',
     ],
     methods: {
@@ -76,7 +87,7 @@ export default {
         posts() {
             let posts = this.$site.pages.filter(post => !post.frontmatter.blog_index);
 
-            switch (this.category) {
+            switch (this.type) {
                 case 'wordpress':
                     posts = posts.filter(post => post.path.startsWith('/wordpress/'));
                     break;

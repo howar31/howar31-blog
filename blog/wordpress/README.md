@@ -12,4 +12,4 @@ footer: Made with ❤ by Howar31 @ 2019
 
 These posts were created on Wordpress (or even before), and archived while moving to VuePress.
 
-<BlogIndex category="wordpress" />
+<BlogIndex type="wordpress" />

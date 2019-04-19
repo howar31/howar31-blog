@@ -5,7 +5,7 @@ description: Secure the GitLab Pages with a free SSL/TSL wildcard certificate by
 categories:
   - Dev Notes
 tags:
-  - gitlab pages
+  - gitlab_pages
   - https
 ---
 
