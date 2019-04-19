@@ -40,4 +40,4 @@ Now web address should be `http://localhost/~username/`
 
 ## Reference
 
-- http://infraadvisory.wordpress.com/2013/03/14/userdir-module-per-user-directory-for-apache/
+- <http://infraadvisory.wordpress.com/2013/03/14/userdir-module-per-user-directory-for-apache/>
