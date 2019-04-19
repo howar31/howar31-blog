@@ -107,6 +107,7 @@ module.exports = {
             serviceWorker: true,
             updatePopup: true
         },
-        '@vuepress/medium-zoom': {}
+        '@vuepress/medium-zoom': {},
+        '@dovyp/vuepress-plugin-clipboard-copy': {},
     },
 }
