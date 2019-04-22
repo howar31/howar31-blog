@@ -21,7 +21,7 @@ I will use these settings for the following example:
 
 Config path: `/etc/environment`
 
-```conf
+```ini
 http_proxy=http://192.168.1.1:3128
 http_proxy_request_fulluri=1
 https_proxy=http://192.168.1.1:3128
@@ -39,7 +39,7 @@ NO_PROXY=localhost,127.0.0.1,localaddress,.localdomain.com
 
 Config path: `~/.npmrc`
 
-```conf
+```ini
 proxy=http://192.168.1.1:3128/
 https-proxy=http://192.168.1.1:3128/
 strict-ssl=false
@@ -50,7 +50,7 @@ registry=http://registry.npmjs.org/
 
 Config path: `/etc/apt/apt.conf.d/95proxies`
 
-```conf
+```ini
 Acquire::http::proxy "http://192.168.1.1:3128";
 Acquire::ftp::proxy "ftp://192.168.1.1:3128";
 Acquire::https::proxy "http://192.168.1.1:3128";
