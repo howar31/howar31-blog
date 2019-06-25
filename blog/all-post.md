@@ -7,7 +7,7 @@ sidebar: false
 home: true
 heroText: " "
 tagline: " "
-footer: Made with ❤ by Howar31 @ 2019
+footer: Howar31 Blog | Made with ❤ by Howar31 @ 2019
 ---
 
 # All Posts

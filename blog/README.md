@@ -17,7 +17,7 @@ tagline: " "
 #   details: details
 # - title: title
 #   details: details
-footer: Made with ❤ by Howar31 @ 2019
+footer: Howar31 Blog | Made with ❤ by Howar31 @ 2019
 ---
 
 # Recent Posts
