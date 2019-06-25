@@ -5,6 +5,8 @@ prev: false
 next: false
 sidebar: false
 home: true
+heroText: " "
+tagline: " "
 # heroImage: /hero.png
 # actionText: Recent Post →
 # actionLink: /#recent-posts
@@ -18,7 +20,7 @@ home: true
 footer: Made with ❤ by Howar31 @ 2019
 ---
 
-## Recent Posts
+# Recent Posts
 
 Here are the 5 most recent posts.
 
