@@ -283,9 +283,9 @@ And that's all, save the pipeline schedule and everything is done.  You may run 
 
 ### Official Docs
 
-- <https://docs.gitlab.com/ee/user/project/pages/lets_encrypt_for_gitlab_pages.html>
-- <https://certbot.eff.org/docs/>
+- [Let's Encrypt for GitLab Pages](https://docs.gitlab.com/ee/user/project/pages/lets_encrypt_for_gitlab_pages.html)
+- [Certbot documentation](https://certbot.eff.org/docs/)
 
 ### Community Posts
 
-- <https://arothuis.nl/posts/lets-encrypt-gitlab-pages/>
+- [Let's Encrypt GitLab Pages And automate the process](https://arothuis.nl/posts/lets-encrypt-gitlab-pages/)
