@@ -101,11 +101,11 @@ module.exports = {
     plugins: {
         '@vuepress/back-to-top': {},
         '@vuepress/google-analytics': {
-            ga: 'UA-8779590-7'
+            ga: 'UA-8779590-7',
         },
         '@vuepress/pwa': {
             serviceWorker: true,
-            updatePopup: true
+            updatePopup: true,
         },
         '@vuepress/medium-zoom': {},
         '@dovyp/vuepress-plugin-clipboard-copy': {},
