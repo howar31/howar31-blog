@@ -6,6 +6,7 @@ categories:
   - Dev Notes
 tags:
   - proxy
+  - snippet
 ---
 
 # Proxy Settings Note
