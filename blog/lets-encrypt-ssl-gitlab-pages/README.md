@@ -11,6 +11,15 @@ tags:
 
 # Secure GitLab Pages with Let's Encrypt Certificate
 
+::: tip Edit - 2019.06.25
+
+- Add [About Getting Certificates on Let's Encrypt](#automatically-renew-and-deploy-certificate-on-gitlab-pages) section.
+- Add [Automatically Renew and Deploy Certificate on GitLab Pages](#automatically-renew-and-deploy-certificate-on-gitlab-pages) section.
+- Add [References](#references) section.
+- Fix typo.
+
+:::
+
 Using SSL to secure your website is not only for safety, but also [tell browser not show your website as not secure](https://blog.chromium.org/2017/04/next-steps-toward-more-connection.html).  **Let's Encrypt** provides free SSL/TSL cerfiticates as long as you remember to renew them once in a while.  And wildcard certificates can be applied to all the subdomains.
 
 In this article, I will show you how to apply for a certificate on Let's Encrypt, and set it on GitLab Pages.
@@ -35,11 +44,11 @@ There are 2 types of SSL certificate, regular and wildcard.
 
 #### Regular SSL Certificates
 
-The regular ssl certificate will issue to your specific domain.  And you may only use the certificate on that specific domain.  For example: `blog.howar31.com`.
+The regular ssl certificate will issue to your specific domain.  And you may only use the certificate on that specific domain.  For example: `blog.example.com`.
 
 #### Wildcard Certificate
 
-While wildcard certificate will allow you to use the certificate on all subdomains you have.  For example: `*.howar31.com`.
+While wildcard certificate will allow you to use the certificate on all subdomains you have.  For example: `*.example.com`.
 
 ### Challenges
 
@@ -49,13 +58,13 @@ For more detail about challenges, please visit [the official Let's Encrypt docum
 
 #### HTTP-01
 
-**HTTP-01** is used to verify that the website is under your control.  You will need to upload a specific file with specific content to the specific path on your website.  Let's Encrypt (certbot) will tell you what to put and where to put, and after that it will check if you have fulfill the challenge or not.
+`HTTP-01` is used to verify that the website is under your control.  You will need to upload a specific file with specific content to the specific path on your website.  Let's Encrypt (certbot) will tell you what to put and where to put, and after that it will check if you have fulfill the challenge or not.
 
 This method is easy to be done since you only need to put file on the web server.  You don't need to deal with complicated server configurations.  But note that this challenge can only be done on port 80 for security reason.
 
 #### DNS-01
 
-**DNS-01** is usually used while you want to get a wildcard certificate.  This challenge will ask you to prove that the DNS for your domain is under your control by putting a specific TXT record on the domain.
+`DNS-01` is usually used while you want to get a wildcard certificate.  This challenge will ask you to prove that the DNS for your domain is under your control by putting a specific TXT record on the domain.
 
 This method is more complicated since you have to config the DNS settings.  But it can offer you a wildcard certificate.  Please note that you must pass this challenge if you want to get a wildcard certificate, since HTTP-01 cannot prove you own the domain.
 
@@ -76,7 +85,7 @@ By using [certbot plugins](https://certbot.eff.org/docs/using.html#getting-certi
 In the following tutorial, I will show you how to get a wildcard certificate and set it on GitLab Pages with manual mode.
 
 ::: tip
-I haven't find a way to *automatically* renew the wildcard certificate and deploy it on GitLab Pages.  If you know how to do it please tell me!
+I haven't find a way to **automatically** renew the **wildcard** certificate and deploy it on GitLab Pages.  If you know how to do it please tell me!
 :::
 
 ### Get Wildcard Certificate from Let's Encrypt
@@ -186,6 +195,8 @@ For setting the certificate on GitLab Pages, please read on.
 
 Open your GitLab project and go to **Settings > Pages**.  Find your own domain and click **Details > Edit**.
 
+![](./images/setup_certificate.png)
+
 Copy your `fillchain.pem` to clipboard:
 
 ```bash
@@ -210,13 +221,13 @@ You may also enable **Force domains with SSL certificates to use HTTPS** in **Se
 
 With the above tutorial,  you can apply a wildcard certificate on GitLab Pages.  But renew it every 3 months will drive you crazy eventually.  So we do need a automatic solution.
 
-As I said previously, I haven't find a way to *automatically* renew the *wildcard* certificate and deploy it on GitLab Pages.  But I do find a way to automatically renew a **regulay certificate** and update it on GitLab Pages with the help of **GitLab CI/CD** and npm package **gitlab-letsencrypt**.
+As I said previously, I haven't find a way to *automatically* renew the *wildcard* certificate and deploy it on GitLab Pages.  But I do find a way to automatically renew a **regulay certificate** and update it on GitLab Pages with the help of **GitLab CI/CD** and npm package **gitlab-letsencrypt**!
 
 ### NPM Package gitlab-letsencrypt
 
-[gitlab-letsencrypt](https://www.npmjs.com/package/gitlab-letsencrypt) can help you to renew the certificate and apply it on GitLab Pages automatically.
+[gitlab-letsencrypt](https://www.npmjs.com/package/gitlab-letsencrypt) is a npm package which can help you to renew the certificate and apply it on GitLab Pages automatically.  It use GitLab CI to pass HTTP-01 challenges, and use GitLab API to update your GitLab Pages' certificate.
 
-As described in [package document](https://www.npmjs.com/package/gitlab-letsencrypt#how-it-works):
+How it works detail is described in [package document](https://www.npmjs.com/package/gitlab-letsencrypt#how-it-works):
 
 1. Requests a challenge from Let's Encrypt using the provided email address for the specified domains. One challenge file is generated per domain
 2. Each challenge file is uploaded to your GitLab repository using GitLab's API, which commits to your repository
@@ -225,9 +236,11 @@ As described in [package document](https://www.npmjs.com/package/gitlab-letsencr
 5. Each challenge file is removed from your GitLab repository by committing to it through the GitLab API
 6. If --production was set, your GitLab page is configured to use the issued certificate
 
-The gitlab-letsencrypt will trigger the HTTP-01 challenge, and upload the file for verification, and delete the file after challenge passed.  And then use GitLab API to update the certificate for your GitLab Pages.
+In summary, the gitlab-letsencrypt will trigger the HTTP-01 challenge, and upload the file for verification, and delete the file after challenge passed.  And then use GitLab API to update the certificate for your GitLab Pages.
 
 ### Setup GitLab CI
+
+We first need modify your CI file.  As you might already have CI for GitLab Pages, append the new job to the CI file.
 
 ```yaml {12-22}
 pages:
@@ -256,17 +269,23 @@ lets-encrypt:
 
 Add a new job `lets-encrypt` to your `.gitlab-ci.yml` file.  The `except` in `pages` and `only` in `lets-encrypt` is set to `schedules` which means the job will only be execute on `schedules` and won't be executed in `master`.
 
-We use GitLab variables (`$LE_EMAIL`, `$LE_DOMAIN`, `$GL_REPOSITORY`, `$GL_TOKEN`) to keep those config values private.  Go to project `Settings > CI/CD > Variables` to fill up the values.
+In the script above, we use GitLab variables (`$LE_EMAIL`, `$LE_DOMAIN`, `$GL_REPOSITORY`, `$GL_TOKEN`) to keep those config values private.  Go to project `Settings > CI/CD > Variables` to fill up the values.
 
-And thejn go to project `CI/CD > Schedules` to setup a schedule for this job.  We can set it to run once per month.
+![](./images/setup_variables.png)
+
+And thejn go to project `CI/CD > Schedules` to setup a schedule for this job.  Set it to run once per month will be enough since Let's Encrypt certificate expire in 3 months.
+
+![](./images/setup_schedules.png)
+
+And that's all, save the pipeline schedule and everything is done.  You may run the schedule manually to verify the job is set correctly.  And the schedule will also be triggered once a month to automatically renew your certificate.
 
 ## References
 
 ### Official Docs
 
-<https://docs.gitlab.com/ee/user/project/pages/lets_encrypt_for_gitlab_pages.html>
-<https://certbot.eff.org/docs/>
+- <https://docs.gitlab.com/ee/user/project/pages/lets_encrypt_for_gitlab_pages.html>
+- <https://certbot.eff.org/docs/>
 
 ### Community Posts
 
-<https://arothuis.nl/posts/lets-encrypt-gitlab-pages/>
+- <https://arothuis.nl/posts/lets-encrypt-gitlab-pages/>
