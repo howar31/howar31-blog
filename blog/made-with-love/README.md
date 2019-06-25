@@ -11,7 +11,7 @@ tags:
 
 # Made with Love Snippets
 
-Here are different methods to put "Made with Love" to your webpage.
+Here are several ways to put "Made with Love" on your webpage.
 
 ## Typing the Heart
 
