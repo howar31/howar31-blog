@@ -15,7 +15,7 @@ Here are several ways to put "Made with Love" on your webpage.
 
 ## Typing the Heart
 
-### Pure Character
+### Unicode Character
 
 > Made with ❤ by Howar31
 
