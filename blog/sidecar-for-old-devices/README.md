@@ -8,6 +8,12 @@ tags:
   - apple
 ---
 
+::: tip Edit - 2019.07.05
+
+- Add some tips.
+
+:::
+
 # Enable Sidecar for Old Devices
 
 The public beta of iPadOS and macOS Catalina is currently live for everyone now.  You may go to [Apple website](http://beta.apple.com/) for more detail info about public beta.
@@ -72,6 +78,12 @@ And now you have to logout and re-login your Macbook or you might find that your
 ## Quick Review about Sidecar
 
 The Sidecar feature is currently in beta.  Many feature feels buggy right now.  As I notice it's quite laggy even using USB-C wired connection.  And the graphic is glitching on iPad display.  Hope these issues will be solved and improved while official release.
+
+::: tip
+To use the Sidecar, you have to enable the Bluetooth on both Macbook and iPad no matter you are connecting Sidecar with wired or wireless.
+
+For wireless connection, you also have to enable WiFi on both devices.  The WiFi does not need the Internet connection to make Sidecar work.
+:::
 
 ## References
 
