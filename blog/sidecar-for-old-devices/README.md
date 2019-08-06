@@ -8,6 +8,12 @@ tags:
   - apple
 ---
 
+::: warning Edit - 2019.08.06
+
+Methods mentioned in this post is no longer working in the latest beta version of macOS (10.15 Beta (19A526h)).
+
+:::
+
 ::: tip Edit - 2019.07.05
 
 - Add some tips.
