@@ -9,13 +9,13 @@ tags:
   - snippet
 ---
 
+# Proxy Settings Note
+
 ::: tip Edit - 2019.09.10
 
 - Add [Git](#git) section.
 
 :::
-
-# Proxy Settings Note
 
 There are so many different system or tool configs to set if you are behind a proxy.  This article simply note where and how to set them.
 

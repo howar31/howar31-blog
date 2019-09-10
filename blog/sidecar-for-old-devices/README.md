@@ -8,6 +8,8 @@ tags:
   - apple
 ---
 
+# Enable Sidecar for Old Devices
+
 ::: warning Edit - 2019.08.06
 
 Methods mentioned in this post is no longer working in the latest beta version of macOS (10.15 Beta (19A526h)).
@@ -19,8 +21,6 @@ Methods mentioned in this post is no longer working in the latest beta version o
 - Add some tips.
 
 :::
-
-# Enable Sidecar for Old Devices
 
 The public beta of iPadOS and macOS Catalina is currently live for everyone now.  You may go to [Apple website](http://beta.apple.com/) for more detail info about public beta.
 
