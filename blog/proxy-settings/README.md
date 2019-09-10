@@ -9,50 +9,69 @@ tags:
   - snippet
 ---
 
+::: tip Edit - 2019.09.10
+
+- Add [Git](#git) section.
+
+:::
+
 # Proxy Settings Note
 
 There are so many different system or tool configs to set if you are behind a proxy.  This article simple note where and how to set them.
 
 I will use these settings for the following example:
 
-* Proxy Host: 192.168.1.1
-* Proxy Port: 3128
+- Proxy Host: host
+- Proxy Port: 3128
+- Proxy User: username
+- Proxy Password: password
+
+::: warning
+You need to **URL encode** your username or password if special characters contains.  
+i.g. *whitespace* = `%20`, *&* = `%26`, etc...
+:::
 
 ## Ubuntu
 
-Config path: `/etc/environment`
+Config file path: `/etc/environment`
 
-```ini
-http_proxy=http://192.168.1.1:3128
+```sh
+http_proxy=http://username:password@host:3128
 http_proxy_request_fulluri=1
-https_proxy=http://192.168.1.1:3128
+https_proxy=$http_proxy
 https_proxy_request_fulluri=0
-no_proxy=localhost,127.0.0.1,localaddress,.localdomain.com
+no_proxy=localhost, 127.0.*, 192.168.*, 10.*, *.local
 
-HTTP_PROXY=http://192.168.1.1:3128
-HTTP_PROXY_REQUEST_FULLURI=1
-HTTPS_PROXY=http://192.168.1.1:3128
-HTTPS_PROXY_REQUEST_FULLURI=0
-NO_PROXY=localhost,127.0.0.1,localaddress,.localdomain.com
-```
-
-## NPM
-
-Config path: `~/.npmrc`
-
-```ini
-proxy=http://192.168.1.1:3128/
-https-proxy=http://192.168.1.1:3128/
-strict-ssl=false
-registry=http://registry.npmjs.org/
+HTTP_PROXY=$http_proxy
+HTTP_PROXY_REQUEST_FULLURI=$http_proxy_request_fulluri
+HTTPS_PROXY=$https_proxy
+HTTPS_PROXY_REQUEST_FULLURI=$https_proxy_request_fulluri
+NO_PROXY=$no_proxy
 ```
 
 ## apt-get
 
-Config path: `/etc/apt/apt.conf.d/95proxies`
+Config file path: `/etc/apt/apt.conf.d/95proxies`
 
-```ini
-Acquire::http::proxy "http://192.168.1.1:3128";
-Acquire::ftp::proxy "ftp://192.168.1.1:3128";
-Acquire::https::proxy "http://192.168.1.1:3128";
+```sh
+Acquire::http::proxy "http://username:password@host:3128";
+Acquire::https::proxy "http://username:password@host:3128";
+Acquire::ftp::proxy "ftp://username:password@host:3128";
+```
+
+## NPM
+
+Config file path: `~/.npmrc`
+
+```sh
+proxy=http://username:password@host:3128/
+https-proxy=http://username:password@host:3128/
+strict-ssl=false
+registry=http://registry.npmjs.org/
+```
+
+## Git
+
+```sh
+git config --global http.proxy http://username:password@host:3128
 ```
