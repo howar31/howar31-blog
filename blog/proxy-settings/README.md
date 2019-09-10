@@ -17,7 +17,7 @@ tags:
 
 # Proxy Settings Note
 
-There are so many different system or tool configs to set if you are behind a proxy.  This article simple note where and how to set them.
+There are so many different system or tool configs to set if you are behind a proxy.  This article simply note where and how to set them.
 
 I will use these settings for the following example:
 
