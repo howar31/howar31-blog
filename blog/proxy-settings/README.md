@@ -14,6 +14,7 @@ tags:
 ::: tip Edit - 2019.09.10
 
 - Add [Git](#git) section.
+- Fix typo
 
 :::
 
@@ -36,17 +37,17 @@ i.g. *whitespace* = `%20`, *&* = `%26`, etc...
 Config file path: `/etc/environment`
 
 ```sh
-http_proxy=http://username:password@host:3128
+http_proxy="http://username:password@host:3128"
 http_proxy_request_fulluri=1
-https_proxy=$http_proxy
+https_proxy="http://username:password@host:3128"
 https_proxy_request_fulluri=0
-no_proxy=localhost, 127.0.*, 192.168.*, 10.*, *.local
+no_proxy="localhost, 127.0.*, 192.168.*, 10.*, *.local"
 
-HTTP_PROXY=$http_proxy
-HTTP_PROXY_REQUEST_FULLURI=$http_proxy_request_fulluri
-HTTPS_PROXY=$https_proxy
-HTTPS_PROXY_REQUEST_FULLURI=$https_proxy_request_fulluri
-NO_PROXY=$no_proxy
+HTTP_PROXY="http://username:password@host:3128"
+HTTP_PROXY_REQUEST_FULLURI=1
+HTTPS_PROXY="http://username:password@host:3128"
+HTTPS_PROXY_REQUEST_FULLURI=0
+NO_PROXY="localhost, 127.0.*, 192.168.*, 10.*, *.local"
 ```
 
 ## apt-get
