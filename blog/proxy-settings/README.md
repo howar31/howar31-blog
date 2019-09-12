@@ -14,6 +14,7 @@ tags:
 ::: tip Edit - 2019.09.10
 
 - Add [Git](#git) section.
+- Add command for NPM proxy
 - Fix typo
 
 :::
@@ -62,7 +63,12 @@ Acquire::ftp::proxy "ftp://username:password@host:3128";
 
 ## NPM
 
-Config file path: `~/.npmrc`
+```sh
+npm config set proxy http://username:password@host:3128
+npm config set https-proxy http://username:password@host:3128
+```
+
+or manually add in config file path: `~/.npmrc`
 
 ```sh
 proxy=http://username:password@host:3128/
