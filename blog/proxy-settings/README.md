@@ -11,9 +11,9 @@ tags:
 
 # Proxy Settings Note
 
-::: tip Edit - 2019.09.10
+::: tip Edit - 2019.09.16
 
-- Add [Git](#git) section.
+- Add/Edit [Git](#git) section.
 - Add command for NPM proxy
 - Fix typo
 
@@ -81,4 +81,12 @@ registry=http://registry.npmjs.org/
 
 ```sh
 git config --global http.proxy http://username:password@host:3128
+git config --global https.proxy http://username:password@host:3128
+```
+
+```sh
+[http]
+        proxy = http://username:password@host:3128
+[https]
+        proxy = http://username:password@host:3128
 ```
