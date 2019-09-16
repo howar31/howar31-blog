@@ -84,7 +84,7 @@ git config --global http.proxy http://username:password@host:3128
 git config --global https.proxy http://username:password@host:3128
 ```
 
-or manually add in config file path: `.gitconfig`
+or manually add in config file path: `~/.gitconfig`
 
 ```sh
 [http]
