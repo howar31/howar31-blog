@@ -17,10 +17,10 @@ body {
     box-shadow: 0 0 1px 0px $blackColor;
 
     .links {
-        background-color: $darkColor;
+        background-color: $darkColor !important;
     }
     .site-name {
-        color: $lightColor;
+        color: $lightColor !important;
     }
 }
 .nav-links {
@@ -32,11 +32,15 @@ body {
 .dropdown-wrapper .nav-dropdown .dropdown-item {
     color: $darkColor;
 }
+.dropdown-wrapper .dropdown-title,
+.dropdown-wrapper .mobile-dropdown-title {
+    color: $whiteColor !important;
+}
 @media (min-width: 719px) {
     .nav-links {
         a.router-link-active,
         a:hover {
-            color: $whiteColor;
+            color: $whiteColor !important;
         }
     }
 }
@@ -44,7 +48,7 @@ body {
     .nav-links {
         a.router-link-active,
         a:hover {
-            color: $accentColor;
+            color: $accentColor !important;
         }
     }
 }
