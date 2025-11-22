@@ -67,7 +67,26 @@ export default defineUserConfig({
             },
         ],
     ],
-    bundler: viteBundler(),
+    bundler: viteBundler({
+        viteOptions: {
+            build: {
+                rollupOptions: {
+                    output: {
+                        manualChunks: (id) => {
+                            // Consolidate all vendor code into a single chunk to reduce requests
+                            if (id.includes("node_modules")) {
+                                return "vendor";
+                            }
+                        },
+                        // Increase chunk size limit to reduce over-splitting
+                        chunkSizeWarningLimit: 1000,
+                    },
+                },
+                // Optimize chunk splitting
+                chunkSizeWarningLimit: 1000,
+            },
+        },
+    }),
     title: "Howar31 Blog",
     description: "Dev Notes and Idea Sharing with ❤",
     dest: "public",
