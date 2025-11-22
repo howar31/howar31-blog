@@ -17,7 +17,7 @@ tagline: " "
 #   details: details
 # - title: title
 #   details: details
-footer: Howar31 Blog | Made with ❤ by Howar31 @ 2019
+footer: false
 ---
 
 # Recent Posts
@@ -27,3 +27,5 @@ Here are the 5 most recent posts.
 <BlogIndex type="current" limit="5" />
 
 For more posts, please visit [All Posts](/all-post.md).
+
+<DynamicFooter />

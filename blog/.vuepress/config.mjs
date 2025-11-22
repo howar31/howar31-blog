@@ -1,11 +1,9 @@
-import { defineUserConfig } from 'vuepress';
-import { viteBundler } from '@vuepress/bundler-vite';
-import { defaultTheme } from '@vuepress/theme-default';
-import { backToTopPlugin } from '@vuepress/plugin-back-to-top';
-import { googleAnalyticsPlugin } from '@vuepress/plugin-google-analytics';
-import { mediumZoomPlugin } from '@vuepress/plugin-medium-zoom';
-import { pwaPlugin } from '@vuepress/plugin-pwa';
-import { copyCodePlugin } from '@vuepress/plugin-copy-code';
+import { defineUserConfig } from "vuepress";
+import { viteBundler } from "@vuepress/bundler-vite";
+import { defaultTheme } from "@vuepress/theme-default";
+import { googleAnalyticsPlugin } from "@vuepress/plugin-google-analytics";
+import { pwaPlugin } from "@vuepress/plugin-pwa";
+import { searchPlugin } from "@vuepress/plugin-search";
 
 // const glob = require('glob');
 // const fs = require('fs');
@@ -136,10 +134,13 @@ export default defineUserConfig({
                     {
                         text: "Author",
                         children: [
-                            { text: "howar31.com", link: "http://howar31.com" },
                             {
-                                text: "GitLab",
-                                link: "https://gitlab.com/howar31",
+                                text: "howar31.com",
+                                link: "https://howar31.com",
+                            },
+                            {
+                                text: "GitHub",
+                                link: "https://github.com/howar31",
                             },
                         ],
                     },
@@ -147,8 +148,8 @@ export default defineUserConfig({
                         text: "Blog",
                         children: [
                             {
-                                text: "GitLab",
-                                link: "https://gitlab.com/howar31/howar31-blog-vuepress/",
+                                text: "Source Code",
+                                link: "https://github.com/howar31/howar31-blog-vuepress/",
                             },
                         ],
                     },
@@ -161,7 +162,14 @@ export default defineUserConfig({
         lastUpdatedText: "Last Updated",
     }),
     plugins: [
-        backToTopPlugin(),
+        searchPlugin({
+            // Search options
+            locales: {
+                "/": {
+                    placeholder: "Search",
+                },
+            },
+        }),
         googleAnalyticsPlugin({
             id: "UA-8779590-7",
         }),
@@ -169,7 +177,5 @@ export default defineUserConfig({
             serviceWorker: true,
             updatePopup: true,
         }),
-        mediumZoomPlugin(),
-        copyCodePlugin(),
     ],
 });

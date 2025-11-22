@@ -7,7 +7,7 @@ sidebar: false
 home: true
 heroText: " "
 tagline: " "
-footer: Howar31 Blog | Made with ❤ by Howar31 @ 2019
+footer: false
 ---
 
 # All Posts
@@ -17,3 +17,5 @@ All posts in this blog are listed below.
 <BlogIndex type="current" />
 
 Posts created before moving to VuePress here are listed in [Archived Posts](/wordpress/).
+
+<DynamicFooter />

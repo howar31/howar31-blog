@@ -7,7 +7,7 @@ sidebar: false
 home: true
 heroText: " "
 tagline: " "
-footer: Howar31 Blog | Made with ❤ by Howar31 @ 2019
+footer: false
 ---
 
 # Wordpress Archives
@@ -15,3 +15,5 @@ footer: Howar31 Blog | Made with ❤ by Howar31 @ 2019
 These posts were created on Wordpress (or even before), and archived while moving to VuePress.
 
 <BlogIndex type="wordpress" />
+
+<DynamicFooter />
