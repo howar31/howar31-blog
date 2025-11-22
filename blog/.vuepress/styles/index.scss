@@ -151,7 +151,14 @@ html[data-theme="dark"],
   }
 
   // Ensure content containers appear above glow
-  .vp-sidebar,
+  // Only apply position: relative on desktop to avoid breaking mobile sidebar positioning
+  @media (min-width: 720px) {
+    .vp-sidebar {
+      position: relative;
+      z-index: 1;
+    }
+  }
+
   .vp-page,
   .vp-theme-container {
     position: relative;
@@ -370,7 +377,7 @@ form[role="search"] ul li a,
   border-right: 1px solid var(--c-border);
 
   [data-theme="dark"] & {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgb(0, 0, 0);
   }
 }
 
