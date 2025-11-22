@@ -172,11 +172,18 @@ const props = defineProps({
     },
 });
 
-const routes = useRoutes();
+let routes;
+try {
+    routes = useRoutes();
+} catch (e) {
+    console.warn("useRoutes() failed:", e);
+    routes = { value: null };
+}
+
 const allPages = ref([]);
 
 onMounted(async () => {
-    if (!routes.value) {
+    if (!routes || !routes.value) {
         console.warn("Routes not available");
         return;
     }
@@ -184,38 +191,61 @@ onMounted(async () => {
     const pagesData = [];
     const routeEntries = Object.entries(routes.value);
 
-    for (const [path, route] of routeEntries) {
-        try {
-            if (
-                path === "/" ||
-                path.includes("404") ||
-                path === "/all-post.html"
-            ) {
-                continue;
-            }
+    // Filter routes first to avoid unnecessary processing
+    const validRoutes = routeEntries.filter(([path]) => {
+        return (
+            path !== "/" && !path.includes("404") && path !== "/all-post.html"
+        );
+    });
 
-            if (route.loader) {
+    // Batch load pages to reduce concurrent requests
+    const batchSize = 5; // Load 5 pages at a time
+    for (let i = 0; i < validRoutes.length; i += batchSize) {
+        const batch = validRoutes.slice(i, i + batchSize);
+
+        // Load batch in parallel but limit concurrency
+        const batchPromises = batch.map(async ([path, route]) => {
+            try {
+                if (!route.loader) {
+                    return null;
+                }
+
                 const module = await route.loader();
                 if (module.data) {
                     const data = module.data;
                     const frontmatter = data.frontmatter || {};
 
                     if (frontmatter.blog_index) {
-                        continue;
+                        return null;
                     }
 
-                    pagesData.push({
+                    return {
                         path: data.path || path,
                         title: frontmatter.title || data.title || "",
                         date: frontmatter.date || "",
                         description: frontmatter.description || "",
                         categories: frontmatter.categories || [],
                         tags: frontmatter.tags || [],
-                    });
+                    };
                 }
+            } catch (e) {
+                console.warn("Error loading page:", path, e);
+                return null;
             }
-        } catch (e) {
-            console.warn("Error loading page:", path, e);
+        });
+
+        const batchResults = await Promise.all(batchPromises);
+        const validResults = batchResults.filter((item) => item !== null);
+        pagesData.push(...validResults);
+
+        // Update UI incrementally for better perceived performance
+        if (pagesData.length > 0) {
+            allPages.value = [...pagesData];
+        }
+
+        // Small delay between batches to avoid overwhelming the browser
+        if (i + batchSize < validRoutes.length) {
+            await new Promise((resolve) => setTimeout(resolve, 50));
         }
     }
 

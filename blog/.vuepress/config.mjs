@@ -78,8 +78,6 @@ export default defineUserConfig({
                                 return "vendor";
                             }
                         },
-                        // Increase chunk size limit to reduce over-splitting
-                        chunkSizeWarningLimit: 1000,
                     },
                 },
                 // Optimize chunk splitting
