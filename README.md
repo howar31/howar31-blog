@@ -107,10 +107,6 @@ This project uses GitHub Actions for automatic deployment to GitHub Pages.
    - Build the site with optimized Vite configuration
    - Deploy to GitHub Pages
 
-### Setup GitHub Pages
-
-See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
-
 > **Note:** The deployment workflow uses `--legacy-peer-deps` flag to handle VuePress v2 RC peer dependency conflicts.
 
 ## 🔧 Configuration
