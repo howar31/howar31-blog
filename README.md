@@ -4,9 +4,10 @@ Personal blog built with VuePress v2, featuring modern web technologies and auto
 
 ## 🚀 Features
 
-- **VuePress v2** - Modern static site generator
-- **Vite Bundler** - Fast build and hot module replacement
-- **Default Theme** - Clean and responsive design with dark mode support
+- **VuePress v2** - Modern static site generator (migrated from v1.8.0)
+- **Vite Bundler** - Fast build and hot module replacement with optimized chunk configuration
+- **Custom Theme** - Clean and responsive design matching main website style with dark mode support
+- **Performance Optimized** - Optimized Vite build configuration and BlogIndex batch loading
 - **Search** - Full-text search functionality
 - **PWA** - Progressive Web App with offline support
 - **Google Analytics** - Website analytics integration
@@ -78,8 +79,10 @@ howar31-blog-vuepress/
 ├── blog/                          # Blog content directory
 │   ├── .vuepress/
 │   │   ├── components/            # Custom Vue components
-│   │   │   ├── BlogIndex.vue      # Blog post list component
+│   │   │   ├── BlogIndex.vue      # Blog post list component (with batch loading)
 │   │   │   └── DynamicFooter.vue # Dynamic footer component
+│   │   ├── styles/                # Custom styles
+│   │   │   └── index.scss         # Custom theme styles matching main website
 │   │   ├── config.mjs             # VuePress configuration
 │   │   └── client.js              # Client-side configuration
 │   ├── wordpress/                 # Archived WordPress posts
@@ -100,22 +103,26 @@ This project uses GitHub Actions for automatic deployment to GitHub Pages.
 
 1. Push changes to `master` or `main` branch
 2. GitHub Actions will automatically:
-   - Install dependencies
-   - Build the site
+   - Install dependencies (using `npm ci --legacy-peer-deps`)
+   - Build the site with optimized Vite configuration
    - Deploy to GitHub Pages
 
 ### Setup GitHub Pages
 
 See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
 
+> **Note:** The deployment workflow uses `--legacy-peer-deps` flag to handle VuePress v2 RC peer dependency conflicts.
+
 ## 🔧 Configuration
 
 Main configuration file: `blog/.vuepress/config.mjs`
 
 Key configurations:
-- **Theme**: Default theme with custom navbar and sidebar
+- **Theme**: Default theme with custom styles matching main website design
 - **Plugins**: Search, Google Analytics, PWA
 - **Build Output**: `public/` directory
+- **Vite Optimization**: Optimized chunk splitting to reduce HTTP requests
+- **Performance**: BlogIndex component with batch loading optimization
 
 ## 📦 Dependencies
 
@@ -137,7 +144,7 @@ Key configurations:
 
 ### BlogIndex
 
-Displays a list of blog posts with filtering and sorting capabilities.
+Displays a list of blog posts with filtering and sorting capabilities. Optimized with batch loading for better performance.
 
 Usage in markdown:
 ```markdown
@@ -156,6 +163,15 @@ Usage in markdown:
 ```markdown
 <DynamicFooter />
 ```
+
+## 🎨 Custom Styling
+
+The blog uses custom styles (`blog/.vuepress/styles/index.scss`) that match the main website design:
+
+- **Color Palette**: Blue gradient theme matching howar31.com
+- **Dark Mode**: Full dark mode support with proper mobile sidebar positioning
+- **Responsive Design**: Optimized for mobile and desktop devices
+- **Typography**: Consistent typography and spacing
 
 ## 📝 License
 
