@@ -1,6 +1,6 @@
 <template>
     <div class="dynamic-footer">
-        Howar31 Blog | Made with ❤ by Howar31 @ {{ currentYear }}
+        @ {{ currentYear }} Howar31. All rights reserved.
     </div>
 </template>
 

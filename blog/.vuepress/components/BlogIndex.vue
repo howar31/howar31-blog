@@ -1,6 +1,6 @@
 <template>
     <div class="blog-index-list">
-        <div class="list-item" v-for="post in posts">
+        <div class="list-item" v-for="post in posts" :key="post.path">
             <div class="list-item-title">
                 <span class="post-title"
                     ><router-link :to="post.path">{{
@@ -42,66 +42,115 @@
 
 .blog-index-list {
     width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    overflow: visible;
+    padding-top: 4px;
+    margin-top: -4px;
 
     .list-item {
-        transition: 0.3s;
-        border-radius: 5px;
-        padding: 20px;
+        transition: all 0.3s ease;
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        border: 1px solid var(--c-border, #e2e8f0);
+        background-color: var(--c-bg, #ffffff);
+        backdrop-filter: blur(10px);
 
         &:nth-child(2n) {
-            background-color: var(--c-bg-soft, #f5f5f5);
+            background-color: var(--c-bg-soft, #f8fafc);
         }
+
         &:hover {
-            transition: 0.3s;
-            background-color: var(--c-bg-active, #e8f0fe);
+            transition: all 0.3s ease;
+            background-color: var(--c-bg-active, #eff6ff);
+            border-color: var(--c-brand, #3b82f6);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(96, 165, 250, 0.15);
         }
 
         .list-item-title {
-            margin-bottom: 5px;
+            margin-bottom: 0.5rem;
 
             .post-title {
                 a {
-                    font-size: 1.1em;
+                    font-size: 1.25rem;
+                    font-weight: 600;
+                    color: var(--c-text, #1e293b);
+                    transition: color 0.2s ease;
+                    text-decoration: none;
+
+                    &:hover {
+                        color: var(--blue-400, #60a5fa);
+                    }
                 }
             }
         }
+
         .list-item-meta {
-            margin-bottom: 10px;
-            color: var(--c-text-lighter, #666);
-            font-size: 0.8em;
+            margin-bottom: 0.75rem;
+            color: var(--c-text-lighter, #94a3b8);
+            font-size: 0.875rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
 
             & > * {
-                padding-right: 10px;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.25rem;
+
+                i {
+                    opacity: 0.7;
+                }
             }
         }
+
         .list-item-content {
-            color: var(--c-text-light, #999);
+            color: var(--c-text-light, #64748b);
+            line-height: 1.6;
         }
     }
 
-    // Dark mode support
     [data-theme="dark"] & {
         .list-item {
+            background-color: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.1);
+
             &:nth-child(2n) {
-                background-color: var(--c-bg-soft, rgba(255, 255, 255, 0.05));
+                background-color: rgba(255, 255, 255, 0.05);
             }
+
             &:hover {
-                background-color: var(--c-bg-active, rgba(15, 84, 192, 0.2));
+                background-color: rgba(96, 165, 250, 0.15);
+                border-color: rgba(96, 165, 250, 0.3);
+                box-shadow: 0 4px 12px rgba(96, 165, 250, 0.2);
+            }
+
+            .list-item-title .post-title a {
+                color: rgb(241, 245, 249);
+
+                &:hover {
+                    color: rgb(96, 165, 250);
+                }
             }
         }
+
         .list-item-meta {
-            color: var(--c-text-lighter, rgba(255, 255, 255, 0.6));
+            color: rgba(255, 255, 255, 0.6);
         }
+
         .list-item-content {
-            color: var(--c-text-light, rgba(255, 255, 255, 0.7));
+            color: rgba(255, 255, 255, 0.7);
         }
     }
 
     @media (max-width: 719px) {
         .list-item {
-            padding: 15px 5px;
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+
+        .list-item-title .post-title a {
+            font-size: 1.1rem;
         }
     }
 }
@@ -126,20 +175,17 @@ const props = defineProps({
 const routes = useRoutes();
 const allPages = ref([]);
 
-// Fetch all page data on client side
 onMounted(async () => {
     if (!routes.value) {
         console.warn("Routes not available");
         return;
     }
 
-    // Get all page data from routes
     const pagesData = [];
     const routeEntries = Object.entries(routes.value);
 
     for (const [path, route] of routeEntries) {
         try {
-            // Skip homepage, 404 and all-post pages
             if (
                 path === "/" ||
                 path.includes("404") ||
@@ -148,14 +194,12 @@ onMounted(async () => {
                 continue;
             }
 
-            // Dynamically load page data
             if (route.loader) {
                 const module = await route.loader();
                 if (module.data) {
                     const data = module.data;
                     const frontmatter = data.frontmatter || {};
 
-                    // Skip pages with blog_index set to true
                     if (frontmatter.blog_index) {
                         continue;
                     }

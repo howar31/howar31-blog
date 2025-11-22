@@ -1,0 +1,467 @@
+// Custom styles for Howar31 Blog
+// Based on howar31.com design style
+
+// Color palette from main website
+:root {
+  // Blue colors (primary accent)
+  --blue-400: #60a5fa;
+  --blue-500: #3b82f6;
+  --blue-600: #2563eb;
+
+  // Violet colors (gradient end)
+  --violet-400: #a78bfa;
+
+  // Slate colors
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+  --slate-950: #020617;
+
+  // Light mode colors
+  // Background colors
+  --c-bg: #ffffff;
+  --c-bg-soft: #f8fafc;
+  --c-bg-active: #eff6ff;
+
+  // Text colors
+  --c-text: #1e293b;
+  --c-text-light: #64748b;
+  --c-text-lighter: #94a3b8;
+  --c-text-accent: var(--blue-500);
+  --c-text-quote: #64748b;
+
+  // Border colors
+  --c-border: #e2e8f0;
+  --c-border-dark: #cbd5e1;
+  --c-divider: #e2e8f0;
+
+  // Brand colors (blue gradient)
+  --c-brand: var(--blue-500);
+  --c-brand-light: var(--blue-400);
+  --c-brand-dark: var(--blue-600);
+
+  // VuePress accent colors - matching main website blue theme
+  --vp-c-accent: var(--blue-500);
+  --vp-c-accent-bg: rgba(59, 130, 246, 0.1);
+  --vp-c-accent-hover: var(--blue-400);
+
+  // Code block colors
+  --code-bg-color: #f8fafc;
+  --code-text-color: #1e293b;
+  --code-line-height: 1.7;
+  --code-font-size: 0.85em;
+  --code-font-family: 'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace;
+
+  // Tip/Info/Warning/Danger boxes
+  --c-tip: var(--blue-500);
+  --c-warning: #f59e0b;
+  --c-danger: #ef4444;
+}
+
+// Global styles
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+// Dark mode colors and styles (matching main website)
+// Reference: https://raw.githubusercontent.com/howar31/landing-page/refs/heads/main/src/app/globals.css
+html[data-theme="dark"],
+[data-theme="dark"] {
+  // CSS Variables - Dark mode colors
+  // Background colors - slate-950 like main website
+  --c-bg: rgb(0, 0, 0);
+  --c-bg-soft: rgba(255, 255, 255, 0.05);
+  --c-bg-active: rgba(96, 165, 250, 0.15);
+
+  // Text colors - white and slate
+  --c-text: #ffffff;
+  --c-text-light: rgba(255, 255, 255, 0.7);
+  --c-text-lighter: rgba(255, 255, 255, 0.6);
+  --c-text-accent: var(--blue-400);
+  --c-text-quote: rgba(255, 255, 255, 0.7);
+
+  // Border colors
+  --c-border: rgba(255, 255, 255, 0.1);
+  --c-border-dark: rgba(255, 255, 255, 0.15);
+  --c-divider: rgba(255, 255, 255, 0.1);
+
+  // Brand colors (blue-violet gradient)
+  --c-brand: var(--blue-400);
+  --c-brand-light: var(--blue-400);
+  --c-brand-dark: var(--blue-600);
+
+  // VuePress accent colors - matching main website blue theme (dark mode)
+  --vp-c-accent: var(--blue-400);
+  --vp-c-accent-bg: rgba(96, 165, 250, 0.15);
+  --vp-c-accent-hover: var(--violet-400);
+
+  // Code block colors
+  --code-bg-color: #0f172a;
+  --code-text-color: #cbd5e1;
+
+  // Dark mode background with purple gradient animation
+  body {
+    background-color: rgb(0, 0, 0);
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  // Ensure main containers don't block the glow animation
+  .vp-page,
+  .vp-theme-container {
+    background-color: transparent !important;
+  }
+
+  // Purple glow animations
+  body::before {
+    content: "";
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+      circle at 50% 25%,
+      rgba(139, 92, 246, 0.15) 0%,
+      transparent 40%
+    );
+    z-index: 0;
+    animation: float-glow-1 20s infinite alternate ease-in-out;
+    pointer-events: none;
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+      circle at 25% 75%,
+      rgba(168, 85, 247, 0.1) 0%,
+      transparent 40%
+    );
+    z-index: 0;
+    animation: float-glow-2 25s infinite alternate-reverse ease-in-out;
+    pointer-events: none;
+  }
+
+  // Ensure content containers appear above glow
+  .vp-sidebar,
+  .vp-page,
+  .vp-theme-container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .vp-navbar {
+    z-index: 50;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
+}
+
+// Animation keyframes
+@keyframes float-glow-1 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(10%, 10%) scale(1.2);
+  }
+  66% {
+    transform: translate(-5%, 5%) scale(0.8);
+  }
+  100% {
+    transform: translate(5%, -10%) scale(1.1);
+  }
+}
+
+@keyframes float-glow-2 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(-10%, -5%) scale(1.2);
+  }
+  66% {
+    transform: translate(5%, -10%) scale(0.8);
+  }
+  100% {
+    transform: translate(-5%, 10%) scale(1.1);
+  }
+}
+
+// Navbar styling
+.vp-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(24px);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+
+  @supports (backdrop-filter: blur(1px)) {
+    background-color: rgba(255, 255, 255, 0);
+  }
+  @supports not (backdrop-filter: blur(1px)) {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+  border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+
+  [data-theme="dark"] & {
+    @supports (backdrop-filter: blur(1px)) {
+      background-color: rgba(2, 6, 23, 0.6);
+    }
+    @supports not (backdrop-filter: blur(1px)) {
+      background-color: rgba(2, 6, 23, 0.7);
+    }
+    border-bottom-color: rgba(30, 41, 59, 0.3);
+  }
+}
+
+// Navbar site name
+.vp-navbar .vp-site-name,
+.vp-site-name {
+  font-weight: 700;
+  color: var(--blue-400);
+  background: linear-gradient(to right, var(--blue-400), var(--violet-400));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  @supports (background-clip: text) {
+    color: transparent;
+  }
+}
+
+.vp-navbar .vp-nav-link,
+.vp-nav-link {
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: var(--c-brand);
+  }
+}
+
+// Search box
+.vp-navbar .vp-search-box input,
+.vp-search-box input,
+.vp-navbar form[role="search"] input,
+form[role="search"] input {
+  background-color: var(--c-bg-soft);
+  border: 1px solid var(--c-border);
+  color: var(--c-text);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+
+  &::placeholder {
+    color: var(--c-text-lighter);
+  }
+
+  &:focus {
+    background-color: var(--c-bg);
+    border-color: var(--c-brand);
+  }
+}
+
+// Search results dropdown
+form[role="search"] ul li,
+form[role="search"] ul li a,
+[role="search"] ul li,
+[role="search"] ul li a,
+.vp-navbar form[role="search"] ul li,
+.vp-navbar form[role="search"] ul li a,
+.vp-navbar [role="search"] ul li,
+.vp-navbar [role="search"] ul li a,
+.vp-search-result-item,
+.vp-search-result .vp-search-result-item,
+.vp-search-suggestions .vp-search-result-item,
+.vp-search-result a,
+.vp-search-suggestions a,
+.vp-search-result li,
+.vp-search-result li a,
+.vp-search-suggestions li,
+.vp-search-suggestions li a,
+[role="search"] a,
+[role="search"] li,
+[role="search"] li a {
+  color: var(--c-text) !important;
+  background-color: transparent !important;
+  transition: background-color 0.2s ease !important;
+
+  &:hover {
+    background-color: var(--vp-c-accent-bg) !important;
+    color: var(--c-text) !important;
+  }
+}
+
+[data-theme="dark"] {
+  .vp-navbar .vp-search-box input,
+  .vp-search-box input,
+  .vp-navbar form[role="search"] input,
+  form[role="search"] input {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    color: var(--c-text) !important;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.5) !important;
+    }
+
+    &:focus {
+      background-color: rgba(255, 255, 255, 0.15) !important;
+      border-color: var(--c-brand) !important;
+    }
+  }
+
+  // Search results dropdown container
+  form[role="search"] ul,
+  [role="search"] ul,
+  .vp-navbar form[role="search"] ul,
+  .vp-navbar [role="search"] ul,
+  .vp-search-result,
+  .vp-search-box .vp-search-result,
+  .vp-navbar .vp-search-result,
+  .vp-search-suggestions,
+  .vp-search-box .vp-search-suggestions,
+  .vp-navbar .vp-search-suggestions,
+  [role="search"] .vp-search-result,
+  [role="search"] .vp-search-suggestions,
+  .vp-search-box > div,
+  .vp-navbar .vp-search-box > div,
+  .vp-navbar form[role="search"] > div,
+  form[role="search"] > div,
+  .vp-navbar [role="search"] > div,
+  [role="search"] > div {
+    background-color: rgba(0, 0, 0, 0.9) !important;
+    backdrop-filter: blur(24px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: var(--c-text) !important;
+  }
+
+  // Search result title and text
+  form[role="search"] ul li a,
+  [role="search"] ul li a,
+  .vp-search-result-title,
+  .vp-search-result-text,
+  .vp-search-result h3,
+  .vp-search-result p,
+  .vp-search-suggestions h3,
+  .vp-search-suggestions p {
+    color: var(--c-text) !important;
+  }
+}
+
+// Sidebar
+.vp-sidebar {
+  border-right: 1px solid var(--c-border);
+
+  [data-theme="dark"] & {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.vp-sidebar .vp-sidebar-link,
+.vp-sidebar-link {
+  transition: color 0.2s ease, background-color 0.2s ease;
+
+  &:hover {
+    color: var(--c-brand);
+    background-color: var(--c-bg-active);
+  }
+
+  &.active {
+    color: var(--c-brand);
+    font-weight: 600;
+    border-left-color: var(--c-brand);
+  }
+}
+
+// Links - exclude code blocks to preserve syntax highlighting
+a:not(pre a):not(code a):not([class*="language-"] a):not(.vp-code a) {
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: var(--c-brand-light);
+    text-decoration: none;
+  }
+
+  &:focus,
+  &:visited,
+  &:active {
+    text-decoration: none;
+  }
+}
+
+// Override VuePress default content link styles - exclude code blocks
+.vp-theme-container a:not(.header-anchor):not(.vp-header-anchor):not(pre a):not(code a):not([class*="language-"] a):not(.vp-code a),
+.theme-default-content a:not(.header-anchor):not(.vp-header-anchor):not(pre a):not(code a):not([class*="language-"] a):not(.vp-code a),
+.vp-content a:not(.header-anchor):not(.vp-header-anchor):not(pre a):not(code a):not([class*="language-"] a):not(.vp-code a),
+.vp-theme-container .vp-content a:not(.header-anchor):not(.vp-header-anchor):not(pre a):not(code a):not([class*="language-"] a):not(.vp-code a),
+.vp-theme-container .theme-default-content a:not(.header-anchor):not(.vp-header-anchor):not(pre a):not(code a):not([class*="language-"] a):not(.vp-code a),
+main .vp-content a:not(.header-anchor):not(.vp-header-anchor):not(pre a):not(code a):not([class*="language-"] a):not(.vp-code a),
+main .theme-default-content a:not(.header-anchor):not(.vp-header-anchor):not(pre a):not(code a):not([class*="language-"] a):not(.vp-code a),
+.vp-page .vp-content a:not(.header-anchor):not(.vp-header-anchor):not(pre a):not(code a):not([class*="language-"] a):not(.vp-code a),
+.vp-page .theme-default-content a:not(.header-anchor):not(.vp-header-anchor):not(pre a):not(code a):not([class*="language-"] a):not(.vp-code a),
+p a:not(.header-anchor):not(.vp-header-anchor):not(pre a):not(code a):not([class*="language-"] a):not(.vp-code a),
+.vp-content p a:not(.header-anchor):not(.vp-header-anchor):not(pre a):not(code a):not([class*="language-"] a):not(.vp-code a),
+.theme-default-content p a:not(.header-anchor):not(.vp-header-anchor):not(pre a):not(code a):not([class*="language-"] a):not(.vp-code a) {
+  text-decoration: none;
+
+  &:hover,
+  &:focus,
+  &:visited,
+  &:active {
+    text-decoration: none;
+  }
+}
+
+// Buttons
+.btn {
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+
+  &.primary {
+    background-color: var(--c-brand);
+    color: white;
+
+    &:hover {
+      background-color: var(--c-brand-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(96, 165, 250, 0.3);
+    }
+  }
+}
+
+// Scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--c-bg-soft);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--c-border-dark);
+  border-radius: 4px;
+
+  &:hover {
+    background: var(--c-text-lighter);
+  }
+}
