@@ -1,3 +1,9 @@
+const { defineUserConfig } = require('vuepress')
+const { backToTopPlugin } = require('@vuepress/plugin-back-to-top')
+const { googleAnalyticsPlugin } = require('@vuepress/plugin-google-analytics')
+const { mediumZoomPlugin } = require('@vuepress/plugin-medium-zoom')
+const { pwaPlugin } = require('@vuepress/plugin-pwa')
+
 // const glob = require('glob');
 // const fs = require('fs');
 // const moment = require('moment');
@@ -49,7 +55,7 @@
 //     '/',
 // ];
 
-module.exports = {
+module.exports = defineUserConfig({
     head: [
         ['link', { rel: 'manifest', href: '/manifest.json' }],
         ['link', { rel: 'icon', href: '/logo/Howar31_Avatar_2015_140px.png' }],
@@ -70,20 +76,20 @@ module.exports = {
     dest: 'public',
     themeConfig: {
         logo: '/logo/Howar31_Avatar_2015_140px.png',
-        nav: [
+        navbar: [
             { text: 'Home', link: '/' },
             { text: 'All Posts', link: '/all-post.md' },
             { text: 'Archives', link: '/wordpress/' },
             {
-                text: 'About', items: [
+                text: 'About', children: [
                     {
-                        text: 'Author', items: [
+                        text: 'Author', children: [
                             { text: 'howar31.com', link: 'http://howar31.com' },
                             { text: 'GitLab', link: 'https://gitlab.com/howar31' },
                         ],
                     },
                     {
-                        text: 'Blog', items: [
+                        text: 'Blog', children: [
                             { text: 'GitLab', link: 'https://gitlab.com/howar31/howar31-blog-vuepress/' },
                         ],
                     },
@@ -92,22 +98,23 @@ module.exports = {
         ],
         sidebarDepth: 2,    // extract to h3
         sidebar: 'auto',
-        lastUpdated: 'Last Updated',
-        searchMaxSuggestions: 10,
+        lastUpdated: true,
+        lastUpdatedText: 'Last Updated',
     },
     markdown: {
         lineNumbers: true,
     },
-    plugins: {
-        '@vuepress/back-to-top': {},
-        '@vuepress/google-analytics': {
-            ga: 'UA-8779590-7',
-        },
-        '@vuepress/pwa': {
+    plugins: [
+        backToTopPlugin(),
+        googleAnalyticsPlugin({
+            id: 'UA-8779590-7',
+        }),
+        pwaPlugin({
             serviceWorker: true,
             updatePopup: true,
-        },
-        '@vuepress/medium-zoom': {},
-        '@dovyp/vuepress-plugin-clipboard-copy': {},
-    },
-}
+        }),
+        mediumZoomPlugin(),
+        // Note: @dovyp/vuepress-plugin-clipboard-copy may need to be checked for v2 compatibility
+        // If not compatible, we may need to find an alternative or remove it
+    ],
+})
