@@ -109,6 +109,18 @@ This project uses GitHub Actions for automatic deployment to GitHub Pages.
 
 > **Note:** The deployment workflow uses `--legacy-peer-deps` flag to handle VuePress v2 RC peer dependency conflicts.
 
+**Deployment Triggers:**
+- Changes to `blog/` directory (content, configuration, styles, components)
+- Changes to `package.json` or `package-lock.json` (dependencies)
+- Changes to other files that affect the build
+
+**Excluded from Deployment:**
+- `README.md` - Documentation only
+- `.cursor/` - IDE configuration
+- `.github/` - GitHub configuration (including workflow files)
+- `LICENSE` - License file
+- `.gitignore` - Git ignore rules
+
 ## 🔧 Configuration
 
 Main configuration file: `blog/.vuepress/config.mjs`
