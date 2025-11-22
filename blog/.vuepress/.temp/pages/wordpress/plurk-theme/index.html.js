@@ -1,0 +1,3 @@
+import comp from "/opt/projects/howar31-blog-vuepress/blog/.vuepress/.temp/pages/wordpress/plurk-theme/index.html.vue"
+const data = JSON.parse("{\"path\":\"/wordpress/plurk-theme/\",\"title\":\"Plurk 噗浪佈景，大河道爽快體驗！\",\"lang\":\"en-US\",\"frontmatter\":{\"title\":\"Plurk 噗浪佈景，大河道爽快體驗！\",\"date\":\"2011-09-05\"},\"git\":{\"updatedTime\":1552921662000,\"contributors\":[{\"name\":\"Howar31\",\"username\":\"\",\"email\":\"howar31@gmail.com\",\"commits\":1}],\"changelog\":[{\"hash\":\"60a76a7cf4d14287112fcea0b6bfcc991effc943\",\"time\":1552921662000,\"email\":\"howar31@gmail.com\",\"author\":\"Howar31\",\"message\":\"Tuning VuePress for better blog experience.\"}]},\"filePathRelative\":\"wordpress/plurk-theme/index.md\"}")
+export { comp, data }

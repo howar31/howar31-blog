@@ -1,0 +1,5 @@
+import "/opt/projects/howar31-blog-vuepress/node_modules/@vuepress/highlighter-helper/lib/client/styles/base.css"
+import "/opt/projects/howar31-blog-vuepress/node_modules/@vuepress/plugin-prismjs/lib/client/styles/nord.css"
+import "/opt/projects/howar31-blog-vuepress/node_modules/@vuepress/highlighter-helper/lib/client/styles/line-numbers.css"
+import "/opt/projects/howar31-blog-vuepress/node_modules/@vuepress/highlighter-helper/lib/client/styles/notation-highlight.css"
+import "/opt/projects/howar31-blog-vuepress/node_modules/@vuepress/highlighter-helper/lib/client/styles/code-block-title.css"

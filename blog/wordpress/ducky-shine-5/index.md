@@ -182,7 +182,7 @@ Shine 2 vs Shine 5
 ![Shine 2 vs Shine 5](./images/P_20150824_130013_p.jpg)  
 Shine 2 vs Shine 5
 
-![Shine 2 vs Shine 5](himages/P_20150824_130330_1_p.jpg)  
+![Shine 2 vs Shine 5](images/P_20150824_130330_1_p.jpg)  
 Shine 2 vs Shine 5
 
 ![Shine 2 vs Shine 5](./images/P_20150824_130510_1_p.jpg)  
