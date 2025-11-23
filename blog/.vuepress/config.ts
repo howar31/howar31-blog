@@ -72,7 +72,7 @@ export default defineUserConfig({
             build: {
                 rollupOptions: {
                     output: {
-                        manualChunks: (id) => {
+                        manualChunks: (id: string) => {
                             // Consolidate all vendor code into a single chunk to reduce requests
                             if (id.includes("node_modules")) {
                                 return "vendor";

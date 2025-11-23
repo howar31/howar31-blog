@@ -83,7 +83,7 @@ howar31-blog-vuepress/
 │   │   │   └── DynamicFooter.vue # Dynamic footer component
 │   │   ├── styles/                # Custom styles
 │   │   │   └── index.scss         # Custom theme styles matching main website
-│   │   ├── config.mjs             # VuePress configuration
+│   │   ├── config.ts              # VuePress configuration
 │   │   └── client.js              # Client-side configuration
 │   ├── wordpress/                 # Archived WordPress posts
 │   └── *.md                       # Blog posts
@@ -123,7 +123,7 @@ This project uses GitHub Actions for automatic deployment to GitHub Pages.
 
 ## 🔧 Configuration
 
-Main configuration file: `blog/.vuepress/config.mjs`
+Main configuration file: `blog/.vuepress/config.ts`
 
 Key configurations:
 - **Theme**: Default theme with custom styles matching main website design
