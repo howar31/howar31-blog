@@ -1,6 +1,6 @@
 ---
 title: 從 VuePress v1 升級到 v2
-date: 2024-12-19
+date: 2025-11-23
 description: 將我的 blog 從 VuePress v1 升級到 v2 的過程，包括配置變更、組件遷移和效能改進
 categories:
   - Dev Notes
