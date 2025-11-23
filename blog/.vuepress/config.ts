@@ -1,6 +1,6 @@
 import { defineUserConfig } from "vuepress";
 import { viteBundler } from "@vuepress/bundler-vite";
-import { defaultTheme } from "@vuepress/theme-default";
+import customTheme from "./theme/index.js";
 import { googleAnalyticsPlugin } from "@vuepress/plugin-google-analytics";
 import { pwaPlugin } from "@vuepress/plugin-pwa";
 import { searchPlugin } from "@vuepress/plugin-search";
@@ -80,7 +80,6 @@ export default defineUserConfig({
                         },
                     },
                 },
-                // Optimize chunk splitting
                 chunkSizeWarningLimit: 1000,
             },
         },
@@ -88,8 +87,7 @@ export default defineUserConfig({
     title: "Howar31 Blog",
     description: "Dev Notes and Idea Sharing with ❤",
     dest: "public",
-    theme: defaultTheme({
-        logo: false,
+    theme: customTheme({
         navbar: [
             { text: "Home", link: "/" },
             { text: "All Posts", link: "/all-post.md" },
@@ -123,7 +121,7 @@ export default defineUserConfig({
             },
         ],
         sidebarDepth: 2,
-        sidebar: "auto",
+        sidebar: false,
         lastUpdated: true,
         lastUpdatedText: "Last Updated",
     }),
@@ -139,7 +137,6 @@ export default defineUserConfig({
             id: "UA-8779590-7",
         }),
         pwaPlugin({
-            serviceWorker: true,
             updatePopup: true,
         }),
     ],

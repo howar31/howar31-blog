@@ -53,6 +53,7 @@ const tags = computed(() => {
 const insertMetaAfterTitle = () => {
     if (!shouldShowMeta.value) return;
 
+    // Use setTimeout to ensure DOM is ready after route transition
     setTimeout(() => {
         const content = document.getElementById("content");
         if (!content) return;
@@ -100,7 +101,9 @@ const insertMetaAfterTitle = () => {
                 catItem.innerHTML = `
                     <i class="fas fa-cat"></i>
                     <span class="meta-label">分類：</span>
-                    <span class="meta-value">${categories.value.join("、")}</span>
+                    <span class="meta-value">${categories.value.join(
+                        "、"
+                    )}</span>
                 `;
                 metaRow.appendChild(catItem);
             }

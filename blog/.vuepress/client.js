@@ -7,9 +7,6 @@ export default defineClientConfig({
     enhance({ app }) {
         app.component("BlogIndex", BlogIndex);
         app.component("DynamicFooter", DynamicFooter);
-        app.component("PostMeta", PostMeta);
     },
-    rootComponents: [
-        PostMeta,
-    ],
+    rootComponents: [PostMeta],
 });
