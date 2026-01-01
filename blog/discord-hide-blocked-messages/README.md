@@ -41,11 +41,15 @@ Discord 提供了兩種「照顧心理衛生」的方式來處理不想看到的
 
 Discord 官方有針對開發者工具（Developer Tool）進行警告與防護機制。在進行以下操作之前，請先解除 Discord 對開發者工具的防護。
 
+#### 1. 無法開啟開發者工具
+
+如果你無法使用 `Ctrl+Shift+I`（Windows/Linux）或 `Cmd+Option+I`（macOS）開啟開發者工具，需要先在設定檔中啟用開發者工具。
+
 ::: warning
 必須先解除防護後，才能使用 `Ctrl+Shift+I`（Windows/Linux）或 `Cmd+Option+I`（macOS）開啟開發者工具。
 :::
 
-#### Windows
+##### Windows
 
 在 Windows 上，請編輯以下檔案：
 
@@ -59,7 +63,7 @@ Discord 官方有針對開發者工具（Developer Tool）進行警告與防護�
 "DANGEROUS_ENABLE_DEVTOOLS_ONLY_ENABLE_IF_YOU_KNOW_WHAT_YOURE_DOING": true
 ```
 
-#### macOS
+##### macOS
 
 在 macOS 上，請在終端機執行以下指令（將 `code` 替換為你偏好的編輯器，如 `nano`、`vim` 等）：
 
@@ -73,7 +77,7 @@ code ~/Library/'Application Support'/discord/settings.json
 "DANGEROUS_ENABLE_DEVTOOLS_ONLY_ENABLE_IF_YOU_KNOW_WHAT_YOURE_DOING": true
 ```
 
-#### 設定範例
+##### 設定範例
 
 以下是 `settings.json` 範例：
 
@@ -86,6 +90,23 @@ code ~/Library/'Application Support'/discord/settings.json
 ```
 
 設定完成後，重新啟動 Discord，即可使用 `Ctrl+Shift+I`（Windows/Linux）或 `Cmd+Option+I`（macOS）開啟開發者工具。
+
+#### 2. 無法在 Console 中貼上內容
+
+即使成功開啟開發者工具，Discord 也可能會阻止你在 Console 中貼上內容。如果你發現無法使用 `Ctrl+V`（Windows/Linux）或 `Cmd+V`（macOS）貼上指令，請按照以下步驟操作：
+
+1. 在 Console 中**手動輸入**以下文字（不要用貼上的方式）：
+
+   ```text
+   allow pasting
+   ```
+
+2. 按下 `Enter` 執行
+3. 執行後，即可正常使用貼上功能
+
+::: tip
+這個指令只需要執行一次，之後就可以正常使用貼上功能了。如果關閉並重新開啟開發者工具，可能需要重新執行。
+:::
 
 ### 注入 CSS 樣式
 
