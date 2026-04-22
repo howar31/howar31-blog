@@ -112,7 +112,8 @@ dashes. No humanize transform anywhere in templates.
 - URL: `/categories/vuepress/`, `/tags/dev-notes/`
 - Displayed in sidebar / terms / post-meta: `vuepress`, `dev-notes`, `css`
 
-Two categories in use: `vuepress` (11 posts) and `wordpress` (42 archive
+Three categories in use: `hugo` (1 post, the current era), `vuepress`
+(11 posts, 2019-2026 VuePress v1/v2 era) and `wordpress` (42 archive
 posts from the pre-VuePress WordPress era).
 
 When adding a new post, keep all taxonomy values lowercase-dash. Don't mix

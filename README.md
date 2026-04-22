@@ -49,7 +49,7 @@ howar31-blog/
 ├── content/
 │   └── posts/
 │       ├── _index.md             # Overrides /posts/ heading → "Recent Posts"
-│       └── <slug>/index.md       # 53 posts; images sit in the same folder
+│       └── <slug>/index.md       # 54 posts; images sit in the same folder
 ├── layouts/
 │   ├── index.html                # Home: 2-column (main + taxonomy sidebar)
 │   ├── _default/                 # baseof · single · list · terms
