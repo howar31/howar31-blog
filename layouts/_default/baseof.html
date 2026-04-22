@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="{{ site.LanguageCode | default "zh-tw" }}">
+{{- partial "head.html" . -}}
+<body>
+  <div class="vp-theme-container" data-theme-container>
+    {{- partial "header.html" . -}}
+    <main class="vp-page">
+      {{- /* Home page uses a wider content container to fit the sidebar grid. */ -}}
+      <div class="{{ if .IsHome }}vp-content-wide{{ else }}vp-content theme-default-content{{ end }}">
+        {{- block "main" . }}{{- end }}
+      </div>
+    </main>
+    {{- partial "footer.html" . -}}
+  </div>
+  {{- partial "back-to-top.html" . -}}
+  {{- with resources.Get "js/theme.js" -}}
+    {{- $theme := . | minify | fingerprint -}}
+    <script src="{{ $theme.RelPermalink }}" integrity="{{ $theme.Data.Integrity }}" defer></script>
+  {{- end -}}
+
+  {{- /*
+    Prism JS bundle — fetched via resources.GetRemote at build time, concatenated
+    in dependency order, minified, fingerprinted, and served from our own origin.
+    Autoloader is dropped in favour of shipping the language grammars we actually
+    use (so the page does not make runtime CDN fetches).
+
+    Load order matters:
+      1. core (`prism.min.js` — already contains markup/css/clike/javascript)
+      2. `markup-templating` (required by vue / handlebars / …)
+      3. additional language grammars
+      4. `line-numbers` plugin
+      5. `toolbar` plugin (must register before its sub-plugins)
+      6. `show-language` + `copy-to-clipboard` (register against toolbar)
+  */ -}}
+  {{- $prismVer := "1.29.0" -}}
+  {{- $prismBase := printf "https://cdn.jsdelivr.net/npm/prismjs@%s" $prismVer -}}
+  {{- $prismJsUrls := slice
+    (printf "%s/prism.min.js" $prismBase)
+    (printf "%s/components/prism-markup-templating.min.js" $prismBase)
+    (printf "%s/components/prism-typescript.min.js" $prismBase)
+    (printf "%s/components/prism-jsx.min.js" $prismBase)
+    (printf "%s/components/prism-tsx.min.js" $prismBase)
+    (printf "%s/components/prism-vue.min.js" $prismBase)
+    (printf "%s/components/prism-yaml.min.js" $prismBase)
+    (printf "%s/components/prism-toml.min.js" $prismBase)
+    (printf "%s/components/prism-bash.min.js" $prismBase)
+    (printf "%s/components/prism-shell-session.min.js" $prismBase)
+    (printf "%s/components/prism-json.min.js" $prismBase)
+    (printf "%s/components/prism-scss.min.js" $prismBase)
+    (printf "%s/components/prism-stylus.min.js" $prismBase)
+    (printf "%s/components/prism-markdown.min.js" $prismBase)
+    (printf "%s/components/prism-diff.min.js" $prismBase)
+    (printf "%s/components/prism-nginx.min.js" $prismBase)
+    (printf "%s/components/prism-docker.min.js" $prismBase)
+    (printf "%s/components/prism-go.min.js" $prismBase)
+    (printf "%s/components/prism-python.min.js" $prismBase)
+    (printf "%s/components/prism-sql.min.js" $prismBase)
+    (printf "%s/plugins/line-numbers/prism-line-numbers.min.js" $prismBase)
+    (printf "%s/plugins/toolbar/prism-toolbar.min.js" $prismBase)
+    (printf "%s/plugins/show-language/prism-show-language.min.js" $prismBase)
+    (printf "%s/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js" $prismBase)
+  -}}
+  {{- $prismJsParts := slice -}}
+  {{- range $prismJsUrls -}}
+    {{- with try (resources.GetRemote .) -}}
+      {{- with .Err -}}
+        {{- errorf "prism js fetch failed: %s" . -}}
+      {{- else with .Value -}}
+        {{- $prismJsParts = $prismJsParts | append . -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $prismJs := $prismJsParts | resources.Concat "js/prism.js" | minify | fingerprint -}}
+  <script src="{{ $prismJs.RelPermalink }}" integrity="{{ $prismJs.Data.Integrity }}" crossorigin="anonymous" defer></script>
+</body>
+</html>

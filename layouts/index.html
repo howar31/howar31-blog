@@ -1,0 +1,92 @@
+{{ define "main" }}
+<section class="home">
+  <header class="home-hero">
+    <h1 class="home-title">{{ site.Title }}</h1>
+    <p class="home-tagline">{{ site.Params.description }}</p>
+  </header>
+
+  <div class="home-layout">
+    <section class="home-main">
+      <header class="home-main-header">
+        <h2>Recent Posts</h2>
+        <a class="home-main-more" href="{{ "/posts/" | relURL }}">All Posts →</a>
+      </header>
+
+      {{- $recent := first 10 (where site.RegularPages "Type" "posts").ByDate.Reverse -}}
+      {{- $total := len (where site.RegularPages "Type" "posts") -}}
+      <ul class="post-list">
+        {{- range $recent }}
+        <li class="post-list-item">
+          <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+          <div class="post-meta">
+            <time datetime="{{ .Date.Format "2006-01-02" }}">
+              <i class="far fa-clock" aria-hidden="true"></i>
+              {{ .Date.Format "2006年01月02日" }}
+            </time>
+            {{- with .Params.categories }}
+              <span>
+                <i class="fas fa-cat" aria-hidden="true"></i>
+                {{- range $i, $c := . -}}
+                  {{- if $i }}、{{ end -}}
+                  <a href="{{ printf "/categories/%s/" (. | urlize) | relURL }}">{{ . }}</a>
+                {{- end -}}
+              </span>
+            {{- end }}
+          </div>
+          {{- with .Description }}
+            <p>{{ . }}</p>
+          {{- end }}
+        </li>
+        {{- end }}
+      </ul>
+
+      <div class="home-main-cta">
+        <a class="home-main-cta-btn" href="{{ "/posts/" | relURL }}">
+          <span>Browse all {{ $total }} posts</span>
+          <i class="fas fa-arrow-right" aria-hidden="true"></i>
+        </a>
+      </div>
+    </section>
+
+    <aside class="home-sidebar" aria-label="Taxonomy navigation">
+      {{- with site.Taxonomies.categories }}
+      <section class="sidebar-block">
+        <h2 class="sidebar-title">
+          <i class="fas fa-cat" aria-hidden="true"></i>
+          Categories
+        </h2>
+        <ul class="term-list sidebar-terms">
+          {{- range $term, $pages := . }}
+          <li>
+            <a href="{{ printf "/categories/%s/" ($term | urlize) | relURL }}">
+              <span class="term-name">{{ $term }}</span>
+              <span class="term-count">{{ len $pages }}</span>
+            </a>
+          </li>
+          {{- end }}
+        </ul>
+      </section>
+      {{- end }}
+
+      {{- with site.Taxonomies.tags }}
+      <section class="sidebar-block">
+        <h2 class="sidebar-title">
+          <i class="fas fa-hashtag" aria-hidden="true"></i>
+          Tags
+        </h2>
+        <ul class="term-list sidebar-terms">
+          {{- range $term, $pages := . }}
+          <li>
+            <a href="{{ printf "/tags/%s/" ($term | urlize) | relURL }}">
+              <span class="term-name">{{ $term }}</span>
+              <span class="term-count">{{ len $pages }}</span>
+            </a>
+          </li>
+          {{- end }}
+        </ul>
+      </section>
+      {{- end }}
+    </aside>
+  </div>
+</section>
+{{ end }}

@@ -1,0 +1,20 @@
+{{ define "main" }}
+<section class="list terms">
+  <h1>{{ .Title }}</h1>
+  {{- with .Content }}
+    <div class="list-intro">{{ . }}</div>
+  {{- end }}
+
+  {{- $plural := .Data.Plural -}}
+  <ul class="term-list">
+    {{- range .Data.Terms.Alphabetical }}
+    <li class="term-list-item">
+      <a href="{{ .Page.RelPermalink }}">
+        <span class="term-name">{{ .Name }}</span>
+        <span class="term-count">{{ .Count }}</span>
+      </a>
+    </li>
+    {{- end }}
+  </ul>
+</section>
+{{ end }}
