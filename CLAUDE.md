@@ -44,11 +44,12 @@ hugo new posts/<slug>/index.md
   {{< /warning >}}
   ```
 
-- **Class naming** (`.vp-navbar`, `.vp-nav-dropdown`, etc.) is inherited
-  from the previous VuePress theme so the migrated SCSS applies directly —
-  it is *not* a current dependency on VuePress. Avoid nested SCSS
-  `&-suffix` after descendant combinators; libsass compiles it into broken
-  selectors (see SPEC.md → SCSS pitfalls).
+- **Class naming** (`.vp-navbar`, `.vp-navbar-inner`, `.vp-site-name`,
+  `.vp-footer`, `.vp-page`, etc.) is inherited from the previous VuePress
+  theme so the migrated SCSS applies directly — it is *not* a current
+  dependency on VuePress. Avoid nested SCSS `&-suffix` after descendant
+  combinators; libsass compiles it into broken selectors (see SPEC.md →
+  SCSS pitfalls).
 - **Commit style**: conventional commits (`feat:` / `fix:` / `docs:` /
   `chore:` / `refactor:`). One commit per feature. Follow the `/commit`
   skill.
@@ -71,7 +72,8 @@ hugo new posts/<slug>/index.md
 
 - No service worker yet — PWA is shell-only (manifest + icons), not offline-first.
 - Code-block line numbers are not sticky during horizontal scroll.
-- `googleAnalytics = "UA-8779590-7"` is Universal Analytics (retired 2023-07);
-  replace with a GA4 `G-XXXX` ID.
+- Google Analytics disabled in `config.toml` (Universal Analytics
+  `UA-8779590-7` retired 2023-07). Re-enable by setting `googleAnalytics`
+  to a GA4 `G-XXXXXXX` ID.
 - `css.Sass: libsass` is deprecated in Hugo 0.153+. Works today; future upgrade
   to dartsass is a one-line config change (plus installing `dart-sass`).

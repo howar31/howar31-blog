@@ -63,7 +63,10 @@ howar31-blog/
 
 - `baseURL = "https://blog.howar31.com/"`
 - `languageCode = "zh-tw"`
-- `googleAnalytics = "UA-8779590-7"` — **expired**, retained only as placeholder
+- `googleAnalytics` — **disabled** (commented out). Previous UA ID
+  `UA-8779590-7` retired 2023-07. Re-enable by setting a GA4 `G-XXXXXXX`
+  value. While disabled, Hugo's `_internal/google_analytics.html` emits
+  nothing
 - `enableEmoji`, `enableGitInfo`, `enableRobotsTXT`: all `true`
 - `[markup.highlight] codeFences = false` → Goldmark emits clean
   `<pre><code class="language-xxx">`, Prism takes over client-side
@@ -71,8 +74,9 @@ howar31-blog/
 - `[taxonomies] category = "categories"`, `tag = "tags"`
 - `[permalinks] posts = "/posts/:contentbasename/"` → URL uses parent folder
   name (slug) not title-derived
-- `[[menu.main]]`: navbar is minimal — only an `About` dropdown entry exists;
-  logo + theme toggle cover the main UI
+- `[[menu.main]]`: **not defined**. Navbar is minimal — logo + theme toggle
+  only. `header.html` does not iterate `site.Menus.main`, so there are no
+  nav items to configure
 - `[[menu.footer]]`: About column (howar31.com / GitHub / Source Code)
 - `[params.sponsor]`: `kofi = "howar31"`, `paypal = "https://donate.howar31.com"`
   — verified identifiers only. Do **not** add `githubSponsors`; not enabled
@@ -184,24 +188,29 @@ amber for warning, with dark-mode variants. Inner content is rendered via
 
 ### SCSS pitfall (document so future edits don't regress)
 
-Do **not** use `&-menu` (or similar `&-suffix`) after a descendant
-combinator inside nested scopes. Libsass compiles:
+Do **not** use `&-<suffix>` after a descendant combinator inside nested
+scopes. Libsass expands `&-suffix` using the *entire* parent selector,
+which duplicates ancestors. For example:
 
 ```scss
-.vp-navbar {
-  .vp-nav-dropdown {
-    &.open &-menu { display: block; }   // BUG
+.outer {
+  .block {
+    &.open &-child { ... }   // BUG
   }
 }
 ```
 
-into `.vp-navbar .vp-nav-dropdown.open .vp-navbar .vp-nav-dropdown-menu`
-(the outer `.vp-navbar` is duplicated) — the selector never matches the
-DOM. Spell the descendant class out explicitly:
+compiles to `.outer .block.open .outer .block-child` (`.outer` duplicated)
+— the selector never matches the DOM. Spell the descendant class out
+explicitly instead:
 
 ```scss
-&.open .vp-nav-dropdown-menu { display: block; }   // OK
+&.open .block-child { ... }   // OK
 ```
+
+This tripped up the navbar dropdown rules in an earlier iteration; both
+the buggy selectors and the code that depended on them were removed, but
+keep this note when adding new BEM-style nested rules.
 
 ## JS (`assets/js/theme.js`)
 
@@ -215,10 +224,7 @@ Single IIFE, `defer`-loaded. Responsibilities in order:
    `matchMedia('(prefers-color-scheme: dark)').addEventListener('change', …)`
    respects system changes **only** when the user hasn't made an explicit
    choice yet.
-3. **Navbar dropdown accessibility** — Click + keyboard handlers on any
-   `[data-dropdown]`. (Current navbar has no dropdowns; code retained for
-   future use.)
-4. **Back-to-top progress ring** — Scroll listener (rAF throttled) updates
+3. **Back-to-top progress ring** — Scroll listener (rAF throttled) updates
    `stroke-dashoffset` on `.back-to-top-bar` based on
    `scrollTop / (scrollHeight - innerHeight)`. Button fades in after 200px.
 
@@ -289,7 +295,8 @@ After the first deploy, repo **Settings → Pages**:
   scroll the gutter scrolls too. Two attempts (JS wrap + sticky, pure-CSS
   flex + sticky) both broke mobile layout and were reverted. A clean
   solution likely requires writing a custom line-numbers implementation.
-- **GA4 upgrade** — Replace `UA-8779590-7` with a GA4 `G-XXXXXXX` ID.
+- **GA4 upgrade** — Analytics currently disabled in `config.toml`. Set
+  `googleAnalytics = "G-XXXXXXX"` (GA4 ID) to re-enable.
 - **libsass → dartsass** — When Hugo removes libsass, install dart-sass
   (`brew install dart-sass`) and change `head.html`'s `$opts` to
   `"transpiler" "dartsass"`.

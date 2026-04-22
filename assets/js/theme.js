@@ -1,6 +1,5 @@
 // Theme + UX interactions:
 //   - Dark mode toggle (localStorage-backed, respects system pref until a choice is made).
-//   - Navbar dropdown menus (click + keyboard).
 //   - Mark code fences with `line-numbers` class so Prism.js line-numbers plugin activates.
 //   - Back-to-top button with circular scroll-progress ring.
 // Theme is applied inline in <head> before paint to avoid FOUC.
@@ -46,90 +45,6 @@
     };
     if (mq.addEventListener) mq.addEventListener('change', listener);
     else if (mq.addListener) mq.addListener(listener);
-  }
-
-  // ---- Navbar dropdowns -------------------------------------------------
-  var dropdowns = document.querySelectorAll('[data-dropdown]');
-  dropdowns.forEach(function (dd) {
-    var title = dd.querySelector('.vp-nav-dropdown-title');
-    if (!title) return;
-    title.addEventListener('click', function (e) {
-      e.preventDefault();
-      dd.classList.toggle('open');
-      title.setAttribute('aria-expanded', dd.classList.contains('open') ? 'true' : 'false');
-    });
-    title.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        dd.classList.toggle('open');
-        title.setAttribute('aria-expanded', dd.classList.contains('open') ? 'true' : 'false');
-      } else if (e.key === 'Escape') {
-        dd.classList.remove('open');
-        title.setAttribute('aria-expanded', 'false');
-      }
-    });
-  });
-  document.addEventListener('click', function (e) {
-    dropdowns.forEach(function (dd) {
-      if (!dd.contains(e.target)) {
-        dd.classList.remove('open');
-        var t = dd.querySelector('.vp-nav-dropdown-title');
-        if (t) t.setAttribute('aria-expanded', 'false');
-      }
-    });
-  });
-
-  // ---- Mobile navbar hamburger -----------------------------------------
-  var navToggle = document.querySelector('[data-nav-toggle]');
-  var navMenu = document.getElementById('vp-nav-menu');
-  if (navToggle && navMenu) {
-    var closeNav = function () {
-      navMenu.classList.remove('open');
-      navToggle.setAttribute('aria-expanded', 'false');
-      // Also collapse any accordion dropdowns so next open starts clean.
-      navMenu.querySelectorAll('[data-dropdown].open').forEach(function (dd) {
-        dd.classList.remove('open');
-        var t = dd.querySelector('.vp-nav-dropdown-title');
-        if (t) t.setAttribute('aria-expanded', 'false');
-      });
-    };
-    var openNav = function () {
-      navMenu.classList.add('open');
-      navToggle.setAttribute('aria-expanded', 'true');
-    };
-
-    navToggle.addEventListener('click', function (e) {
-      e.stopPropagation();
-      if (navMenu.classList.contains('open')) closeNav();
-      else openNav();
-    });
-
-    // Close when a link inside the menu is tapped (route change).
-    navMenu.addEventListener('click', function (e) {
-      var target = e.target.closest('a');
-      if (target) closeNav();
-    });
-
-    // Close on outside tap.
-    document.addEventListener('click', function (e) {
-      if (!navMenu.classList.contains('open')) return;
-      if (navMenu.contains(e.target) || navToggle.contains(e.target)) return;
-      closeNav();
-    });
-
-    // Close on Escape.
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && navMenu.classList.contains('open')) {
-        closeNav();
-        navToggle.focus();
-      }
-    });
-
-    // Close if window resized back to desktop width.
-    var mqDesktop = window.matchMedia('(min-width: 720px)');
-    var handleResize = function (e) { if (e.matches) closeNav(); };
-    if (mqDesktop.addEventListener) mqDesktop.addEventListener('change', handleResize);
-    else if (mqDesktop.addListener) mqDesktop.addListener(handleResize);
   }
 
   // ---- Back-to-top button + scroll progress ring -----------------------

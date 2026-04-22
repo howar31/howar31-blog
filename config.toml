@@ -5,8 +5,10 @@ enableRobotsTXT = true
 enableEmoji = true
 enableGitInfo = true
 
-# Universal Analytics ID kept from VuePress config; upgrade to GA4 separately.
-googleAnalytics = "UA-8779590-7"
+# Google Analytics: previous `UA-8779590-7` was Universal Analytics, retired
+# 2023-07. Disabled until a GA4 property ID (format `G-XXXXXXX`) is issued,
+# otherwise Hugo injects a dead tracker that ad-blockers flag.
+# googleAnalytics = "G-XXXXXXX"
 
 [params]
   description = "Dev Notes and Idea Sharing with ❤"
@@ -18,21 +20,19 @@ googleAnalytics = "UA-8779590-7"
   fontAwesomeIntegrity = "sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
   googleFonts = "https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap"
 
-# Navbar — leaf items use `url`; parents with submenus use `children`.
-[[menu.main]]
-  name = "Home"
-  url = "/"
-  weight = 10
+# Sponsor / tip links. Only verified platforms — GitHub Sponsors is NOT
+# enabled on this account (`howar31`) so do not re-add it without first
+# applying + getting approved via github.com/sponsors.
+#
+# Ko-fi: user-facing `https://ko-fi.com/howar31`
+# PayPal: user-owned short URL → Cloudflare 302 → PayPal hosted button
+#         (hosted_button_id=MLVT3HDZKUZCW). Prefer this over paypal.me.
+[params.sponsor]
+  kofi = "howar31"
+  paypal = "https://donate.howar31.com"
 
-[[menu.main]]
-  name = "All Posts"
-  url = "/posts/"
-  weight = 20
-
-# Top navbar is now minimal (logo + theme toggle only). About / social / source
-# links live in the footer; taxonomy browsing lives on the home page sidebar.
-
-# Footer "About" group — rendered as a column in the footer partial.
+# Footer "About" column. The top navbar is intentionally minimal
+# (logo + theme toggle only), so no `[[menu.main]]` entries are defined.
 [[menu.footer]]
   name = "howar31.com"
   url = "https://howar31.com"
@@ -50,35 +50,6 @@ googleAnalytics = "UA-8779590-7"
   url = "https://github.com/howar31/howar31-blog"
   weight = 30
   pre = "code"
-
-# Sponsor / tip links. Only verified platforms — GitHub Sponsors is NOT
-# enabled on this account (`howar31`) so do not re-add it without first
-# applying + getting approved via github.com/sponsors.
-#
-# Ko-fi: user-facing `https://ko-fi.com/howar31`
-# PayPal: user-owned short URL → Cloudflare 302 → PayPal hosted button
-#         (hosted_button_id=MLVT3HDZKUZCW). Prefer this over paypal.me.
-[params.sponsor]
-  kofi = "howar31"
-  paypal = "https://donate.howar31.com"
-
-[[menu.main]]
-  parent = "about"
-  name = "howar31.com"
-  url = "https://howar31.com"
-  weight = 10
-
-[[menu.main]]
-  parent = "about"
-  name = "GitHub"
-  url = "https://github.com/howar31"
-  weight = 20
-
-[[menu.main]]
-  parent = "about"
-  name = "Source Code"
-  url = "https://github.com/howar31/howar31-blog"
-  weight = 30
 
 [markup]
   [markup.highlight]
