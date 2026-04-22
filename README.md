@@ -1,198 +1,132 @@
-# Howar31 Blog VuePress
+# Howar31 Blog
 
-Personal blog built with VuePress v2, featuring modern web technologies and automatic deployment to GitHub Pages.
+Personal blog built with [Hugo](https://gohugo.io/), deployed to GitHub Pages
+under the custom domain `blog.howar31.com`.
 
-## 🚀 Features
+Previously powered by VuePress v1 → v2; migrated to Hugo in April 2026 for
+faster builds, a stable ecosystem, and zero Node.js runtime dependency.
 
-- **VuePress v2** - Modern static site generator (migrated from v1.8.0)
-- **Vite Bundler** - Fast build and hot module replacement with optimized chunk configuration
-- **Custom Theme** - Clean and responsive design matching main website style with dark mode support
-- **Performance Optimized** - Optimized Vite build configuration and BlogIndex batch loading
-- **Search** - Full-text search functionality
-- **PWA** - Progressive Web App with offline support
-- **Google Analytics** - Website analytics integration
-- **Auto Deployment** - Automatic deployment to GitHub Pages via GitHub Actions
+For deeper architecture details see [SPEC.md](./SPEC.md).
+For a concise index of conventions and commands see [CLAUDE.md](./CLAUDE.md).
 
-## 📋 Prerequisites
+## Stack
 
-- **Node.js** v20 or higher
-- **npm** (comes with Node.js)
-- **nvm** (recommended for Node.js version management)
+- **[Hugo](https://gohugo.io/) extended v0.160.1+** — static site generator
+- **[Prism.js](https://prismjs.com/) 1.29.0** — client-side syntax highlighting
+  (Dracula theme), line numbers, copy button, language badge; the whole
+  Prism bundle is fetched once at build time via `resources.GetRemote` and
+  served from the site's own origin
+- **FontAwesome v5.8.1** (CDN) — icons for post meta, theme toggle, sponsor buttons
+- **GitHub Actions** — deploys to GitHub Pages on push to `master`
 
-## 🛠️ Installation
+No Node.js, no npm, no bundler.
 
-### 1. Install Node.js v20 using nvm
+## Prerequisites
 
-```bash
-# Install nvm (if not already installed)
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+- Hugo **extended** v0.160 or newer (`brew install hugo`)
+- Git
 
-# Reload shell configuration
-source ~/.zshrc  # or ~/.bashrc
-
-# Install Node.js v20
-nvm install 20
-
-# Use Node.js v20
-nvm use 20
-```
-
-### 2. Clone the repository
+## Local development
 
 ```bash
-git clone git@github.com:howar31/howar31-blog-vuepress.git
-cd howar31-blog-vuepress
+git clone git@github.com:howar31/howar31-blog.git
+cd howar31-blog
+
+# Dev server with live reload
+hugo server --buildFuture
+# → http://localhost:1313/
+
+# One-off production build (matches the GitHub Actions output)
+hugo --minify
+# → ./public/
 ```
 
-### 3. Install dependencies
+## Project layout
+
+```
+howar31-blog/
+├── config.toml                   # Hugo site config (baseURL, menus, params, markup)
+├── content/
+│   └── posts/
+│       ├── _index.md             # Overrides /posts/ heading → "Recent Posts"
+│       └── <slug>/index.md       # 53 posts; images sit in the same folder
+├── layouts/
+│   ├── index.html                # Home: 2-column (main + taxonomy sidebar)
+│   ├── _default/                 # baseof · single · list · terms
+│   ├── partials/                 # head · header · footer · post-meta · back-to-top
+│   └── shortcodes/               # tip · warning  (replace VuePress ::: containers)
+├── assets/
+│   ├── scss/main.scss            # All styles (dark-mode glow, navbar, code block, pills)
+│   └── js/theme.js               # Dark-mode toggle, back-to-top, Prism line-numbers opt-in
+├── archetypes/default.md         # Template used by `hugo new`
+├── static/                       # Copied verbatim: CNAME, manifest.json, logo/
+├── .github/workflows/hugo.yml    # Pages deployment
+├── README.md / CLAUDE.md / SPEC.md
+```
+
+## Writing a post
 
 ```bash
-npm install --legacy-peer-deps
+hugo new posts/my-new-post/index.md
 ```
 
-> **Note:** The `--legacy-peer-deps` flag is required due to peer dependency conflicts between VuePress v2 RC versions.
+Each post is a [page bundle](https://gohugo.io/content-management/page-bundles/)
+so images live next to the Markdown and can be referenced relatively.
 
-## 🏃 Development
+Frontmatter:
 
-Start the development server:
-
-```bash
-npm run blog:dev
+```yaml
+---
+title: "My new post"
+date: 2026-04-22
+description: "Short summary shown in list pages and <meta name=description>."
+categories:
+  - vuepress          # lowercase-dash; value = URL slug = displayed string
+tags:
+  - hugo
+  - migration
+---
 ```
 
-The site will be available at `http://localhost:8080` with hot module replacement.
+**Taxonomy naming**: always lowercase-dash (`vuepress`, `dev-notes`, `ci-cd`).
+The frontmatter value equals the URL slug and equals the text shown in sidebar /
+terms page / post meta — no transform anywhere in the templates. Keep it
+consistent when adding new terms.
 
-## 🏗️ Build
+### Tip / warning callouts
 
-Build the site for production:
+Shortcodes mirror the old VuePress `:::` containers:
 
-```bash
-npm run blog:build
-```
-
-The built files will be in the `public/` directory.
-
-## 📁 Project Structure
-
-```
-howar31-blog-vuepress/
-├── blog/                          # Blog content directory
-│   ├── .vuepress/
-│   │   ├── components/            # Custom Vue components
-│   │   │   ├── BlogIndex.vue      # Blog post list component (with batch loading)
-│   │   │   └── DynamicFooter.vue # Dynamic footer component
-│   │   ├── styles/                # Custom styles
-│   │   │   └── index.scss         # Custom theme styles matching main website
-│   │   ├── config.ts              # VuePress configuration
-│   │   └── client.js              # Client-side configuration
-│   ├── wordpress/                 # Archived WordPress posts
-│   └── *.md                       # Blog posts
-├── .github/
-│   └── workflows/
-│       └── deploy.yml             # GitHub Actions deployment workflow
-├── public/                        # Build output directory (generated)
-├── package.json                   # Project dependencies
-└── README.md                      # This file
-```
-
-## 🚢 Deployment
-
-This project uses GitHub Actions for automatic deployment to GitHub Pages.
-
-### Automatic Deployment
-
-1. Push changes to `master` or `main` branch
-2. GitHub Actions will automatically:
-   - Install dependencies (using `npm ci --legacy-peer-deps`)
-   - Build the site with optimized Vite configuration
-   - Deploy to GitHub Pages
-
-> **Note:** The deployment workflow uses `--legacy-peer-deps` flag to handle VuePress v2 RC peer dependency conflicts.
-
-**Deployment Triggers:**
-- Changes to `blog/` directory (content, configuration, styles, components)
-- Changes to `package.json` or `package-lock.json` (dependencies)
-- Changes to other files that affect the build
-
-**Excluded from Deployment:**
-- `README.md` - Documentation only
-- `.cursor/` - IDE configuration
-- `.github/` - GitHub configuration (including workflow files)
-- `LICENSE` - License file
-- `.gitignore` - Git ignore rules
-
-## 🔧 Configuration
-
-Main configuration file: `blog/.vuepress/config.ts`
-
-Key configurations:
-- **Theme**: Default theme with custom styles matching main website design
-- **Plugins**: Search, Google Analytics, PWA
-- **Build Output**: `public/` directory
-- **Vite Optimization**: Optimized chunk splitting to reduce HTTP requests
-- **Performance**: BlogIndex component with batch loading optimization
-
-## 📦 Dependencies
-
-### Core
-- `vuepress@^2.0.0-rc.26` - VuePress framework
-- `@vuepress/bundler-vite@^2.0.0-rc.26` - Vite bundler
-- `@vuepress/theme-default@^2.0.0-rc.26` - Default theme
-
-### Plugins
-- `@vuepress/plugin-search@^2.0.0-rc.26` - Search functionality
-- `@vuepress/plugin-google-analytics@^2.0.0-rc.26` - Google Analytics
-- `@vuepress/plugin-pwa@^2.0.0-rc.26` - Progressive Web App
-
-### Utilities
-- `moment@^2.29.1` - Date formatting
-- `sass-embedded@^1.93.3` - SCSS preprocessor
-
-## 🎨 Custom Components
-
-### BlogIndex
-
-Displays a list of blog posts with filtering and sorting capabilities. Optimized with batch loading for better performance.
-
-Usage in markdown:
 ```markdown
-<BlogIndex type="current" limit="5" />
+{{< tip "Optional title" >}}
+Body text with **Markdown** works.
+{{< /tip >}}
+
+{{< warning >}}
+Body text.
+{{< /warning >}}
 ```
 
-Props:
-- `type`: Filter type (`"current"` | `"wordpress"`)
-- `limit`: Maximum number of posts to display
+## Deployment
 
-### DynamicFooter
+Push to `master` → `.github/workflows/hugo.yml` runs `hugo --minify` and
+deploys to GitHub Pages. `static/CNAME` maps the site to `blog.howar31.com`.
 
-Displays footer with dynamically generated current year.
+After the first deploy, under repo **Settings → Pages**:
 
-Usage in markdown:
-```markdown
-<DynamicFooter />
-```
+- **Source**: GitHub Actions (not a branch)
+- **Custom domain**: `blog.howar31.com`
+- **Enforce HTTPS**: on
 
-## 🎨 Custom Styling
+## Support this blog
 
-The blog uses custom styles (`blog/.vuepress/styles/index.scss`) that match the main website design:
+Independent, no ads. If something here saved you time:
 
-- **Color Palette**: Blue gradient theme matching howar31.com
-- **Dark Mode**: Full dark mode support with proper mobile sidebar positioning
-- **Responsive Design**: Optimized for mobile and desktop devices
-- **Typography**: Consistent typography and spacing
+- ☕ [Ko-fi](https://ko-fi.com/howar31)
+- 💸 [PayPal](https://donate.howar31.com)
 
-## 📝 License
+## Links
 
-This project is open source and available under the MIT License.
-
-## 🔗 Links
-
-- **Blog**: [https://blog.howar31.com](https://blog.howar31.com)
-- **Author**: [https://howar31.com](https://howar31.com)
-- **GitHub**: [https://github.com/howar31](https://github.com/howar31)
-
-## 📚 Resources
-
-- [VuePress v2 Documentation](https://v2.vuepress.vuejs.org/)
-- [VuePress v2 Migration Guide](https://v2.vuepress.vuejs.org/guide/migration.html)
-- [GitHub Actions Documentation](https://docs.github.com/en/actions)
+- **Blog** — [blog.howar31.com](https://blog.howar31.com)
+- **Author** — [howar31.com](https://howar31.com)
+- **GitHub** — [github.com/howar31](https://github.com/howar31)

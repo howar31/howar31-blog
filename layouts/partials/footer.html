@@ -1,0 +1,55 @@
+{{- $sponsor := site.Params.sponsor | default dict -}}
+<footer class="vp-footer" role="contentinfo">
+  <div class="vp-footer-inner">
+    {{- with site.Menus.footer }}
+    <section class="vp-footer-col">
+      <h4 class="vp-footer-heading">About</h4>
+      <ul class="vp-footer-list">
+        {{- range . }}
+        <li>
+          <a href="{{ .URL }}"{{ if hasPrefix .URL "http" }} rel="noopener" target="_blank"{{ end }}>
+            {{- with .Pre -}}
+              {{- $icon := . -}}
+              {{- if eq $icon "github" -}}<i class="fab fa-github" aria-hidden="true"></i>
+              {{- else if eq $icon "globe" -}}<i class="fas fa-globe" aria-hidden="true"></i>
+              {{- else if eq $icon "code" -}}<i class="fas fa-code" aria-hidden="true"></i>
+              {{- end -}}
+            {{- end -}}
+            {{ .Name }}
+          </a>
+        </li>
+        {{- end }}
+      </ul>
+    </section>
+    {{- end }}
+
+    {{- if or $sponsor.kofi $sponsor.paypal }}
+    <section class="vp-footer-col vp-footer-sponsor">
+      <h4 class="vp-footer-heading">Support this blog</h4>
+      <p class="vp-footer-sponsor-desc">Independent blog, no ads. If a post here saved you time, consider buying me a coffee.</p>
+      <div class="vp-footer-sponsor-buttons">
+        {{- /* Ko-fi first: lower friction (guest checkout, donor messages). */ -}}
+        {{- with $sponsor.kofi }}
+        <a class="vp-sponsor-btn sponsor-kofi" href="https://ko-fi.com/{{ . }}" rel="noopener" target="_blank" aria-label="Buy me a coffee on Ko-fi">
+          <i class="fas fa-coffee" aria-hidden="true"></i>
+          <span>Ko-fi</span>
+        </a>
+        {{- end }}
+        {{- with $sponsor.paypal }}
+        <a class="vp-sponsor-btn sponsor-paypal" href="{{ . }}" rel="noopener" target="_blank" aria-label="Tip via PayPal">
+          <i class="fab fa-paypal" aria-hidden="true"></i>
+          <span>PayPal</span>
+        </a>
+        {{- end }}
+      </div>
+    </section>
+    {{- end }}
+  </div>
+
+  <div class="vp-footer-bottom">
+    <p>
+      <i class="fas fa-heart" style="color: var(--c-brand);" aria-hidden="true"></i>
+      &copy; {{ now.Year }} {{ site.Params.author }}. {{ site.Params.description }}
+    </p>
+  </div>
+</footer>

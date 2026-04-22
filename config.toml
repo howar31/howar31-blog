@@ -1,0 +1,116 @@
+baseURL = "https://blog.howar31.com/"
+languageCode = "zh-tw"
+title = "Howar31 Blog"
+enableRobotsTXT = true
+enableEmoji = true
+enableGitInfo = true
+
+# Universal Analytics ID kept from VuePress config; upgrade to GA4 separately.
+googleAnalytics = "UA-8779590-7"
+
+[params]
+  description = "Dev Notes and Idea Sharing with ❤"
+  author = "Howar31"
+  avatar = "/logo/Howar31_Avatar_2015_140px.png"
+  ogImage = "https://blog.howar31.com/logo/Howar31_Avatar_2015_background.png"
+  themeColor = "#000000"
+  fontAwesomeCDN = "https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+  fontAwesomeIntegrity = "sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+  googleFonts = "https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap"
+
+# Navbar — leaf items use `url`; parents with submenus use `children`.
+[[menu.main]]
+  name = "Home"
+  url = "/"
+  weight = 10
+
+[[menu.main]]
+  name = "All Posts"
+  url = "/posts/"
+  weight = 20
+
+# Top navbar is now minimal (logo + theme toggle only). About / social / source
+# links live in the footer; taxonomy browsing lives on the home page sidebar.
+
+# Footer "About" group — rendered as a column in the footer partial.
+[[menu.footer]]
+  name = "howar31.com"
+  url = "https://howar31.com"
+  weight = 10
+  pre = "globe"
+
+[[menu.footer]]
+  name = "GitHub"
+  url = "https://github.com/howar31"
+  weight = 20
+  pre = "github"
+
+[[menu.footer]]
+  name = "Source Code"
+  url = "https://github.com/howar31/howar31-blog"
+  weight = 30
+  pre = "code"
+
+# Sponsor / tip links. Only verified platforms — GitHub Sponsors is NOT
+# enabled on this account (`howar31`) so do not re-add it without first
+# applying + getting approved via github.com/sponsors.
+#
+# Ko-fi: user-facing `https://ko-fi.com/howar31`
+# PayPal: user-owned short URL → Cloudflare 302 → PayPal hosted button
+#         (hosted_button_id=MLVT3HDZKUZCW). Prefer this over paypal.me.
+[params.sponsor]
+  kofi = "howar31"
+  paypal = "https://donate.howar31.com"
+
+[[menu.main]]
+  parent = "about"
+  name = "howar31.com"
+  url = "https://howar31.com"
+  weight = 10
+
+[[menu.main]]
+  parent = "about"
+  name = "GitHub"
+  url = "https://github.com/howar31"
+  weight = 20
+
+[[menu.main]]
+  parent = "about"
+  name = "Source Code"
+  url = "https://github.com/howar31/howar31-blog"
+  weight = 30
+
+[markup]
+  [markup.highlight]
+    # Disable Hugo's Chroma highlighter. Fenced code blocks are rendered as plain
+    # `<pre><code class="language-xxx">` by Goldmark and highlighted client-side
+    # by Prism.js (see head.html / baseof.html). Prism's plugin ecosystem gives
+    # us language badges, copy button, line numbers, etc. with no custom code.
+    codeFences = false
+    noClasses = true
+  [markup.goldmark.renderer]
+    unsafe = true
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
+    ordered = false
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+
+[permalinks]
+  # Use parent folder name (e.g. discord-hide-blocked-messages) not title-derived slug.
+  posts = "/posts/:contentbasename/"
+
+[sitemap]
+  changefreq = "monthly"
+  priority = 0.5
+  filename = "sitemap.xml"
+
+[outputs]
+  home = ["HTML", "RSS"]
+  section = ["HTML", "RSS"]
+
+[pagination]
+  pagerSize = 20

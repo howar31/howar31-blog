@@ -1,0 +1,87 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>
+    {{- if .IsHome -}}
+      {{ site.Title }}
+    {{- else -}}
+      {{ .Title }} | {{ site.Title }}
+    {{- end -}}
+  </title>
+  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
+  <meta name="author" content="{{ site.Params.author }}">
+
+  {{- /* Inline theme boot: set data-theme before paint to avoid FOUC. */ -}}
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('howar31-theme');
+        var theme = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        if (theme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) { /* ignore */ }
+    })();
+  </script>
+
+  {{- $opts := dict "outputStyle" "compressed" "transpiler" "libsass" -}}
+  {{- $main := resources.Get "scss/main.scss" | toCSS $opts | resources.Fingerprint -}}
+  <link rel="stylesheet" href="{{ $main.RelPermalink }}" integrity="{{ $main.Data.Integrity }}">
+
+  <link rel="stylesheet" href="{{ site.Params.fontAwesomeCDN }}"
+        integrity="{{ site.Params.fontAwesomeIntegrity }}" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="{{ site.Params.googleFonts }}">
+
+  {{- /*
+    Prism CSS — fetched at build time via resources.GetRemote, concatenated,
+    minified and fingerprinted. Served from our own origin so the browser
+    does not talk to a CDN at runtime. Versions are pinned in the URLs.
+  */ -}}
+  {{- $prismVer := "1.29.0" -}}
+  {{- $prismThemesVer := "1.9.0" -}}
+  {{- $prismBase := printf "https://cdn.jsdelivr.net/npm/prismjs@%s" $prismVer -}}
+  {{- $prismCssUrls := slice
+    (printf "https://cdn.jsdelivr.net/npm/prism-themes@%s/themes/prism-dracula.min.css" $prismThemesVer)
+    (printf "%s/plugins/line-numbers/prism-line-numbers.min.css" $prismBase)
+    (printf "%s/plugins/toolbar/prism-toolbar.min.css" $prismBase)
+  -}}
+  {{- $prismCssParts := slice -}}
+  {{- range $prismCssUrls -}}
+    {{- with try (resources.GetRemote .) -}}
+      {{- with .Err -}}
+        {{- errorf "prism css fetch failed: %s" . -}}
+      {{- else with .Value -}}
+        {{- $prismCssParts = $prismCssParts | append . -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $prismCss := $prismCssParts | resources.Concat "css/prism.css" | minify | fingerprint -}}
+  <link rel="stylesheet" href="{{ $prismCss.RelPermalink }}" integrity="{{ $prismCss.Data.Integrity }}" crossorigin="anonymous">
+
+  <link rel="manifest" href="{{ "manifest.json" | relURL }}">
+  <link rel="icon" href="{{ site.Params.avatar | relURL }}">
+  <link rel="apple-touch-icon" href="{{ site.Params.avatar | relURL }}">
+
+  <meta name="theme-color" content="{{ site.Params.themeColor }}">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="msapplication-TileImage" content="{{ site.Params.avatar | relURL }}">
+  <meta name="msapplication-TileColor" content="{{ site.Params.themeColor }}">
+
+  <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+  <meta property="og:title" content="{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }}{{ end }}">
+  <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
+  <meta property="og:url" content="{{ .Permalink }}">
+  <meta property="og:image" content="{{ site.Params.ogImage }}">
+
+  {{- with .OutputFormats.Get "rss" -}}
+  <link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ site.Title }}">
+  {{- end }}
+
+  {{- if hugo.IsProduction -}}
+    {{- template "_internal/google_analytics.html" . -}}
+  {{- end -}}
+</head>
