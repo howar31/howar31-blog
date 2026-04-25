@@ -14,6 +14,13 @@ $breakpoint-mobile: 719px;
 
 html {
   scroll-behavior: smooth;
+  // Sibling clamp to body's overflow-x: clip — Chrome/Safari can fail to
+  // propagate overflow-x from body to the viewport when the other axis
+  // stays visible, leaving the document horizontally scrollable. Setting
+  // it on the root element bypasses propagation entirely. `clip` (not
+  // `hidden`) avoids creating a scroll container so sticky positioning
+  // on the navbar still works.
+  overflow-x: clip;
 }
 
 body {
