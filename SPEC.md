@@ -230,6 +230,10 @@ caption per image.
     `figure-glow-drift` keyframe — a 14s gentle translate + scale loop
     that mirrors the body's `float-glow-1/2` vibe). Hover lifts the
     pseudo-element to `opacity: 1` and brightens the border
+  - **Overflow clamp** — `body { overflow-x: clip }` (not `hidden`)
+    prevents the `::before` `-30%` bleed from creating a horizontal
+    scroll on mobile while preserving the sticky navbar (`clip` doesn't
+    establish a scroll container)
   - **Hover tilt** — JS adds `.is-tilting` class on `mouseenter`, which
     swaps in a short `transform 0.2s ease-out` transition. JS sets
     `transform: perspective(800px) rotateX/Y(±6°) scale(1.02)` from

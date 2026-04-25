@@ -26,6 +26,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  // Prevent .post-figure::before glow bleed (`inset: -30%`) from creating
+  // a horizontal scroll on narrow viewports. `clip` (not `hidden`) avoids
+  // establishing a scroll container so the sticky navbar still works.
+  overflow-x: clip;
 }
 
 .vp-theme-container {
