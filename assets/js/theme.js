@@ -80,4 +80,88 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
+
+  // ---- Image modal (lightbox) ------------------------------------------
+  // Click any image inside .post-content to view it enlarged.
+  // Close on backdrop click, X button, or Escape. Linked images are skipped.
+  var postContent = document.querySelector('.post-content');
+  if (postContent) {
+    var modal = document.createElement('div');
+    modal.className = 'vp-image-modal';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-hidden', 'true');
+    modal.setAttribute('aria-label', '放大圖片');
+    modal.innerHTML =
+      '<div class="vp-image-modal-backdrop"></div>' +
+      '<img class="vp-image-modal-img" alt="">' +
+      '<button class="vp-image-modal-close" type="button" aria-label="關閉">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+          '<line x1="6" y1="6" x2="18" y2="18"></line>' +
+          '<line x1="18" y1="6" x2="6" y2="18"></line>' +
+        '</svg>' +
+      '</button>';
+    document.body.appendChild(modal);
+
+    var modalImg = modal.querySelector('.vp-image-modal-img');
+    var modalBackdrop = modal.querySelector('.vp-image-modal-backdrop');
+    var modalClose = modal.querySelector('.vp-image-modal-close');
+    var lastTrigger = null;
+    var clearSrcTimer = null;
+
+    function openModal(img) {
+      lastTrigger = img;
+      modalImg.setAttribute('src', img.currentSrc || img.src);
+      var srcset = img.getAttribute('srcset');
+      if (srcset) modalImg.setAttribute('srcset', srcset);
+      else modalImg.removeAttribute('srcset');
+      var sizes = img.getAttribute('sizes');
+      if (sizes) modalImg.setAttribute('sizes', sizes);
+      else modalImg.removeAttribute('sizes');
+      modalImg.setAttribute('alt', img.getAttribute('alt') || '');
+
+      if (clearSrcTimer) { clearTimeout(clearSrcTimer); clearSrcTimer = null; }
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      root.classList.add('modal-open');
+      // Defer focus until after the open transition starts so the cue is visible.
+      window.requestAnimationFrame(function () { modalClose.focus(); });
+    }
+
+    function closeModal() {
+      if (!modal.classList.contains('is-open')) return;
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      root.classList.remove('modal-open');
+      // Release the (potentially large) image after the fade-out completes.
+      clearSrcTimer = setTimeout(function () {
+        modalImg.removeAttribute('src');
+        modalImg.removeAttribute('srcset');
+        modalImg.removeAttribute('sizes');
+      }, 200);
+      if (lastTrigger && typeof lastTrigger.focus === 'function') {
+        try { lastTrigger.focus({ preventScroll: true }); } catch (_) { lastTrigger.focus(); }
+      }
+      lastTrigger = null;
+    }
+
+    postContent.addEventListener('click', function (e) {
+      var target = e.target;
+      if (!target || target.tagName !== 'IMG') return;
+      if (target.closest('a')) return;
+      e.preventDefault();
+      openModal(target);
+    });
+
+    // Close on backdrop click, but NOT on clicks on the image itself.
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal || e.target === modalBackdrop) closeModal();
+    });
+
+    modalClose.addEventListener('click', closeModal);
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+    });
+  }
 })();

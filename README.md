@@ -57,7 +57,7 @@ howar31-blog/
 │   └── shortcodes/               # tip · warning  (replace VuePress ::: containers)
 ├── assets/
 │   ├── scss/main.scss            # All styles (dark-mode glow, navbar, code block, pills)
-│   └── js/theme.js               # Dark-mode toggle, back-to-top, Prism line-numbers opt-in
+│   └── js/theme.js               # Dark-mode toggle, back-to-top, Prism line-numbers, image lightbox
 ├── archetypes/default.md         # Template used by `hugo new`
 ├── static/                       # Copied verbatim: CNAME, manifest.json, logo/
 ├── .github/workflows/hugo.yml    # Pages deployment
@@ -92,6 +92,13 @@ tags:
 The frontmatter value equals the URL slug and equals the text shown in sidebar /
 terms page / post meta — no transform anywhere in the templates. Keep it
 consistent when adding new terms.
+
+### Images
+
+Drop images into the post folder and reference them relatively
+(`![alt](./images/foo.png)`). Readers can click any in-body image to view
+it enlarged in a modal — close with the X button, the dark backdrop, or
+`Esc`. No shortcode needed.
 
 ### Tip / warning callouts
 

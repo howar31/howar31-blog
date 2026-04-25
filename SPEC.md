@@ -186,6 +186,13 @@ amber for warning, with dark-mode variants. Inner content is rendered via
   matches the previous VuePress look).
 - `.term-list > li > a` produces pill-style tag chips, with a
   `.sidebar-terms` variant that is smaller.
+- `.vp-image-modal` lightbox lives at the end of the file. Backdrop is
+  `rgba(0, 0, 0, 0.85)` in both light and dark mode (standard lightbox
+  UX, intentionally not bound to `--c-*`). z-index 200 (backdrop) / 201
+  (close button) sits above navbar (50) and back-to-top (100). Open
+  state toggled via `.is-open` with opacity + visibility transition.
+  `html.modal-open { overflow: hidden }` locks page scroll. `<= 640px`
+  media query trims close-button margins and caps image height to 85vh.
 
 ### SCSS pitfall (document so future edits don't regress)
 
@@ -228,6 +235,19 @@ Single IIFE, `defer`-loaded. Responsibilities in order:
 3. **Back-to-top progress ring** — Scroll listener (rAF throttled) updates
    `stroke-dashoffset` on `.back-to-top-bar` based on
    `scrollTop / (scrollHeight - innerHeight)`. Button fades in after 200px.
+4. **Post-image lightbox** — On post pages, builds a single
+   `.vp-image-modal` element once and appends it to `<body>`. Delegated
+   click handler on `.post-content` opens the modal for any `<img>` not
+   wrapped in `<a>` (linked images keep their navigation behaviour). The
+   modal copies `src`/`srcset`/`sizes`/`alt` so responsive images still
+   pick the correct source at the larger render size. Three close paths:
+   click on backdrop (clicks on the `<img>` itself do **not** close),
+   click on the X button (44×44 touch target, top-right), `Escape` key.
+   Body scroll is locked via `html.modal-open` while open. `aria-modal`,
+   `aria-hidden`, `aria-label` toggled for assistive tech; focus moves to
+   the close button on open and back to the originating image on close.
+   The lightbox is intentionally one-shot — no prev/next navigation, no
+   pinch/pan logic beyond the browser's native gestures.
 
 Prism logic (highlighting, toolbar, copy-to-clipboard) lives entirely in
 the Prism bundle, not in `theme.js`.

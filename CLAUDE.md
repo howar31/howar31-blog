@@ -63,7 +63,7 @@ hugo new posts/<slug>/index.md
 | `content/posts/<slug>/index.md` | Blog post (+ per-post image folder) |
 | `layouts/` | Hugo templates (see SPEC.md for partials breakdown) |
 | `assets/scss/main.scss` | All site styles (SCSS via Hugo Pipes → libsass) |
-| `assets/js/theme.js` | Dark-mode toggle, back-to-top, Prism `line-numbers` opt-in |
+| `assets/js/theme.js` | Dark-mode toggle, back-to-top, Prism `line-numbers` opt-in, post-image lightbox |
 | `static/` | Static files copied verbatim to `public/` (manifest, CNAME, logo) |
 | `config.toml` | Site config: `baseURL`, `[params]`, menus, taxonomies, markup |
 | `.github/workflows/hugo.yml` | GitHub Pages deployment workflow |
