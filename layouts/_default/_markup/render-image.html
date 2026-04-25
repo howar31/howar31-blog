@@ -1,0 +1,29 @@
+{{- /*
+  Render-image hook: wrap markdown images in <figure> with a <figcaption>
+  derived from the alt text — but only when the alt text is descriptive.
+
+  Skip the figcaption (plain <img>) when:
+    - alt is empty
+    - alt looks like a filename (ends in .png/.jpg/.jpeg/.gif/.webp)
+
+  Pair this with `markup.goldmark.parser.wrapStandAloneImageWithinParagraph = false`
+  so the <figure> is not wrapped in <p> (which would be invalid HTML).
+*/ -}}
+{{- $alt := .PlainText -}}
+{{- $src := .Destination | safeURL -}}
+{{- $title := .Title -}}
+{{- $isFilename := false -}}
+{{- with $alt -}}
+  {{- $lc := lower . -}}
+  {{- range slice ".png" ".jpg" ".jpeg" ".gif" ".webp" ".svg" -}}
+    {{- if hasSuffix $lc . -}}{{- $isFilename = true -}}{{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if and $alt (not $isFilename) -}}
+<figure class="post-figure">
+  <img src="{{ $src }}" alt="{{ $alt }}"{{ with $title }} title="{{ . }}"{{ end }} loading="lazy">
+  <figcaption>{{ $alt }}</figcaption>
+</figure>
+{{- else -}}
+<img src="{{ $src }}"{{ with $alt }} alt="{{ . }}"{{ end }}{{ with $title }} title="{{ . }}"{{ end }} loading="lazy">
+{{- end -}}

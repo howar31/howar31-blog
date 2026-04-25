@@ -28,6 +28,10 @@ hugo new posts/<slug>/index.md
 
 - **Page bundles**: every post is `content/posts/<slug>/index.md` with images
   in the same folder (`./images/...` works out of the box).
+- **Image captions**: `![descriptive alt](./images/foo.png)` becomes a
+  `<figure>` card with the alt text as `<figcaption>`. If the alt looks
+  like a filename (`*.png` / `*.jpg` / etc.) or is empty, the render hook
+  emits a plain `<img>` instead — see SPEC.md → render-image hook.
 - **Taxonomy naming** (both categories and tags): `lowercase-dash`. The
   frontmatter value *equals* the URL slug *equals* the displayed string —
   no humanize transform anywhere. Keep new tags in this form:
@@ -62,8 +66,9 @@ hugo new posts/<slug>/index.md
 |---|---|
 | `content/posts/<slug>/index.md` | Blog post (+ per-post image folder) |
 | `layouts/` | Hugo templates (see SPEC.md for partials breakdown) |
+| `layouts/_default/_markup/render-image.html` | Goldmark hook: wraps captioned images in `<figure>` cards |
 | `assets/scss/main.scss` | All site styles (SCSS via Hugo Pipes → libsass) |
-| `assets/js/theme.js` | Dark-mode toggle, back-to-top, Prism `line-numbers` opt-in, post-image lightbox |
+| `assets/js/theme.js` | Dark-mode toggle, back-to-top, Prism `line-numbers`, image lightbox, figure tilt |
 | `static/` | Static files copied verbatim to `public/` (manifest, CNAME, logo) |
 | `config.toml` | Site config: `baseURL`, `[params]`, menus, taxonomies, markup |
 | `.github/workflows/hugo.yml` | GitHub Pages deployment workflow |

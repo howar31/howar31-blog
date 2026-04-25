@@ -39,7 +39,9 @@ howar31-blog/
 │   │   ├── baseof.html                  # HTML skeleton + Prism JS bundle
 │   │   ├── single.html                  # Post page
 │   │   ├── list.html                    # /posts/, /categories/<x>/, /tags/<x>/
-│   │   └── terms.html                   # /categories/, /tags/ (taxonomy index)
+│   │   ├── terms.html                   # /categories/, /tags/ (taxonomy index)
+│   │   └── _markup/
+│   │       └── render-image.html        # Goldmark hook: image → figure card
 │   ├── partials/
 │   │   ├── head.html                    # <head>: theme boot, SCSS pipe, Prism CSS bundle, meta
 │   │   ├── header.html                  # .vp-navbar — site name + theme toggle (minimal)
@@ -71,6 +73,9 @@ howar31-blog/
 - `[markup.highlight] codeFences = false` → Goldmark emits clean
   `<pre><code class="language-xxx">`, Prism takes over client-side
 - `[markup.goldmark.renderer] unsafe = true` → allow raw HTML in Markdown
+- `[markup.goldmark.parser] wrapStandAloneImageWithinParagraph = false`
+  → required for the render-image hook (see "Render hooks" below) so a
+  standalone `![]()` becomes `<figure>` not `<p><figure>…</figure></p>`
 - `[taxonomies] category = "categories"`, `tag = "tags"`
 - `[permalinks] posts = "/posts/:contentbasename/"` → URL uses parent folder
   name (slug) not title-derived
@@ -170,6 +175,30 @@ Styled in `main.scss` under `.hint-container` — blue-border pill for tip,
 amber for warning, with dark-mode variants. Inner content is rendered via
 `{{ .Inner | markdownify }}`.
 
+## Render hooks
+
+### `layouts/_default/_markup/render-image.html`
+
+Goldmark fires this hook for every Markdown `![alt](src)`. The hook
+classifies the alt and chooses one of two outputs:
+
+- **Descriptive alt** → `<figure class="post-figure"><img …
+  loading="lazy"><figcaption>{alt}</figcaption></figure>`. The alt text
+  IS the caption — single source of truth, no need to repeat it as a
+  paragraph below the image
+- **Filename-style alt** (suffixes `.png/.jpg/.jpeg/.gif/.webp/.svg`,
+  case-insensitive) **or empty alt** → plain `<img …
+  loading="lazy">` without a figure wrapper
+
+Pairs with `markup.goldmark.parser.wrapStandAloneImageWithinParagraph =
+false` in `config.toml`; otherwise Goldmark would wrap the figure in
+`<p>`, producing invalid HTML (`<figure>` is block-level).
+
+The `ducky-shine-5` post originally had each image followed by a plain
+text line repeating the alt; those 44 duplicate lines were stripped at
+hook-introduction time so the rendered output now shows just one
+caption per image.
+
 ## SCSS (`assets/scss/main.scss`)
 
 - Heavy reuse of CSS custom properties (`--c-bg`, `--c-text`, `--c-brand`,
@@ -186,13 +215,46 @@ amber for warning, with dark-mode variants. Inner content is rendered via
   matches the previous VuePress look).
 - `.term-list > li > a` produces pill-style tag chips, with a
   `.sidebar-terms` variant that is smaller.
+- `.post-figure` (the captioned image card produced by the render hook):
+  - **Light mode** — opaque `var(--c-bg-soft)` card, `padding: 0.5em`,
+    `border-radius: 10px`, directional drop shadow; image inside has
+    its own `border-radius: 4px`. Hover bumps the shadow and adds a
+    faint violet halo (`rgba(167, 139, 250, 0.12)`)
+  - **Dark mode** — frosted-glass frame: `backdrop-filter: blur(20px)`
+    + `rgba(255, 255, 255, 0.04)` background + 1px white-tint border.
+    The blur picks up the page's animated `body::before/::after` violet
+    gradients passing behind. A `.post-figure::before` pseudo-element
+    layers an additional local violet ambient glow (`rgba(139, 92, 246,
+    0.18)` radial at `opacity: 0.55`, animated via the
+    `figure-glow-drift` keyframe — a 14s gentle translate + scale loop
+    that mirrors the body's `float-glow-1/2` vibe). Hover lifts the
+    pseudo-element to `opacity: 1` and brightens the border
+  - **Hover tilt** — JS adds `.is-tilting` class on `mouseenter`, which
+    swaps in a short `transform 0.2s ease-out` transition. JS sets
+    `transform: perspective(800px) rotateX/Y(±6°) scale(1.02)` from
+    cursor position via rAF. `mouseleave` removes the class so the
+    default `0.4s cubic-bezier` transition eases back. Gated client-side
+    by `(hover: hover) and (pointer: fine)` and
+    `prefers-reduced-motion`. SCSS-side `@media
+    (prefers-reduced-motion: reduce)` belt-and-braces disables both the
+    transition and the `figure-glow-drift` animation
 - `.vp-image-modal` lightbox lives at the end of the file. Backdrop is
   `rgba(0, 0, 0, 0.85)` in both light and dark mode (standard lightbox
   UX, intentionally not bound to `--c-*`). z-index 200 (backdrop) / 201
   (close button) sits above navbar (50) and back-to-top (100). Open
   state toggled via `.is-open` with opacity + visibility transition.
-  `html.modal-open { overflow: hidden }` locks page scroll. `<= 640px`
-  media query trims close-button margins and caps image height to 85vh.
+  `html.modal-open { overflow: hidden }` locks page scroll
+- `.vp-image-modal-card` wraps the image and caption inside the modal,
+  mirroring the in-page `.post-figure` look at a larger size. Always
+  uses the navbar's frosted-glass treatment regardless of theme
+  (`backdrop-filter: blur(24px)` + `rgba(255, 255, 255, 0.08)` over the
+  dark backdrop) plus a violet ambient `0 0 64px` box-shadow for
+  brand-coloured ambient. `.vp-image-modal-caption` is hidden by default
+  and only shown when `.vp-image-modal-card` has `.has-caption` (added
+  by JS when the source figure had a `figcaption`). Caption colour is
+  fixed `rgba(255, 255, 255, 0.92)` rather than `var(--c-text)` because
+  the modal always sits on a dark backdrop. `<= 640px` media query
+  trims close-button margins and caps image height to 73vh
 
 ### SCSS pitfall (document so future edits don't regress)
 
@@ -236,18 +298,33 @@ Single IIFE, `defer`-loaded. Responsibilities in order:
    `stroke-dashoffset` on `.back-to-top-bar` based on
    `scrollTop / (scrollHeight - innerHeight)`. Button fades in after 200px.
 4. **Post-image lightbox** — On post pages, builds a single
-   `.vp-image-modal` element once and appends it to `<body>`. Delegated
+   `.vp-image-modal` (containing a `.vp-image-modal-card` figure with
+   `<img>` + `<figcaption>`) once and appends it to `<body>`. Delegated
    click handler on `.post-content` opens the modal for any `<img>` not
    wrapped in `<a>` (linked images keep their navigation behaviour). The
    modal copies `src`/`srcset`/`sizes`/`alt` so responsive images still
-   pick the correct source at the larger render size. Three close paths:
-   click on backdrop (clicks on the `<img>` itself do **not** close),
-   click on the X button (44×44 touch target, top-right), `Escape` key.
-   Body scroll is locked via `html.modal-open` while open. `aria-modal`,
-   `aria-hidden`, `aria-label` toggled for assistive tech; focus moves to
-   the close button on open and back to the originating image on close.
-   The lightbox is intentionally one-shot — no prev/next navigation, no
-   pinch/pan logic beyond the browser's native gestures.
+   pick the correct source at the larger render size. If the source
+   `<img>` is inside a `figure.post-figure` with a `<figcaption>`, the
+   text is mirrored into `.vp-image-modal-caption` and `.has-caption`
+   added to the card (CSS shows the caption strip); otherwise the
+   caption stays hidden. Three close paths: click on backdrop (clicks on
+   the card itself do **not** close), click on the X button (44×44
+   touch target, top-right), `Escape` key. Body scroll is locked via
+   `html.modal-open` while open. `aria-modal`, `aria-hidden`,
+   `aria-label` toggled for assistive tech; focus moves to the close
+   button on open and back to the originating image on close. The
+   lightbox is intentionally one-shot — no prev/next navigation, no
+   pinch/pan logic beyond the browser's native gestures
+5. **Figure card 3D tilt** — On post pages, attaches `mouseenter` /
+   `mousemove` / `mouseleave` listeners to every `figure.post-figure`.
+   Mousemove computes a `(x, y)` offset from the card centre and writes
+   `transform: perspective(800px) rotateX/Y(±6°) scale(1.02)` on a
+   single rAF per frame; the `.is-tilting` class swaps the SCSS
+   transition to a short ease-out for instant cursor follow.
+   Mouseleave drops the class, clears the inline transform, and the
+   default `0.4s cubic-bezier` transition eases the card back to rest.
+   Skipped entirely when `(hover: hover) and (pointer: fine)` is false
+   (touch devices) or `prefers-reduced-motion: reduce` is set
 
 Prism logic (highlighting, toolbar, copy-to-clipboard) lives entirely in
 the Prism bundle, not in `theme.js`.

@@ -94,7 +94,10 @@
     modal.setAttribute('aria-label', '放大圖片');
     modal.innerHTML =
       '<div class="vp-image-modal-backdrop"></div>' +
-      '<img class="vp-image-modal-img" alt="">' +
+      '<figure class="vp-image-modal-card">' +
+        '<img class="vp-image-modal-img" alt="">' +
+        '<figcaption class="vp-image-modal-caption"></figcaption>' +
+      '</figure>' +
       '<button class="vp-image-modal-close" type="button" aria-label="關閉">' +
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
           '<line x1="6" y1="6" x2="18" y2="18"></line>' +
@@ -103,7 +106,9 @@
       '</button>';
     document.body.appendChild(modal);
 
+    var modalCard = modal.querySelector('.vp-image-modal-card');
     var modalImg = modal.querySelector('.vp-image-modal-img');
+    var modalCaption = modal.querySelector('.vp-image-modal-caption');
     var modalBackdrop = modal.querySelector('.vp-image-modal-backdrop');
     var modalClose = modal.querySelector('.vp-image-modal-close');
     var lastTrigger = null;
@@ -119,6 +124,18 @@
       if (sizes) modalImg.setAttribute('sizes', sizes);
       else modalImg.removeAttribute('sizes');
       modalImg.setAttribute('alt', img.getAttribute('alt') || '');
+
+      // Mirror the source figure's caption inside the modal card.
+      var srcFigure = img.closest('figure.post-figure');
+      var srcCaption = srcFigure ? srcFigure.querySelector('figcaption') : null;
+      var captionText = srcCaption ? (srcCaption.textContent || '').trim() : '';
+      if (captionText) {
+        modalCaption.textContent = captionText;
+        modalCard.classList.add('has-caption');
+      } else {
+        modalCaption.textContent = '';
+        modalCard.classList.remove('has-caption');
+      }
 
       if (clearSrcTimer) { clearTimeout(clearSrcTimer); clearSrcTimer = null; }
       modal.classList.add('is-open');
@@ -163,5 +180,45 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
     });
+
+    // ---- Figure card 3D tilt (hover-only, reduced-motion aware) --------
+    // Mouse-tracked perspective tilt on captioned figures. SCSS already
+    // exposes the .is-tilting hook (drops the transform transition while
+    // following the cursor); we just toggle and write inline transforms.
+    var hasFineHover = window.matchMedia &&
+                       window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    var prefersReducedMotion = window.matchMedia &&
+                               window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (hasFineHover && !prefersReducedMotion) {
+      postContent.querySelectorAll('figure.post-figure').forEach(function (fig) {
+        var rafId = null;
+        var px = 0, py = 0;
+
+        fig.addEventListener('mouseenter', function () {
+          fig.classList.add('is-tilting');
+        });
+
+        fig.addEventListener('mousemove', function (e) {
+          var rect = fig.getBoundingClientRect();
+          px = (e.clientX - rect.left) / rect.width - 0.5;
+          py = (e.clientY - rect.top) / rect.height - 0.5;
+          if (rafId) return;
+          rafId = window.requestAnimationFrame(function () {
+            var max = 6; // degrees
+            var rx = (-py * max).toFixed(2);
+            var ry = (px * max).toFixed(2);
+            fig.style.transform =
+              'perspective(800px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) scale(1.02)';
+            rafId = null;
+          });
+        });
+
+        fig.addEventListener('mouseleave', function () {
+          if (rafId) { window.cancelAnimationFrame(rafId); rafId = null; }
+          fig.classList.remove('is-tilting');
+          fig.style.transform = '';
+        });
+      });
+    }
   }
 })();
