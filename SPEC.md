@@ -56,7 +56,8 @@ howar31-blog/
 │   └── js/theme.js                      # All runtime JS (no Prism logic here)
 ├── static/                              # Passed through untouched
 │   ├── CNAME                            # blog.howar31.com
-│   ├── manifest.json                    # PWA manifest (no SW yet)
+│   ├── manifest.json                    # PWA manifest
+│   ├── service-worker.js                # Cleanup shim: unregisters old VuePress SW + clears caches
 │   └── logo/…                           # Site icons (avatar, apple-touch, etc.)
 └── .github/workflows/hugo.yml           # CI: install Hugo → build --minify → deploy Pages
 ```
@@ -354,17 +355,20 @@ generated automatically by Hugo `fingerprint`.
 
 ## PWA status
 
-Shell-only:
+Shell-only (no offline support):
 
 - ✅ `manifest.json` in `static/`
 - ✅ `<link rel="manifest">` injected in `head.html`
 - ✅ `theme-color`, `apple-touch-icon`, `msapplication-TileImage` set
 - ✅ HTTPS (via GitHub Pages + Cloudflare / custom domain)
-- ❌ **No service worker** → no offline cache, no background sync
-
-Adding offline support is out of scope for the migration. When revisited,
-drop a static `service-worker.js` in `static/` and register it from
-`theme.js`.
+- ✅ `static/service-worker.js` — **cleanup shim only**. The old VuePress
+  site used `@vuepress/plugin-pwa` which registered a service worker at
+  `/service-worker.js`. This file replaces that SW: on install it calls
+  `skipWaiting()`, on activate it calls `self.registration.unregister()`
+  and deletes all caches. No page registers it — only browsers that still
+  have the old VuePress SW will fetch the update. Safe to leave
+  indefinitely; has zero runtime cost for new visitors
+- ❌ No active service worker → no offline cache, no background sync
 
 ## Deployment
 

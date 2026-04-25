@@ -69,13 +69,15 @@ hugo new posts/<slug>/index.md
 | `layouts/_default/_markup/render-image.html` | Goldmark hook: wraps captioned images in `<figure>` cards |
 | `assets/scss/main.scss` | All site styles (SCSS via Hugo Pipes → libsass) |
 | `assets/js/theme.js` | Dark-mode toggle, back-to-top, Prism `line-numbers`, image lightbox, figure tilt |
-| `static/` | Static files copied verbatim to `public/` (manifest, CNAME, logo) |
+| `static/` | Static files copied verbatim to `public/` (manifest, CNAME, logo, SW cleanup shim) |
 | `config.toml` | Site config: `baseURL`, `[params]`, menus, taxonomies, markup |
 | `.github/workflows/hugo.yml` | GitHub Pages deployment workflow |
 
 ## Known open items
 
-- No service worker yet — PWA is shell-only (manifest + icons), not offline-first.
+- `static/service-worker.js` is a cleanup shim that unregisters the old
+  VuePress PWA service worker and clears its caches. It is not loaded by
+  any page — only pre-existing SW clients fetch it. Safe to leave forever.
 - Code-block line numbers are not sticky during horizontal scroll.
 - Google Analytics disabled in `config.toml` (Universal Analytics
   `UA-8779590-7` retired 2023-07). Re-enable by setting `googleAnalytics`

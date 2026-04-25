@@ -61,7 +61,7 @@ howar31-blog/
 │   ├── scss/main.scss            # All styles (dark-mode glow, navbar, figure cards, lightbox)
 │   └── js/theme.js               # Dark-mode toggle, back-to-top, Prism line-numbers, lightbox, figure tilt
 ├── archetypes/default.md         # Template used by `hugo new`
-├── static/                       # Copied verbatim: CNAME, manifest.json, logo/
+├── static/                       # Copied verbatim: CNAME, manifest.json, logo/, SW cleanup shim
 ├── .github/workflows/hugo.yml    # Pages deployment
 ├── README.md / CLAUDE.md / SPEC.md
 ```
