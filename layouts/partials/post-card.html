@@ -1,0 +1,31 @@
+{{- $img := "" -}}
+{{- with .Params.image }}{{ $img = ($.Resources.GetMatch .) }}{{ end -}}
+{{- if not $img }}{{ with (.Resources.ByType "image") }}{{ $img = index . 0 }}{{ end }}{{ end -}}
+<article class="post-card{{ if $img }} has-thumb{{ end }}">
+  <div class="post-card-body">
+    <h3 class="post-card-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+    <div class="post-card-meta">
+      <span><i class="far fa-calendar-alt" aria-hidden="true"></i>
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006年01月02日" }}</time></span>
+      <span><i class="far fa-clock" aria-hidden="true"></i> {{ .ReadingTime }} 分鐘閱讀</span>
+      {{- with .Params.categories }}
+      <span><i class="fas fa-cat" aria-hidden="true"></i>
+        {{- range $i, $c := . }}{{ if $i }}、{{ end }}<a href="{{ printf "/categories/%s/" ($c | urlize) | relURL }}">{{ $c }}</a>{{ end -}}
+      </span>
+      {{- end }}
+    </div>
+    {{- with .Description }}<p class="post-card-summary">{{ . }}</p>{{ end }}
+    {{- with .Params.tags }}
+    <div class="post-card-tags">
+      {{- range . }}
+      <a class="vp-pill" href="{{ printf "/tags/%s/" (. | urlize) | relURL }}">
+        <i class="fas fa-hashtag" aria-hidden="true"></i>{{ . }}</a>
+      {{- end }}
+    </div>
+    {{- end }}
+  </div>
+  {{- with $img }}
+  <a class="post-card-thumb" href="{{ $.RelPermalink }}" aria-hidden="true" tabindex="-1"
+     style="background-image:url('{{ .RelPermalink }}')"></a>
+  {{- end }}
+</article>

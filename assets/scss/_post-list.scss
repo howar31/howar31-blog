@@ -1,56 +1,145 @@
-// Post list (home + /posts/ + taxonomy pages)
+// Post list container (home, /posts/, taxonomy pages)
 .post-list {
   list-style: none;
   padding: 0;
   margin: 0;
+}
 
-  .post-list-item {
-    margin-bottom: 2.5rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--c-border);
+// Post card row
+.post-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--c-border);
 
-    &:last-child {
-      border-bottom: none;
+  &.has-thumb {
+    grid-template-columns: 1fr 200px;
+  }
+
+  // last-of-type (not last-child) stays correct whether or not the card
+  // is wrapped in another element by the consuming template.
+  &:last-of-type {
+    border-bottom: none;
+  }
+}
+
+.post-card-body {
+  min-width: 0; // prevent long titles / code from blowing out the grid track
+}
+
+.post-card-title {
+  margin: 0;
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+
+  a {
+    color: var(--c-text);
+    transition: color .2s ease;
+  }
+}
+
+.post-card:hover .post-card-title a {
+  color: var(--violet-400);
+}
+
+.post-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.125rem;
+  margin-top: 0.5rem;
+  font-size: 0.8125rem;
+  color: var(--c-text-lighter);
+
+  i {
+    opacity: 0.7;
+  }
+
+  a {
+    color: inherit;
+
+    &:hover {
+      color: var(--c-brand);
     }
+  }
+}
 
-    h2, h3 {
-      margin: 0 0 0.5rem;
-      font-size: 1.4rem;
-      padding-bottom: 0;
-      border-bottom: none;
+.post-card-summary {
+  margin-top: 0.75rem;
+  color: var(--c-text-light);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+}
 
-      a {
-        color: var(--c-text);
-        transition: color 0.2s ease;
+.post-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+}
 
-        &:hover {
-          color: var(--c-brand);
-        }
-      }
-    }
+// Pill chip (shared; also used elsewhere)
+.vp-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.6875rem;
+  padding: 0.18rem 0.6rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--c-border);
+  background: var(--c-bg-soft);
+  color: var(--c-text-light);
+  text-decoration: none;
+  transition: border-color .2s ease, color .2s ease;
 
-    .post-meta {
-      color: var(--c-text-lighter);
-      font-size: 0.875rem;
-      margin: 0.25rem 0 0.75rem;
+  &:hover {
+    border-color: var(--c-brand);
+    color: var(--c-text);
+  }
 
-      > span,
-      > time {
-        margin-right: 0.75rem;
-      }
+  i {
+    font-size: 0.6em;
+    opacity: 0.6;
+  }
+}
 
-      a {
-        color: var(--c-text-lighter);
+// Thumbnail (right column on desktop)
+.post-card-thumb {
+  display: block;
+  height: 130px;
+  border-radius: var(--radius-lg);
+  background-size: cover;
+  background-position: center;
+  border: 1px solid var(--c-border);
+  box-shadow: var(--shadow-card);
+  transition: transform .4s cubic-bezier(0.2,0.8,0.2,1), box-shadow .4s cubic-bezier(0.2,0.8,0.2,1);
+}
 
-        &:hover {
-          color: var(--c-brand);
-        }
-      }
-    }
+.post-card:hover .post-card-thumb {
+  transform: translateY(-2px) rotate(-0.5deg);
+  box-shadow: 0 16px 32px rgba(0,0,0,0.5), var(--shadow-violet-glow);
+}
 
-    p {
-      color: var(--c-text-light);
-      margin: 0.5rem 0 0;
-    }
+// Mobile: collapse thumb above text
+@media (max-width: $breakpoint-mobile) {
+  .post-card.has-thumb {
+    grid-template-columns: 1fr;
+  }
+
+  .post-card-thumb {
+    height: 170px;
+    order: -1;
+  }
+}
+
+// Respect reduced-motion preference
+@media (prefers-reduced-motion: reduce) {
+  .post-card-thumb {
+    transition: none;
+  }
+
+  .post-card:hover .post-card-thumb {
+    transform: none;
   }
 }
