@@ -3,26 +3,37 @@
 // Sidebar drops below on mobile so nothing gets hidden.
 .home-hero {
   text-align: center;
-  padding: 2.5rem 0 2rem;
+  padding: 3rem 0 2rem;
+}
 
-  .home-title {
-    font-size: 2.4rem;
-    margin: 0;
-    background: linear-gradient(to right, var(--blue-400), var(--violet-400));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+.home-eyebrow {
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--c-text-lighter);
+  margin-bottom: 0.625rem;
+}
 
-    @supports (background-clip: text) {
-      color: transparent;
-    }
+.home-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  margin: 0;
+  background: linear-gradient(to right, var(--blue-400), var(--violet-400));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  @supports (background-clip: text) {
+    color: transparent;
   }
+}
 
-  .home-tagline {
-    margin: 0.6rem 0 0;
-    color: var(--c-text-light);
-    font-size: 1rem;
-  }
+.home-tagline {
+  margin-top: 0.5rem;
+  color: var(--c-text-light);
+  font-size: 1rem;
 }
 
 .home-layout {
@@ -95,10 +106,10 @@
 @media (max-width: $breakpoint-mobile) {
   .home-hero {
     padding: 1.5rem 0 1rem;
+  }
 
-    .home-title {
-      font-size: 1.8rem;
-    }
+  .home-title {
+    font-size: 1.875rem;
   }
 
   .home-layout {
