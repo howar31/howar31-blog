@@ -1,0 +1,123 @@
+.vp-footer {
+  margin-top: 4rem;
+  padding: 2.5rem 1.5rem 1.5rem;
+  color: var(--c-text-light);
+  font-size: 0.9rem;
+  border-top: 1px solid var(--c-border);
+  background-color: var(--c-bg-soft);
+
+  .vp-footer-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 2.5rem;
+  }
+
+  .vp-footer-heading {
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--c-text-lighter);
+    margin: 0 0 0.75rem;
+  }
+
+  .vp-footer-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      margin: 0.35rem 0;
+    }
+
+    a {
+      color: var(--c-text);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      &:hover {
+        color: var(--c-brand);
+      }
+
+      i {
+        color: var(--c-text-lighter);
+        width: 1em;
+        text-align: center;
+      }
+    }
+  }
+
+  .vp-footer-sponsor-desc {
+    margin: 0 0 0.9rem;
+    color: var(--c-text-light);
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  .vp-footer-sponsor-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .vp-sponsor-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.9rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1px solid var(--c-border);
+    background-color: var(--c-bg);
+    color: var(--c-text);
+    transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease, transform 0.1s ease;
+
+    &:hover {
+      transform: translateY(-1px);
+      color: var(--c-brand);
+      border-color: var(--c-brand);
+    }
+
+    i {
+      font-size: 1em;
+    }
+
+    &.sponsor-github:hover {
+      background-color: #24292e;
+      color: #fff;
+      border-color: #24292e;
+    }
+    &.sponsor-kofi:hover {
+      background-color: #ff5e5b;
+      color: #fff;
+      border-color: #ff5e5b;
+    }
+    &.sponsor-bmc:hover {
+      background-color: #ffdd00;
+      color: #000;
+      border-color: #ffdd00;
+    }
+    &.sponsor-paypal:hover {
+      background-color: #003087;
+      color: #fff;
+      border-color: #003087;
+    }
+  }
+
+  .vp-footer-bottom {
+    max-width: 1080px;
+    margin: 2rem auto 0;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--c-border);
+    text-align: center;
+    font-size: 0.85rem;
+
+    p {
+      margin: 0;
+    }
+  }
+}

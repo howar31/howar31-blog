@@ -1,0 +1,327 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  // Sibling clamp to body's overflow-x: clip — Chrome/Safari can fail to
+  // propagate overflow-x from body to the viewport when the other axis
+  // stays visible, leaving the document horizontally scrollable. Setting
+  // it on the root element bypasses propagation entirely. `clip` (not
+  // `hidden`) avoids creating a scroll container so sticky positioning
+  // on the navbar still works.
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  color: var(--c-text);
+  background-color: var(--c-bg);
+  line-height: 1.7;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  // Prevent .post-figure::before glow bleed (`inset: -30%`) from creating
+  // a horizontal scroll on narrow viewports. `clip` (not `hidden`) avoids
+  // establishing a scroll container so the sticky navbar still works.
+  overflow-x: clip;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 2rem 0 1rem;
+  color: var(--c-text);
+}
+
+h1 {
+  font-size: 2.2rem;
+  margin-top: 1rem;
+}
+
+h2 {
+  font-size: 1.65rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--c-border);
+}
+
+h3 { font-size: 1.35rem; }
+h4 { font-size: 1.15rem; }
+
+p {
+  margin: 1rem 0;
+}
+
+a {
+  color: var(--c-text-accent);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--c-brand-light);
+  }
+}
+
+// Code blocks — always dark, do not follow the site theme toggle.
+// Colors reference dark-mode palette (slate-900 bg, slate-300 fg) and are held constant.
+$code-bg-dark: #0f172a;
+$code-fg-dark: #cbd5e1;
+$code-inline-border: rgba(148, 163, 184, 0.25);
+
+code {
+  font-family: 'Fira Code', var(--code-font-family);
+  font-size: 0.85em;
+  background-color: $code-bg-dark;
+  color: $code-fg-dark;
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  border: 1px solid $code-inline-border;
+}
+
+// Block-level <pre> — Prism dracula theme owns the colors. We only set the
+// outer shape (radius, margin, base font) and make sure the background stays
+// our slate-900 regardless of which Prism theme was loaded, so visuals match
+// the VuePress reference.
+pre[class*="language-"] {
+  margin: 1rem 0;
+  padding: 1rem 1.25rem;
+  border-radius: 6px;
+  line-height: 1.7;
+  background-color: $code-bg-dark !important;
+  font-family: 'Fira Code', var(--code-font-family);
+  font-size: 0.85em;
+
+  code[class*="language-"] {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    border: none;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+  }
+}
+
+// Prism toolbar (copy button + language badge) container.
+// Prism wraps <pre> in <div class="code-toolbar"> and adds <div class="toolbar">
+// holding child buttons. We style that toolbar to sit in the top-right and
+// gate visibility by hover (desktop) or focus/active (touch).
+div.code-toolbar {
+  position: relative;
+  margin: 1rem 0;
+
+  > pre[class*="language-"] {
+    margin: 0;
+  }
+
+  > .toolbar {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.75rem;
+    display: flex;
+    gap: 0.5rem;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+
+    > .toolbar-item {
+      display: inline-flex;
+
+      > button,
+      > a,
+      > span {
+        background-color: rgba(203, 213, 225, 0.08);
+        color: rgba(203, 213, 225, 0.75);
+        border: 1px solid rgba(203, 213, 225, 0.18);
+        border-radius: 4px;
+        padding: 0.2rem 0.6rem;
+        font-size: 0.75rem;
+        font-family: inherit;
+        line-height: 1.4;
+        cursor: pointer;
+        text-decoration: none;
+        transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+
+        &:hover,
+        &:focus {
+          color: var(--blue-400);
+          border-color: var(--blue-400);
+          background-color: rgba(96, 165, 250, 0.15);
+          outline: none;
+        }
+      }
+    }
+  }
+
+  // Reveal toolbar on hover (desktop) or focus-within/active (touch).
+  &:hover > .toolbar,
+  &:focus-within > .toolbar {
+    opacity: 1;
+  }
+}
+
+// Mobile: show copy button when user taps the block (focus-within) or keeps
+// it faintly visible so it's discoverable. :hover is unreliable on touch.
+@media (hover: none) {
+  div.code-toolbar > .toolbar {
+    opacity: 0.55;
+  }
+  div.code-toolbar:focus-within > .toolbar,
+  div.code-toolbar:active > .toolbar {
+    opacity: 1;
+  }
+}
+
+// Line numbers plugin — Prism's default behaviour (absolute gutter inside
+// <pre> padding). Both attempts at a sticky gutter failed:
+//   1. JS wrap + .pre-scroll with min-width:max-content → pre pushed page width
+//   2. display:flex on <pre> with sticky .line-numbers-rows → flex items'
+//      intrinsic width pushed pre past container on iOS Safari
+// Keeping non-sticky for now; revisit when there's time to prototype properly.
+pre[class*="language-"].line-numbers {
+  padding-left: 3.5em;
+
+  > code {
+    padding-left: 0;
+  }
+
+  .line-numbers-rows {
+    color: rgba(203, 213, 225, 0.35);
+    border-right: 1px solid rgba(203, 213, 225, 0.1);
+
+    > span::before {
+      color: inherit;
+    }
+  }
+}
+
+blockquote {
+  margin: 1rem 0;
+  padding: 0.5rem 1rem;
+  border-left: 4px solid var(--c-brand);
+  color: var(--c-text-quote);
+  background-color: var(--c-bg-soft);
+  border-radius: 0 4px 4px 0;
+
+  > p {
+    margin: 0.5rem 0;
+  }
+}
+
+table {
+  border-collapse: collapse;
+  margin: 1rem 0;
+  display: block;
+  overflow-x: auto;
+
+  th, td {
+    border: 1px solid var(--c-border);
+    padding: 0.5rem 0.75rem;
+  }
+
+  th {
+    background-color: var(--c-bg-soft);
+    font-weight: 600;
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--c-border);
+  margin: 2rem 0;
+}
+
+// Global styles
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+// Links - exclude code blocks to preserve syntax highlighting
+a:not(pre a):not(code a):not([class*="language-"] a):not(.vp-code a) {
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: var(--c-brand-light);
+    text-decoration: none;
+  }
+
+  &:focus,
+  &:visited,
+  &:active {
+    text-decoration: none;
+  }
+}
+
+// Override VuePress default content link styles - exclude code blocks
+.vp-theme-container a:not(.header-anchor):not(.vp-header-anchor):not(pre a):not(code a):not([class*="language-"] a):not(.vp-code a),
+.theme-default-content a:not(.header-anchor):not(.vp-header-anchor):not(pre a):not(code a):not([class*="language-"] a):not(.vp-code a),
+.vp-content a:not(.header-anchor):not(.vp-header-anchor):not(pre a):not(code a):not([class*="language-"] a):not(.vp-code a),
+.vp-theme-container .vp-content a:not(.header-anchor):not(.vp-header-anchor):not(pre a):not(code a):not([class*="language-"] a):not(.vp-code a),
+.vp-theme-container .theme-default-content a:not(.header-anchor):not(.vp-header-anchor):not(pre a):not(code a):not([class*="language-"] a):not(.vp-code a),
+main .vp-content a:not(.header-anchor):not(.vp-header-anchor):not(pre a):not(code a):not([class*="language-"] a):not(.vp-code a),
+main .theme-default-content a:not(.header-anchor):not(.vp-header-anchor):not(pre a):not(code a):not([class*="language-"] a):not(.vp-code a),
+.vp-page .vp-content a:not(.header-anchor):not(.vp-header-anchor):not(pre a):not(code a):not([class*="language-"] a):not(.vp-code a),
+.vp-page .theme-default-content a:not(.header-anchor):not(.vp-header-anchor):not(pre a):not(code a):not([class*="language-"] a):not(.vp-code a),
+p a:not(.header-anchor):not(.vp-header-anchor):not(pre a):not(code a):not([class*="language-"] a):not(.vp-code a),
+.vp-content p a:not(.header-anchor):not(.vp-header-anchor):not(pre a):not(code a):not([class*="language-"] a):not(.vp-code a),
+.theme-default-content p a:not(.header-anchor):not(.vp-header-anchor):not(pre a):not(code a):not([class*="language-"] a):not(.vp-code a) {
+  text-decoration: none;
+
+  &:hover,
+  &:focus,
+  &:visited,
+  &:active {
+    text-decoration: none;
+  }
+}
+
+// Buttons
+.btn {
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+
+  &.primary {
+    background-color: var(--c-brand);
+    color: white;
+
+    &:hover {
+      background-color: var(--c-brand-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(96, 165, 250, 0.3);
+    }
+  }
+}
+
+// Scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--c-bg-soft);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--c-border-dark);
+  border-radius: 4px;
+
+  &:hover {
+    background: var(--c-text-lighter);
+  }
+}
+
+@media (max-width: 719px) {
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.4rem; }
+}

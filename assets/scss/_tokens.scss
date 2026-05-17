@@ -1,0 +1,197 @@
+// Color palette from main website
+:root {
+  // Blue colors (primary accent)
+  --blue-400: #60a5fa;
+  --blue-500: #3b82f6;
+  --blue-600: #2563eb;
+
+  // Violet colors (gradient end)
+  --violet-400: #a78bfa;
+
+  // Slate colors
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+  --slate-950: #020617;
+
+  // Light mode colors
+  // Background colors
+  --c-bg: #ffffff;
+  --c-bg-soft: #f8fafc;
+  --c-bg-active: #eff6ff;
+
+  // Text colors
+  --c-text: #1e293b;
+  --c-text-light: #64748b;
+  --c-text-lighter: #94a3b8;
+  --c-text-accent: var(--blue-500);
+  --c-text-quote: #64748b;
+
+  // Border colors
+  --c-border: #e2e8f0;
+  --c-border-dark: #cbd5e1;
+  --c-divider: #e2e8f0;
+
+  // Brand colors (blue gradient)
+  --c-brand: var(--blue-500);
+  --c-brand-light: var(--blue-400);
+  --c-brand-dark: var(--blue-600);
+
+  // VuePress accent colors - matching main website blue theme
+  --vp-c-accent: var(--blue-500);
+  --vp-c-accent-bg: rgba(59, 130, 246, 0.1);
+  --vp-c-accent-hover: var(--blue-400);
+
+  // Code block colors
+  --code-bg-color: #f8fafc;
+  --code-text-color: #1e293b;
+  --code-line-height: 1.7;
+  --code-font-size: 0.85em;
+  --code-font-family: 'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace;
+
+  // Tip/Info/Warning/Danger boxes
+  --c-tip: var(--blue-500);
+  --c-warning: #f59e0b;
+  --c-danger: #ef4444;
+}
+
+// Dark mode colors and styles (matching main website)
+// Reference: https://raw.githubusercontent.com/howar31/landing-page/refs/heads/main/src/app/globals.css
+html[data-theme="dark"],
+[data-theme="dark"] {
+  // CSS Variables - Dark mode colors
+  // Background colors - slate-950 like main website
+  --c-bg: rgb(0, 0, 0);
+  --c-bg-soft: rgba(255, 255, 255, 0.05);
+  --c-bg-active: rgba(96, 165, 250, 0.15);
+
+  // Text colors - white and slate
+  --c-text: #ffffff;
+  --c-text-light: rgba(255, 255, 255, 0.7);
+  --c-text-lighter: rgba(255, 255, 255, 0.6);
+  --c-text-accent: var(--blue-400);
+  --c-text-quote: rgba(255, 255, 255, 0.7);
+
+  // Border colors
+  --c-border: rgba(255, 255, 255, 0.1);
+  --c-border-dark: rgba(255, 255, 255, 0.15);
+  --c-divider: rgba(255, 255, 255, 0.1);
+
+  // Brand colors (blue-violet gradient)
+  --c-brand: var(--blue-400);
+  --c-brand-light: var(--blue-400);
+  --c-brand-dark: var(--blue-600);
+
+  // VuePress accent colors - matching main website blue theme (dark mode)
+  --vp-c-accent: var(--blue-400);
+  --vp-c-accent-bg: rgba(96, 165, 250, 0.15);
+  --vp-c-accent-hover: var(--violet-400);
+
+  // Code block colors
+  --code-bg-color: #0f172a;
+  --code-text-color: #cbd5e1;
+
+  // Dark mode background with purple gradient animation
+  body {
+    background-color: rgb(0, 0, 0);
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  // Ensure main containers don't block the glow animation
+  .vp-page,
+  .vp-theme-container {
+    background-color: transparent !important;
+  }
+
+  // Purple glow animations
+  body::before {
+    content: "";
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+      circle at 50% 25%,
+      rgba(139, 92, 246, 0.15) 0%,
+      transparent 40%
+    );
+    z-index: 0;
+    animation: float-glow-1 20s infinite alternate ease-in-out;
+    pointer-events: none;
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+      circle at 25% 75%,
+      rgba(168, 85, 247, 0.1) 0%,
+      transparent 40%
+    );
+    z-index: 0;
+    animation: float-glow-2 25s infinite alternate-reverse ease-in-out;
+    pointer-events: none;
+  }
+
+  .vp-page,
+  .vp-theme-container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .vp-navbar {
+    z-index: 50;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
+}
+
+// Animation keyframes
+@keyframes float-glow-1 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(10%, 10%) scale(1.2);
+  }
+  66% {
+    transform: translate(-5%, 5%) scale(0.8);
+  }
+  100% {
+    transform: translate(5%, -10%) scale(1.1);
+  }
+}
+
+@keyframes float-glow-2 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(-10%, -5%) scale(1.2);
+  }
+  66% {
+    transform: translate(5%, -10%) scale(0.8);
+  }
+  100% {
+    transform: translate(-5%, 10%) scale(1.1);
+  }
+}

@@ -1,0 +1,56 @@
+// Post list (home + /posts/ + taxonomy pages)
+.post-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  .post-list-item {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--c-border);
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    h2, h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1.4rem;
+      padding-bottom: 0;
+      border-bottom: none;
+
+      a {
+        color: var(--c-text);
+        transition: color 0.2s ease;
+
+        &:hover {
+          color: var(--c-brand);
+        }
+      }
+    }
+
+    .post-meta {
+      color: var(--c-text-lighter);
+      font-size: 0.875rem;
+      margin: 0.25rem 0 0.75rem;
+
+      > span,
+      > time {
+        margin-right: 0.75rem;
+      }
+
+      a {
+        color: var(--c-text-lighter);
+
+        &:hover {
+          color: var(--c-brand);
+        }
+      }
+    }
+
+    p {
+      color: var(--c-text-light);
+      margin: 0.5rem 0 0;
+    }
+  }
+}

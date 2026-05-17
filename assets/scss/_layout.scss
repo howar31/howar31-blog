@@ -1,0 +1,25 @@
+.vp-theme-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.vp-page {
+  flex: 1;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.vp-content,
+.theme-default-content {
+  max-width: $content-max-width;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+// Home page uses a wider container so the 2-column (main + sidebar) grid fits.
+.vp-content-wide {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}

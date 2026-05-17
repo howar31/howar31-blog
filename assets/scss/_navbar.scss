@@ -1,0 +1,111 @@
+// Dark mode toggle button
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--c-border);
+  color: var(--c-text);
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+
+  &:hover {
+    color: var(--c-brand);
+    border-color: var(--c-brand);
+  }
+
+  .theme-toggle-light,
+  .theme-toggle-dark {
+    font-size: 1rem;
+  }
+}
+
+html[data-theme="dark"] .theme-toggle-light,
+html:not([data-theme="dark"]) .theme-toggle-dark {
+  display: none;
+}
+
+// Navbar wrapper
+.vp-navbar {
+  height: $navbar-height;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+
+  .vp-navbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 1rem;
+  }
+
+  .vp-site-name {
+    font-size: 1.25rem;
+    text-decoration: none;
+  }
+
+  // Right-side cluster — only the theme toggle lives here; nav/dropdown/
+  // hamburger were removed after the navbar was simplified.
+  .vp-navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
+// Navbar styling
+.vp-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(24px);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+
+  @supports (backdrop-filter: blur(1px)) {
+    background-color: rgba(255, 255, 255, 0);
+  }
+  @supports not (backdrop-filter: blur(1px)) {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+  border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+
+  [data-theme="dark"] & {
+    @supports (backdrop-filter: blur(1px)) {
+      background-color: rgba(2, 6, 23, 0.6);
+    }
+    @supports not (backdrop-filter: blur(1px)) {
+      background-color: rgba(2, 6, 23, 0.7);
+    }
+    border-bottom-color: rgba(30, 41, 59, 0.3);
+  }
+}
+
+// Navbar site name
+.vp-navbar .vp-site-name,
+.vp-site-name {
+  font-weight: 700;
+  color: var(--blue-400);
+  background: linear-gradient(to right, var(--blue-400), var(--violet-400));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  @supports (background-clip: text) {
+    color: transparent;
+  }
+}
+
+@media (max-width: 719px) {
+  .vp-navbar {
+    padding: 0 1rem;
+    position: sticky;
+    top: 0;
+  }
+}
