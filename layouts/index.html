@@ -29,47 +29,7 @@
       </div>
     </section>
 
-    {{- /* Sidebar: the existing <aside class="home-sidebar"> block is kept
-           verbatim here; Task 8 replaces it with a sidebar.html partial. */ -}}
-    <aside class="home-sidebar" aria-label="Taxonomy navigation">
-      {{- with site.Taxonomies.categories }}
-      <section class="sidebar-block">
-        <h2 class="sidebar-title">
-          <i class="fas fa-cat" aria-hidden="true"></i>
-          Categories
-        </h2>
-        <ul class="term-list sidebar-terms">
-          {{- range $term, $pages := . }}
-          <li>
-            <a href="{{ printf "/categories/%s/" ($term | urlize) | relURL }}">
-              <span class="term-name">{{ $term }}</span>
-              <span class="term-count">{{ len $pages }}</span>
-            </a>
-          </li>
-          {{- end }}
-        </ul>
-      </section>
-      {{- end }}
-
-      {{- with site.Taxonomies.tags }}
-      <section class="sidebar-block">
-        <h2 class="sidebar-title">
-          <i class="fas fa-hashtag" aria-hidden="true"></i>
-          Tags
-        </h2>
-        <ul class="term-list sidebar-terms">
-          {{- range $term, $pages := . }}
-          <li>
-            <a href="{{ printf "/tags/%s/" ($term | urlize) | relURL }}">
-              <span class="term-name">{{ $term }}</span>
-              <span class="term-count">{{ len $pages }}</span>
-            </a>
-          </li>
-          {{- end }}
-        </ul>
-      </section>
-      {{- end }}
-    </aside>
+    {{ partial "sidebar.html" . }}
   </div>
 </section>
 {{ end }}

@@ -1,0 +1,43 @@
+{{- $sponsor := site.Params.sponsor | default dict -}}
+<aside class="home-sidebar" aria-label="Sidebar">
+  <div class="side-card">
+    <img class="side-avatar" src="{{ site.Params.avatar | relURL }}" width="64" height="64" alt="{{ site.Params.author }}">
+    <div class="side-eyebrow">About</div>
+    <div class="side-name">{{ site.Params.author }}</div>
+    <p class="side-bio">熱衷開源的 Web Developer，深耕後端與雲端基礎建設。</p>
+    <div class="side-links">
+      <a class="side-social" href="https://github.com/howar31" rel="noopener" target="_blank" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
+      <a class="side-social" href="https://howar31.com" rel="noopener" target="_blank" aria-label="howar31.com"><i class="fas fa-globe" aria-hidden="true"></i></a>
+    </div>
+  </div>
+
+  {{- with site.Taxonomies.tags }}
+  <div class="side-card">
+    <div class="side-eyebrow">Tags</div>
+    <div class="side-tagcloud">
+      {{- range $term, $pages := . }}
+      <a class="vp-pill side-tag" href="{{ printf "/tags/%s/" ($term | urlize) | relURL }}"
+         style="font-size:{{ add 11 (math.Min 5 (len $pages)) }}px">
+        #{{ $term }} <span class="side-tag-count">{{ len $pages }}</span></a>
+      {{- end }}
+    </div>
+  </div>
+  {{- end }}
+
+  {{- if or $sponsor.kofi $sponsor.paypal }}
+  <div class="side-card">
+    <div class="side-eyebrow">Support This Blog</div>
+    <p class="side-bio">If a post here saved you time, consider buying me a coffee.</p>
+    <div class="side-support">
+      {{- with $sponsor.kofi }}
+      <a class="side-support-btn sponsor-kofi" href="https://ko-fi.com/{{ . }}" rel="noopener" target="_blank">
+        <i class="fas fa-coffee" aria-hidden="true"></i> Ko-fi</a>
+      {{- end }}
+      {{- with $sponsor.paypal }}
+      <a class="side-support-btn sponsor-paypal" href="{{ . }}" rel="noopener" target="_blank">
+        <i class="fab fa-paypal" aria-hidden="true"></i> PayPal</a>
+      {{- end }}
+    </div>
+  </div>
+  {{- end }}
+</aside>
