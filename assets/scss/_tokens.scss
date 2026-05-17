@@ -1,102 +1,189 @@
-// Color palette from main website
+// Design System Tokens
+// Source: ~/.claude/cache/howar31-blog-design/colors_and_type.css
+// Dark mode is canonical; light mode overrides --c-* semantics in :root.
+
 :root {
-  // Blue colors (primary accent)
+  // ---- Color scales -------------------------------------------------------
   --blue-400: #60a5fa;
   --blue-500: #3b82f6;
   --blue-600: #2563eb;
-
-  // Violet colors (gradient end)
   --violet-400: #a78bfa;
+  --violet-500: #8b5cf6;
+  --violet-purple: #a855f7;
 
-  // Slate colors
+  --slate-50:  #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
   --slate-300: #cbd5e1;
   --slate-400: #94a3b8;
+  --slate-500: #64748b;
   --slate-600: #475569;
   --slate-700: #334155;
   --slate-800: #1e293b;
   --slate-900: #0f172a;
   --slate-950: #020617;
 
-  // Light mode colors
-  // Background colors
-  --c-bg: #ffffff;
-  --c-bg-soft: #f8fafc;
+  // ---- Semantic dark tokens (canonical) -----------------------------------
+  --bg-canvas: rgb(2, 6, 23);  /* slate-950 */
+  --bg-card: rgba(15, 23, 42, 0.5);
+  --bg-card-hover: rgba(15, 23, 42, 0.8);
+  --bg-soft: rgba(255, 255, 255, 0.05);
+  --bg-active: rgba(96, 165, 250, 0.15);
+
+  // ---- Glass tokens -------------------------------------------------------
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-bg-strong: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-blur: 24px;
+  --glass-blur-soft: 20px;
+
+  // ---- Ambient glow -------------------------------------------------------
+  --glow-1: rgba(139, 92, 246, 0.15);
+  --glow-2: rgba(168, 85, 247, 0.10);
+
+  // ---- Shadow system ------------------------------------------------------
+  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.40);
+  --shadow-card-hover: 0 8px 20px rgba(0, 0, 0, 0.50);
+  --shadow-blue: 0 6px 18px rgba(96, 165, 250, 0.25);
+  --shadow-blue-strong: 0 10px 24px rgba(96, 165, 250, 0.35);
+  --shadow-violet-glow: 0 0 32px rgba(167, 139, 250, 0.12);
+  --shadow-figure-hover:
+    0 24px 48px rgba(0, 0, 0, 0.18),
+    0 8px 16px rgba(0, 0, 0, 0.10),
+    0 0 32px rgba(167, 139, 250, 0.12);
+
+  // ---- Status / hint colors -----------------------------------------------
+  --tip:        var(--blue-500);
+  --tip-bg:     rgba(59, 130, 246, 0.08);
+  --warning:    #f59e0b;
+  --warning-bg: rgba(245, 158, 11, 0.08);
+  --danger:     #ef4444;
+  --danger-bg:  rgba(239, 68, 68, 0.08);
+
+  // ---- Radii --------------------------------------------------------------
+  --radius-sm:   4px;
+  --radius-md:   6px;
+  --radius-lg:   10px;
+  --radius-xl:   12px;
+  --radius-pill: 999px;
+
+  // ---- Type stacks --------------------------------------------------------
+  --font-sans: "Noto Sans TC", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Noto Serif TC", "Times New Roman", serif;
+  --font-kai: "LXGW WenKai TC", "Noto Serif TC", serif;
+  --font-display: "Atkinson Hyperlegible Next", var(--font-sans);
+  --font-mono: "JetBrains Mono", "Noto Sans Mono", "Noto Sans Mono CJK TC",
+    "Sarasa Mono TC", "Consolas", "Monaco", "Courier New", monospace;
+
+  // ---- Type scale ---------------------------------------------------------
+  --fs-hero:    72px;
+  --fs-hero-sm: 48px;
+  --fs-h1:      35.2px;
+  --fs-h2:      26.4px;
+  --fs-h3:      21.6px;
+  --fs-h4:      18.4px;
+  --fs-lead:    24px;
+  --fs-body:    16px;
+  --fs-meta:    14px;
+  --fs-small:   12.5px;
+  --fs-code:    13.6px;
+
+  // ---- Font weights -------------------------------------------------------
+  --fw-regular:  400;
+  --fw-medium:   500;
+  --fw-semibold: 600;
+  --fw-bold:     700;
+
+  // ---- Line heights -------------------------------------------------------
+  --lh-tight: 1.25;
+  --lh-snug:  1.45;
+  --lh-body:  1.7;
+
+  // ---- Letter spacing -----------------------------------------------------
+  --tracking-tight: -0.02em;
+  --tracking-wide:   0.08em;
+
+  // ---- Semantic: light-mode --c-* / --vp-* / code vars -------------------
+
+  // Background
+  --c-bg:        #ffffff;
+  --c-bg-soft:   #f8fafc;
   --c-bg-active: #eff6ff;
 
-  // Text colors
-  --c-text: #1e293b;
-  --c-text-light: #64748b;
+  // Text
+  --c-text:         #1e293b;
+  --c-text-light:   #64748b;
   --c-text-lighter: #94a3b8;
-  --c-text-accent: var(--blue-500);
-  --c-text-quote: #64748b;
+  --c-text-accent:  var(--blue-500);
+  --c-text-quote:   #64748b;
 
-  // Border colors
-  --c-border: #e2e8f0;
+  // Borders
+  --c-border:      #e2e8f0;
   --c-border-dark: #cbd5e1;
-  --c-divider: #e2e8f0;
+  --c-divider:     #e2e8f0;
 
-  // Brand colors (blue gradient)
-  --c-brand: var(--blue-500);
+  // Brand
+  --c-brand:       var(--blue-500);
   --c-brand-light: var(--blue-400);
-  --c-brand-dark: var(--blue-600);
+  --c-brand-dark:  var(--blue-600);
 
-  // VuePress accent colors - matching main website blue theme
-  --vp-c-accent: var(--blue-500);
-  --vp-c-accent-bg: rgba(59, 130, 246, 0.1);
+  // VuePress accent
+  --vp-c-accent:       var(--blue-500);
+  --vp-c-accent-bg:    rgba(59, 130, 246, 0.1);
   --vp-c-accent-hover: var(--blue-400);
 
-  // Code block colors
-  --code-bg-color: #f8fafc;
-  --code-text-color: #1e293b;
+  // Code block (font family left for Task 3)
+  --code-bg-color:    #f8fafc;
+  --code-text-color:  #1e293b;
   --code-line-height: 1.7;
-  --code-font-size: 0.85em;
+  --code-font-size:   0.85em;
   --code-font-family: 'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace;
 
-  // Tip/Info/Warning/Danger boxes
-  --c-tip: var(--blue-500);
+  // VuePress-compatibility duplicates of --tip / --warning / --danger.
+  --c-tip:     var(--blue-500);
   --c-warning: #f59e0b;
-  --c-danger: #ef4444;
+  --c-danger:  #ef4444;
 }
 
-// Dark mode colors and styles (matching main website)
-// Reference: https://raw.githubusercontent.com/howar31/landing-page/refs/heads/main/src/app/globals.css
+// Dark mode — overrides all --c-* / --vp-* / code vars.
+// Background moves to slate-950 (was pure black).
 html[data-theme="dark"],
 [data-theme="dark"] {
-  // CSS Variables - Dark mode colors
-  // Background colors - slate-950 like main website
-  --c-bg: rgb(0, 0, 0);
-  --c-bg-soft: rgba(255, 255, 255, 0.05);
+  // Background
+  --c-bg:        var(--bg-canvas);
+  --c-bg-soft:   rgba(255, 255, 255, 0.05);
   --c-bg-active: rgba(96, 165, 250, 0.15);
 
-  // Text colors - white and slate
-  --c-text: #ffffff;
-  --c-text-light: rgba(255, 255, 255, 0.7);
+  // Text
+  --c-text:         #ffffff;
+  --c-text-light:   rgba(255, 255, 255, 0.7);
   --c-text-lighter: rgba(255, 255, 255, 0.6);
-  --c-text-accent: var(--blue-400);
-  --c-text-quote: rgba(255, 255, 255, 0.7);
+  --c-text-accent:  var(--blue-400);
+  --c-text-quote:   rgba(255, 255, 255, 0.7);
 
-  // Border colors
-  --c-border: rgba(255, 255, 255, 0.1);
+  // Borders
+  --c-border:      rgba(255, 255, 255, 0.1);
   --c-border-dark: rgba(255, 255, 255, 0.15);
-  --c-divider: rgba(255, 255, 255, 0.1);
+  --c-divider:     rgba(255, 255, 255, 0.1);
 
-  // Brand colors (blue-violet gradient)
-  --c-brand: var(--blue-400);
+  // Brand
+  --c-brand:       var(--blue-400);
   --c-brand-light: var(--blue-400);
-  --c-brand-dark: var(--blue-600);
+  --c-brand-dark:  var(--blue-600);
 
-  // VuePress accent colors - matching main website blue theme (dark mode)
-  --vp-c-accent: var(--blue-400);
-  --vp-c-accent-bg: rgba(96, 165, 250, 0.15);
+  // VuePress accent
+  --vp-c-accent:       var(--blue-400);
+  --vp-c-accent-bg:    rgba(96, 165, 250, 0.15);
   --vp-c-accent-hover: var(--violet-400);
 
-  // Code block colors
-  --code-bg-color: #0f172a;
+  // Code block
+  --code-bg-color:   #0f172a;
   --code-text-color: #cbd5e1;
 
-  // Dark mode background with purple gradient animation
+  // Dark mode background — deep slate canvas
   body {
-    background-color: rgb(0, 0, 0);
+    background-color: var(--bg-canvas);
     position: relative;
     overflow-x: hidden;
   }
@@ -117,7 +204,7 @@ html[data-theme="dark"],
     height: 200%;
     background: radial-gradient(
       circle at 50% 25%,
-      rgba(139, 92, 246, 0.15) 0%,
+      var(--glow-1) 0%,
       transparent 40%
     );
     z-index: 0;
@@ -134,7 +221,7 @@ html[data-theme="dark"],
     height: 200%;
     background: radial-gradient(
       circle at 25% 75%,
-      rgba(168, 85, 247, 0.1) 0%,
+      var(--glow-2) 0%,
       transparent 40%
     );
     z-index: 0;
