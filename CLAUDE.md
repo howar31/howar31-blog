@@ -65,10 +65,16 @@ hugo new posts/<slug>/index.md
 | Path | Purpose |
 |---|---|
 | `content/posts/<slug>/index.md` | Blog post (+ per-post image folder) |
+| `content/about.md` | About page — linked from navbar, served at `/about/` |
 | `layouts/` | Hugo templates (see SPEC.md for partials breakdown) |
 | `layouts/_default/_markup/render-image.html` | Goldmark hook: wraps captioned images in `<figure>` cards |
-| `assets/scss/main.scss` | All site styles (SCSS via Hugo Pipes → libsass) |
-| `assets/js/theme.js` | Dark-mode toggle, back-to-top, Prism `line-numbers`, image lightbox, figure tilt |
+| `layouts/partials/post-card.html` | Reusable post card partial (title, meta, summary, tags, auto thumbnail) |
+| `layouts/partials/sidebar.html` | Home sidebar: About card, tag cloud, support card |
+| `layouts/index.json` | Hugo JSON output template → `/index.json` — feeds front-end search |
+| `assets/scss/main.scss` | SCSS entrypoint: 4 variables + `@import` of 12 partials (`_tokens` … `_pagination`) |
+| `assets/scss/_*.scss` | SCSS partials — design tokens, base, layout, navbar, footer, hero, post-list, sidebar, post, search, back-to-top, pagination |
+| `assets/js/theme.js` | Dark-mode toggle, mobile-nav toggle, search modal, back-to-top, Prism `line-numbers`, image lightbox, figure tilt |
+| `static/fonts/` | Self-hosted fonts (`AtkinsonHyperlegibleNext.woff2`) |
 | `static/` | Static files copied verbatim to `public/` (manifest, CNAME, logo, SW cleanup shim) |
 | `config.toml` | Site config: `baseURL`, `[params]`, menus, taxonomies, markup |
 | `.github/workflows/hugo.yml` | GitHub Pages deployment workflow |

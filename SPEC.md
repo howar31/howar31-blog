@@ -8,12 +8,14 @@ future agents quickly without having to re-derive everything from the code.
 | Layer | Tool | Notes |
 |---|---|---|
 | Static site generator | **Hugo extended ≥ 0.160.1** | `codeFences = false`, `goldmark.renderer.unsafe = true` |
-| CSS | SCSS via Hugo Pipes (libsass) | Fingerprinted + minified |
+| CSS | SCSS via Hugo Pipes (libsass) | Fingerprinted + minified; `main.scss` is an entrypoint that `@import`s 12 partials |
 | JS | Plain ES5-ish (defer) | Hugo `minify` + `fingerprint` |
 | Syntax highlighter | **Prism.js 1.29.0** (client-side) | Core + 20 language grammars + 4 plugins, bundled at build time |
 | Prism theme | `prism-themes@1.9.0/themes/prism-dracula.min.css` | Force `background-color: #0f172a` so it matches site regardless of page theme |
 | Icon font | FontAwesome 5.8.1 (CDN) | Used for post meta, nav toggle, sponsor buttons |
-| Code font | Google Fonts Fira Code | For `code` / `pre` |
+| Body font | Google Fonts **Noto Sans TC** | Loaded via `[params.googleFonts]` URL in `config.toml` |
+| Code font | Google Fonts **JetBrains Mono** | Replaces previous Fira Code; same Google Fonts request |
+| Display font | **Atkinson Hyperlegible Next** (self-hosted) | `static/fonts/AtkinsonHyperlegibleNext.woff2`; used for home hero title via `--font-display` |
 | Hosting | GitHub Pages via `upload-pages-artifact` + `deploy-pages` | Custom domain `blog.howar31.com` (CNAME in `static/`) |
 
 No Node.js is executed at build or runtime. All remote third-party code
@@ -28,13 +30,15 @@ howar31-blog/
 ├── config.toml                          # Site config (see "Config" below)
 ├── archetypes/default.md                # Template for `hugo new`
 ├── content/
+│   ├── about.md                         # About page (linked from navbar; /about/)
 │   └── posts/
 │       ├── _index.md                    # Overrides section title → "Recent Posts"
 │       └── <slug>/
 │           ├── index.md                 # Post (page bundle)
 │           └── images/…                 # Post-local images
 ├── layouts/
-│   ├── index.html                       # Home page (2-column grid)
+│   ├── index.html                       # Home page (hero + post-card list + sidebar)
+│   ├── index.json                       # JSON output template: /index.json for search
 │   ├── _default/
 │   │   ├── baseof.html                  # HTML skeleton + Prism JS bundle
 │   │   ├── single.html                  # Post page
@@ -44,20 +48,37 @@ howar31-blog/
 │   │       └── render-image.html        # Goldmark hook: image → figure card
 │   ├── partials/
 │   │   ├── head.html                    # <head>: theme boot, SCSS pipe, Prism CSS bundle, meta
-│   │   ├── header.html                  # .vp-navbar — site name + theme toggle (minimal)
+│   │   ├── header.html                  # Full navbar: gradient site name + nav links + search + GitHub + theme toggle + mobile hamburger
 │   │   ├── footer.html                  # About + Sponsor columns + © line
+│   │   ├── post-card.html               # Reusable post card (title, meta, summary, tags, thumbnail)
 │   │   ├── post-meta.html               # .blog-post-meta under each post h1
+│   │   ├── sidebar.html                 # Home sidebar: About card, tag cloud, support card
 │   │   └── back-to-top.html             # SVG circle scroll-progress button
 │   └── shortcodes/
 │       ├── tip.html                     # {{< tip "…" >}} callout
 │       └── warning.html                 # {{< warning "…" >}} callout
 ├── assets/
-│   ├── scss/main.scss                   # All styles
+│   ├── scss/
+│   │   ├── main.scss                    # SCSS entrypoint: 4 variables + @import of 12 partials
+│   │   ├── _tokens.scss                 # Design-system tokens: color scales, glass/shadow/radius/type; dark canonical
+│   │   ├── _base.scss                   # CSS reset, body, typography, links
+│   │   ├── _layout.scss                 # Page structure: vp-page, vp-content, vp-content-wide
+│   │   ├── _navbar.scss                 # .vp-navbar, .vp-nav, .vp-nav-mobile
+│   │   ├── _footer.scss                 # .vp-footer
+│   │   ├── _hero.scss                   # .home-hero
+│   │   ├── _post-list.scss              # .post-list, .post-card
+│   │   ├── _sidebar.scss                # .home-sidebar, .side-card, .term-list
+│   │   ├── _post.scss                   # .post-content, .post-figure, .vp-image-modal, shortcodes
+│   │   ├── _search.scss                 # .vp-search modal
+│   │   ├── _back-to-top.scss            # .back-to-top
+│   │   └── _pagination.scss             # Hugo internal pagination
 │   └── js/theme.js                      # All runtime JS (no Prism logic here)
 ├── static/                              # Passed through untouched
 │   ├── CNAME                            # blog.howar31.com
 │   ├── manifest.json                    # PWA manifest
 │   ├── service-worker.js                # Cleanup shim: unregisters old VuePress SW + clears caches
+│   ├── fonts/
+│   │   └── AtkinsonHyperlegibleNext.woff2  # Self-hosted display font
 │   └── logo/…                           # Site icons (avatar, apple-touch, etc.)
 └── .github/workflows/hugo.yml           # CI: install Hugo → build --minify → deploy Pages
 ```
@@ -80,13 +101,17 @@ howar31-blog/
 - `[taxonomies] category = "categories"`, `tag = "tags"`
 - `[permalinks] posts = "/posts/:contentbasename/"` → URL uses parent folder
   name (slug) not title-derived
-- `[[menu.main]]`: **not defined**. Navbar is minimal — logo + theme toggle
-  only. `header.html` does not iterate `site.Menus.main`, so there are no
-  nav items to configure
+- `[[menu.main]]` — **defined**: Home (weight 10), Posts (20), Categories
+  (30), Tags (40), About (50). `header.html` iterates `site.Menus.main`
+  for both desktop nav links and the mobile hamburger panel
 - `[[menu.footer]]`: About column (howar31.com / GitHub / Source Code)
 - `[params.sponsor]`: `kofi = "howar31"`, `paypal = "https://donate.howar31.com"`
   — verified identifiers only. Do **not** add `githubSponsors`; not enabled
   on the user's account
+- `[params.googleFonts]` — URL loading **Noto Sans TC** + **JetBrains Mono**
+  via Google Fonts; injected in `head.html` via `<link rel="stylesheet">`
+- `[outputs] home = ["HTML", "RSS", "JSON"]` — the JSON output type feeds
+  `layouts/index.json` → `/index.json` → front-end search
 
 ## Home page architecture
 
@@ -94,15 +119,16 @@ Two-column CSS Grid at ≥ 720px; stacks at < 720px.
 
 ```
 .home
-├── .home-hero                           # Blue→violet gradient title + tagline
+├── .home-hero                           # Eyebrow + display-font title + tagline
 └── .home-layout (grid: 1fr 16rem)
     ├── .home-main
     │   ├── .home-main-header            # "Recent Posts" + "All Posts →"
-    │   ├── .post-list × 10 latest
-    │   └── .home-main-cta               # Pill "Browse all N posts →"
-    └── .home-sidebar (position: sticky)
-        ├── .sidebar-block "Categories"  # pills via .term-list.sidebar-terms
-        └── .sidebar-block "Tags"        # same pattern
+    │   ├── .post-list × 10 latest       # Each item uses post-card.html partial
+    │   └── .home-main-cta               # "Browse all N posts →" pill button
+    └── .home-sidebar (partial: sidebar.html, position: sticky)
+        ├── .side-card "About"           # Avatar, name, bio, GitHub + howar31.com links
+        ├── .side-card "Tags"            # Count-sized .vp-pill tag cloud
+        └── .side-card "Support"        # Ko-fi + PayPal buttons from [params.sponsor]
 ```
 
 The `vp-content-wide` wrapper (baseof.html chose this when `.IsHome`) gives
@@ -134,12 +160,14 @@ drift from other places rendered differently.
   → `minify` → `fingerprint`). `.IsHome` selects `vp-content-wide` vs
   `vp-content theme-default-content`.
 - **`head.html`** — Inline FOUC-prevention script reads
-  `localStorage['howar31-theme']` (or `prefers-color-scheme`) and sets
-  `data-theme="dark"` before paint. Compiles `main.scss`, fetches Prism CSS
-  bundle, adds FA + Google Fonts, OG / PWA meta, RSS link, GA block in
-  production.
-- **`header.html`** — Minimal: site-name (with blue→violet gradient text
-  via `background-clip: text`) + theme toggle button. No nav items.
+  `localStorage['howar31-theme']` and defaults to **dark** when no stored
+  preference exists (`var theme = stored || 'dark'`). Compiles `main.scss`,
+  fetches Prism CSS bundle, adds FA + Google Fonts (Noto Sans TC +
+  JetBrains Mono), OG / PWA meta, RSS link, GA block in production.
+- **`header.html`** — Full navbar: gradient site name (`.vp-site-name`) +
+  desktop nav links (`.vp-nav`, iterates `site.Menus.main` with active-state
+  detection) + search-trigger icon button + GitHub icon link + theme toggle +
+  mobile hamburger (`.vp-nav-burger`) that toggles `.vp-nav-mobile` panel.
 - **`footer.html`** — Two-column grid (`repeat(auto-fit, minmax(14rem, 1fr))`).
   "About" column iterates `site.Menus.footer`; "Support this blog" renders
   Ko-fi + PayPal buttons when the relevant params are set. Bottom line is
@@ -147,17 +175,31 @@ drift from other places rendered differently.
 - **`single.html`** — `<article>` with `<h1>`, `post-meta`, `.Content`.
   First Markdown `# title` line is stripped at content-migration time so
   there is only one `h1`.
-- **`list.html`** — Used for `/posts/`, category pages, tag pages. Simple
-  paginated post list (20 per page).
+- **`list.html`** — Used for `/posts/`, category pages, tag pages. Paginated
+  post list (20 per page); each item rendered by the `post-card.html` partial.
 - **`terms.html`** — Used for `/categories/` and `/tags/` indexes. Renders
   a pill cloud of terms via `.Data.Terms.Alphabetical`, using `.Name`
   (the raw lowercase-dash slug) as display text.
+- **`index.json`** — Hugo JSON output template. Emits `/index.json`: a JSON
+  array of `{title, url, date, summary, tags, categories}` for every post.
+  Consumed lazily by the front-end search module in `theme.js`.
 
 ## Partials
 
-- **`post-meta.html`** — `<div class="blog-post-meta">` with date, optional
-  description, categories, tags. FA icons: `far fa-clock`, `fas fa-cat`,
-  `fas fa-hashtag`. Date formatted `YYYY年MM月DD日`.
+- **`post-card.html`** — Reusable `<article class="post-card">`: title link,
+  meta row (date · reading time · category), summary paragraph, tag pills,
+  and an auto-resolved thumbnail (`.Params.image` → first image resource in
+  page bundle → no thumbnail). Used by both `index.html` (home recent-posts)
+  and `list.html` (/posts/, category, tag pages).
+- **`post-meta.html`** — `<div class="blog-post-meta">` compact icon row:
+  date · reading time · category (FA icons; no text labels). Tag pills below
+  the description. Old `分類：` / `標籤：` text labels and `.meta-label` /
+  `.meta-value` rules were removed in the refactor.
+- **`sidebar.html`** — Home sidebar `<aside class="home-sidebar">` with three
+  `.side-card` glass cards: About (avatar, name, bio, GitHub + howar31.com
+  links), Tag cloud (count-sized `.vp-pill` pills via `site.Taxonomies.tags`),
+  Support (Ko-fi + PayPal buttons from `[params.sponsor]`). Styled in
+  `_sidebar.scss`.
 - **`back-to-top.html`** — Fixed button bottom-right with two concentric
   `<circle>`s (track + progress bar). Circle geometry (`cx/cy/r`) is set as
   **HTML attributes** not CSS, because iOS Safari ≤ 16 does not support the
@@ -172,7 +214,7 @@ drift from other places rendered differently.
 Both accept an optional positional arg as title:
 `{{< tip "Edit — 2019-07-05" >}}...{{< /tip >}}`.
 
-Styled in `main.scss` under `.hint-container` — blue-border pill for tip,
+Styled in `_post.scss` under `.hint-container` — blue-border pill for tip,
 amber for warning, with dark-mode variants. Inner content is rendered via
 `{{ .Inner | markdownify }}`.
 
@@ -200,12 +242,33 @@ text line repeating the alt; those 44 duplicate lines were stripped at
 hook-introduction time so the rendered output now shows just one
 caption per image.
 
-## SCSS (`assets/scss/main.scss`)
+## SCSS (`assets/scss/`)
 
-- Heavy reuse of CSS custom properties (`--c-bg`, `--c-text`, `--c-brand`,
-  etc.) switched via `html[data-theme="dark"]` selector. Dark mode adds two
-  fixed `body::before` / `::after` purple radial gradients with
+`main.scss` is a thin entrypoint (4 SCSS variables + `@import` of 12
+partials). Variables defined there and available to all partials:
+`$navbar-height: 3.6rem`, `$content-max-width: 740px`,
+`$breakpoint-narrow: 959px`, `$breakpoint-mobile: 719px`.
+
+Partial import order: `_tokens, _base, _layout, _navbar, _footer, _hero,
+_post-list, _sidebar, _post, _search, _back-to-top, _pagination`.
+
+### `_tokens.scss` — design-system foundation
+
+- Self-hosts the **Atkinson Hyperlegible Next** display font via `@font-face`.
+- `:root` block defines the full design-system token set: color scales
+  (`--blue-*`, `--violet-*`, `--slate-*`), glass tokens (`--glass-bg`,
+  `--glass-border`, `--glass-blur`), shadow tokens (`--shadow-card`,
+  `--shadow-blue`, etc.), glow tokens (`--glow-1`, `--glow-2`), radius
+  tokens (`--radius-sm` through `--radius-pill`), type stacks
+  (`--font-sans`, `--font-mono`, `--font-display`, etc.), and semantic
+  `--c-*` / `--vp-c-*` vars — all set to **light-mode** values in `:root`.
+- **Dark mode is the canonical default.** `html[data-theme="dark"]` overrides
+  all `--c-*` / `--vp-c-*` / code vars to the dark palette. Dark mode also
+  adds `body::before` / `::after` purple radial gradients with
   `float-glow-1` / `float-glow-2` 20s / 25s infinite keyframe animations.
+
+### General SCSS notes
+
 - `.vp-*` class naming inherited from the previous VuePress default theme
   to allow the original SCSS rules to apply directly.
 - Sticky `.vp-navbar` with `backdrop-filter: blur(24px)` — site title uses
@@ -214,8 +277,10 @@ caption per image.
 - Code blocks (`pre[class*="language-"]`) are forced to the slate-900 dark
   palette regardless of site theme (intentional: code is always dark,
   matches the previous VuePress look).
-- `.term-list > li > a` produces pill-style tag chips, with a
-  `.sidebar-terms` variant that is smaller.
+- `.term-list > li > a` produces pill-style tag chips (used by `terms.html`
+  and `_sidebar.scss`). The old `.sidebar-terms` size variant was removed
+  in the refactor — `_sidebar.scss` now uses `.side-tagcloud` with inline
+  `font-size` scaling instead.
 - `.post-figure` (the captioned image card produced by the render hook):
   - **Light mode** — opaque `var(--c-bg-soft)` card, `padding: 0.5em`,
     `border-radius: 10px`, directional drop shadow; image inside has
@@ -243,7 +308,7 @@ caption per image.
     `prefers-reduced-motion`. SCSS-side `@media
     (prefers-reduced-motion: reduce)` belt-and-braces disables both the
     transition and the `figure-glow-drift` animation
-- `.vp-image-modal` lightbox lives at the end of the file. Backdrop is
+- `.vp-image-modal` lightbox lives in `_post.scss`. Backdrop is
   `rgba(0, 0, 0, 0.85)` in both light and dark mode (standard lightbox
   UX, intentionally not bound to `--c-*`). z-index 200 (backdrop) / 201
   (close button) sits above navbar (50) and back-to-top (100). Open
@@ -299,10 +364,20 @@ Single IIFE, `defer`-loaded. Responsibilities in order:
    `matchMedia('(prefers-color-scheme: dark)').addEventListener('change', …)`
    respects system changes **only** when the user hasn't made an explicit
    choice yet.
-3. **Back-to-top progress ring** — Scroll listener (rAF throttled) updates
+3. **Mobile nav toggle** — Click handler on `[data-nav-toggle]` toggles
+   the `hidden` attribute on `[data-nav-panel]` (`.vp-nav-mobile`) and
+   updates `aria-expanded`. A `resize` listener auto-hides the panel at
+   ≥ 720px viewport width.
+4. **Search modal** — Builds a `.vp-search` dialog once and appends it to
+   `<body>`. Opens on the navbar search button (`[data-search-open]`) or
+   the `/` key (when no input/textarea is focused); closes on Esc or
+   backdrop click. Lazy-fetches `/index.json` once on first open; all
+   filtering is client-side token match. Focus trap keeps Tab/Shift+Tab
+   inside the modal. See "Front-end search" section for full details.
+5. **Back-to-top progress ring** — Scroll listener (rAF throttled) updates
    `stroke-dashoffset` on `.back-to-top-bar` based on
    `scrollTop / (scrollHeight - innerHeight)`. Button fades in after 200px.
-4. **Post-image lightbox** — On post pages, builds a single
+6. **Post-image lightbox** — On post pages, builds a single
    `.vp-image-modal` (containing a `.vp-image-modal-card` figure with
    `<img>` + `<figcaption>`) once and appends it to `<body>`. Delegated
    click handler on `.post-content` opens the modal for any `<img>` not
@@ -320,7 +395,7 @@ Single IIFE, `defer`-loaded. Responsibilities in order:
    button on open and back to the originating image on close. The
    lightbox is intentionally one-shot — no prev/next navigation, no
    pinch/pan logic beyond the browser's native gestures
-5. **Figure card 3D tilt** — On post pages, attaches `mouseenter` /
+7. **Figure card 3D tilt** — On post pages, attaches `mouseenter` /
    `mousemove` / `mouseleave` listeners to every `figure.post-figure`.
    Mousemove computes a `(x, y)` offset from the card centre and writes
    `transform: perspective(800px) rotateX/Y(±6°) scale(1.02)` on a
@@ -333,6 +408,48 @@ Single IIFE, `defer`-loaded. Responsibilities in order:
 
 Prism logic (highlighting, toolbar, copy-to-clipboard) lives entirely in
 the Prism bundle, not in `theme.js`.
+
+## Front-end search
+
+Zero-dependency, all client-side, no build step.
+
+### Data source: `layouts/index.json`
+
+Hugo template that emits `/index.json` (enabled by `[outputs] home =
+["HTML", "RSS", "JSON"]` in `config.toml`). Structure:
+
+```json
+[
+  {
+    "title": "Post title",
+    "url": "/posts/slug/",
+    "date": "2026年01月02日",
+    "summary": "description or auto-truncated plaintext (≤160 chars)",
+    "tags": ["tag-a", "tag-b"],
+    "categories": ["category"]
+  },
+  ...
+]
+```
+
+### Search module in `theme.js`
+
+- Builds a glass `.vp-search` modal (role=dialog) with a backdrop, a
+  `.vp-search-card` containing `.vp-search-input` and `.vp-search-results`,
+  and appends it to `<body>` once.
+- **Open triggers**: click on `[data-search-open]` (navbar search button),
+  or `/` keydown when focus is not in an input or textarea.
+- **Close triggers**: `Escape` key, click on `.vp-search-backdrop`.
+- **Index loading**: on first open, `fetch('/index.json')` is called once;
+  result is cached in `sIndex`. Subsequent opens reuse the cache.
+- **Filtering**: each `input` event splits the query into whitespace-delimited
+  tokens; a post matches if every token appears (case-insensitive) somewhere
+  in `title + summary + tags + categories`. Results are rendered as
+  `.vp-search-result` anchor elements with title and `date · category` meta.
+  Empty query clears results; no matches shows "找不到符合的文章".
+- **Accessibility**: `aria-modal`, `aria-label`, focus trap (Tab/Shift+Tab
+  cycle within the modal), focus returns to the search trigger on close.
+- **Styled** in `assets/scss/_search.scss`.
 
 ## Prism pipeline
 
