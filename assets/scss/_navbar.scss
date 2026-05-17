@@ -32,31 +32,111 @@ html:not([data-theme="dark"]) .theme-toggle-dark {
 .vp-navbar {
   height: $navbar-height;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   padding: 0 1.5rem;
 
   .vp-navbar-inner {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 2rem;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1080px;
     margin: 0 auto;
-    gap: 1rem;
   }
 
   .vp-site-name {
     font-size: 1.25rem;
     text-decoration: none;
+    flex-shrink: 0;
   }
 
-  // Right-side cluster — only the theme toggle lives here; nav/dropdown/
-  // hamburger were removed after the navbar was simplified.
+  // Right-side cluster — search, GitHub, theme toggle, hamburger.
   .vp-navbar-actions {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    margin-left: auto;
+  }
+}
+
+// Primary nav links (desktop)
+.vp-nav {
+  display: flex;
+  gap: 1.4rem;
+  flex: 1;
+}
+
+.vp-nav-link {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--c-text-light);
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+  transition: color .2s ease, border-bottom-color .2s ease;
+
+  &:hover {
+    color: var(--c-text);
+  }
+
+  &.is-active {
+    color: var(--c-text);
+    border-bottom-color: var(--blue-400);
+  }
+}
+
+// Icon buttons (search, GitHub)
+.vp-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  color: var(--c-text-light);
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: color .2s ease, background-color .2s ease;
+
+  &:hover {
+    color: var(--c-brand);
+    background: var(--c-bg-soft);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--blue-400);
+    outline-offset: 2px;
+  }
+}
+
+// Hamburger button — hidden on desktop, inherits .vp-icon-btn visuals
+.vp-nav-burger {
+  display: none;
+}
+
+// Mobile nav panel — hidden by default (handled by [hidden] attribute)
+.vp-nav-mobile {
+  display: none;
+}
+
+.vp-nav-mobile-link {
+  display: block;
+  padding: 0.7rem 0;
+  color: var(--c-text-light);
+  font-size: 0.95rem;
+  text-decoration: none;
+  border-bottom: 1px solid var(--c-border);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    color: var(--c-text);
   }
 }
 
@@ -107,5 +187,33 @@ html:not([data-theme="dark"]) .theme-toggle-dark {
     padding: 0 1rem;
     position: sticky;
     top: 0;
+    // Allow height to grow when mobile panel is open
+    height: auto;
+    min-height: $navbar-height;
+    justify-content: flex-start;
+
+    .vp-navbar-inner {
+      height: $navbar-height;
+      flex-shrink: 0;
+    }
+  }
+
+  // Hide desktop nav links
+  .vp-nav {
+    display: none;
+  }
+
+  // Show hamburger
+  .vp-nav-burger {
+    display: inline-flex;
+  }
+
+  // Mobile panel: shown when [hidden] attr is absent
+  .vp-nav-mobile:not([hidden]) {
+    display: flex;
+    flex-direction: column;
+    background: var(--c-bg);
+    border-top: 1px solid var(--c-border);
+    padding: 0.5rem 1rem;
   }
 }

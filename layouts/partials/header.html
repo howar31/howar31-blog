@@ -2,11 +2,33 @@
   <div class="vp-navbar-inner">
     <a class="vp-site-name" href="{{ "/" | relURL }}">{{ site.Title }}</a>
 
+    <nav class="vp-nav" aria-label="Primary">
+      {{- range site.Menus.main }}
+      {{- $active := or (eq $.RelPermalink .URL) (and (ne .URL "/") (hasPrefix $.RelPermalink .URL)) }}
+      <a class="vp-nav-link{{ if $active }} is-active{{ end }}" href="{{ .URL | relURL }}">{{ .Name }}</a>
+      {{- end }}
+    </nav>
+
     <div class="vp-navbar-actions">
+      <button type="button" class="vp-icon-btn" data-search-open aria-label="Search" title="Search">
+        <i class="fas fa-search" aria-hidden="true"></i>
+      </button>
+      <a class="vp-icon-btn" href="https://github.com/howar31" rel="noopener noreferrer" target="_blank" aria-label="GitHub">
+        <i class="fab fa-github" aria-hidden="true"></i>
+      </a>
       <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle dark mode" title="Toggle dark mode">
         <i class="far fa-sun theme-toggle-light" aria-hidden="true"></i>
         <i class="far fa-moon theme-toggle-dark" aria-hidden="true"></i>
       </button>
+      <button type="button" class="vp-icon-btn vp-nav-burger" data-nav-toggle aria-label="Menu" aria-expanded="false" aria-controls="vp-nav-mobile-panel">
+        <i class="fas fa-bars" aria-hidden="true"></i>
+      </button>
     </div>
   </div>
+
+  <nav id="vp-nav-mobile-panel" class="vp-nav-mobile" data-nav-panel aria-label="Mobile" hidden>
+    {{- range site.Menus.main }}
+    <a class="vp-nav-mobile-link" href="{{ .URL | relURL }}">{{ .Name }}</a>
+    {{- end }}
+  </nav>
 </header>

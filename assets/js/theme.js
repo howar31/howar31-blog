@@ -47,6 +47,24 @@
     else if (mq.addListener) mq.addListener(listener);
   }
 
+  // ---- Mobile nav toggle -----------------------------------------------
+  var navToggle = document.querySelector('[data-nav-toggle]');
+  var navPanel = document.querySelector('[data-nav-panel]');
+  if (navToggle && navPanel) {
+    navToggle.addEventListener('click', function () {
+      var open = navPanel.hasAttribute('hidden');
+      if (open) navPanel.removeAttribute('hidden');
+      else navPanel.setAttribute('hidden', '');
+      navToggle.setAttribute('aria-expanded', String(open));
+    });
+    window.addEventListener('resize', function () {
+      if (window.innerWidth >= 720) {
+        navPanel.setAttribute('hidden', '');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
   // ---- Back-to-top button + scroll progress ring -----------------------
   var backBtn = document.querySelector('[data-back-to-top]');
   if (backBtn) {

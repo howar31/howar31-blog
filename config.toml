@@ -31,8 +31,30 @@ enableGitInfo = true
   kofi = "howar31"
   paypal = "https://donate.howar31.com"
 
-# Footer "About" column. The top navbar is intentionally minimal
-# (logo + theme toggle only), so no `[[menu.main]]` entries are defined.
+# Main navigation menu. Displayed in the top navbar on desktop; collapses
+# into a hamburger panel on mobile.
+[[menu.main]]
+  name = "Home"
+  url = "/"
+  weight = 10
+[[menu.main]]
+  name = "Posts"
+  url = "/posts/"
+  weight = 20
+[[menu.main]]
+  name = "Categories"
+  url = "/categories/"
+  weight = 30
+[[menu.main]]
+  name = "Tags"
+  url = "/tags/"
+  weight = 40
+[[menu.main]]
+  name = "About"
+  url = "/about/"
+  weight = 50
+
+# Footer "About" column.
 [[menu.footer]]
   name = "howar31.com"
   url = "https://howar31.com"
