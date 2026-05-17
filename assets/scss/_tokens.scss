@@ -2,6 +2,14 @@
 // Source: ~/.claude/cache/howar31-blog-design/colors_and_type.css
 // Dark mode is canonical; light mode overrides --c-* semantics in :root.
 
+@font-face {
+  font-family: "Atkinson Hyperlegible Next";
+  src: url("/fonts/AtkinsonHyperlegibleNext.woff2") format("woff2");
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   // ---- Color scales -------------------------------------------------------
   --blue-400: #60a5fa;
@@ -133,12 +141,12 @@
   --vp-c-accent-bg:    rgba(59, 130, 246, 0.1);
   --vp-c-accent-hover: var(--blue-400);
 
-  // Code block (font family left for Task 3)
+  // Code block — code/pre use var(--font-mono); these are kept for the
+  // dark-mode --code-bg/text overrides below.
   --code-bg-color:    #f8fafc;
   --code-text-color:  #1e293b;
   --code-line-height: 1.7;
   --code-font-size:   0.85em;
-  --code-font-family: 'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace;
 
   // VuePress-compatibility duplicates of --tip / --warning / --danger.
   --c-tip:     var(--blue-500);

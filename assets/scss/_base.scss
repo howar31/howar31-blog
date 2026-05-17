@@ -72,7 +72,7 @@ $code-fg-dark: #cbd5e1;
 $code-inline-border: rgba(148, 163, 184, 0.25);
 
 code {
-  font-family: 'Fira Code', var(--code-font-family);
+  font-family: var(--font-mono);
   font-size: 0.85em;
   background-color: $code-bg-dark;
   color: $code-fg-dark;
@@ -91,7 +91,7 @@ pre[class*="language-"] {
   border-radius: 6px;
   line-height: 1.7;
   background-color: $code-bg-dark !important;
-  font-family: 'Fira Code', var(--code-font-family);
+  font-family: var(--font-mono);
   font-size: 0.85em;
 
   code[class*="language-"] {
@@ -242,7 +242,7 @@ hr {
 
 // Global styles
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--font-sans);
 }
 
 // Links - exclude code blocks to preserve syntax highlighting

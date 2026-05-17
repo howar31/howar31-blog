@@ -18,7 +18,7 @@ enableGitInfo = true
   themeColor = "#000000"
   fontAwesomeCDN = "https://use.fontawesome.com/releases/v5.8.1/css/all.css"
   fontAwesomeIntegrity = "sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
-  googleFonts = "https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap"
+  googleFonts = "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap"
 
 # Sponsor / tip links. Only verified platforms — GitHub Sponsors is NOT
 # enabled on this account (`howar31`) so do not re-add it without first
