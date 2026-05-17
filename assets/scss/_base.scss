@@ -321,7 +321,7 @@ p a:not(.header-anchor):not(.vp-header-anchor):not(pre a):not(code a):not([class
   }
 }
 
-@media (max-width: 719px) {
+@media (max-width: $breakpoint-mobile) {
   h1 { font-size: 1.8rem; }
   h2 { font-size: 1.4rem; }
 }

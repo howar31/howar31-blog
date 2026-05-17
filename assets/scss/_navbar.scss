@@ -102,7 +102,7 @@ html:not([data-theme="dark"]) .theme-toggle-dark {
   }
 }
 
-@media (max-width: 719px) {
+@media (max-width: $breakpoint-mobile) {
   .vp-navbar {
     padding: 0 1rem;
     position: sticky;

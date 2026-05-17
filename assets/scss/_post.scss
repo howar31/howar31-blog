@@ -173,7 +173,7 @@
 }
 
 // Mobile responsive
-@media (max-width: 719px) {
+@media (max-width: $breakpoint-mobile) {
   .blog-post-meta {
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
