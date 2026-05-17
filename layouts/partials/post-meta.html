@@ -1,53 +1,23 @@
-{{- /* Blog post meta matching VuePress `.blog-post-meta` structure. */ -}}
-{{- $hasDate := .Date -}}
-{{- $hasDesc := .Description -}}
 {{- $categories := .Params.categories -}}
 {{- $tags := .Params.tags -}}
-{{- if or $hasDate $hasDesc $categories $tags -}}
 <div class="blog-post-meta">
-  {{- if $hasDate }}
   <div class="meta-row">
-    <span class="meta-item">
-      <i class="far fa-clock" aria-hidden="true"></i>
-      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006年01月02日" }}</time>
-    </span>
-  </div>
-  {{- end }}
-
-  {{- with $hasDesc }}
-  <div class="meta-description">
-    <p>{{ . }}</p>
-  </div>
-  {{- end }}
-
-  {{- if or $categories $tags }}
-  <div class="meta-row">
+    <span class="meta-item"><i class="far fa-calendar-alt" aria-hidden="true"></i>
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006年01月02日" }}</time></span>
+    <span class="meta-item"><i class="far fa-clock" aria-hidden="true"></i> {{ .ReadingTime }} 分鐘閱讀</span>
     {{- with $categories }}
-    <span class="meta-item">
-      <i class="fas fa-cat" aria-hidden="true"></i>
-      <span class="meta-label">分類：</span>
-      <span class="meta-value">
-        {{- range $i, $c := . -}}
-          {{- if $i }}、{{ end -}}
-          <a href="{{ printf "/categories/%s/" (. | urlize) | relURL }}">{{ . }}</a>
-        {{- end -}}
-      </span>
+    <span class="meta-item"><i class="fas fa-cat" aria-hidden="true"></i>
+      {{- range $i, $c := . }}{{ if $i }}、{{ end }}<a href="{{ printf "/categories/%s/" ($c | urlize) | relURL }}">{{ $c }}</a>{{ end -}}
     </span>
     {{- end }}
-
-    {{- with $tags }}
-    <span class="meta-item">
-      <i class="fas fa-hashtag" aria-hidden="true"></i>
-      <span class="meta-label">標籤：</span>
-      <span class="meta-value">
-        {{- range $i, $t := . -}}
-          {{- if $i }}、{{ end -}}
-          <a href="{{ printf "/tags/%s/" (. | urlize) | relURL }}">{{ . }}</a>
-        {{- end -}}
-      </span>
-    </span>
+  </div>
+  {{- with .Description }}<div class="meta-description"><p>{{ . }}</p></div>{{ end }}
+  {{- with $tags }}
+  <div class="meta-tags">
+    {{- range . }}
+    <a class="vp-pill" href="{{ printf "/tags/%s/" (. | urlize) | relURL }}">
+      <i class="fas fa-hashtag" aria-hidden="true"></i>{{ . }}</a>
     {{- end }}
   </div>
   {{- end }}
 </div>
-{{- end -}}

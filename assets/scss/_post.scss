@@ -134,15 +134,6 @@
       time {
         font-variant-numeric: tabular-nums;
       }
-
-      .meta-label {
-        font-weight: 500;
-        opacity: 0.8;
-      }
-
-      .meta-value {
-        opacity: 1;
-      }
     }
   }
 
@@ -155,6 +146,18 @@
     p {
       margin: 0;
     }
+  }
+
+  .meta-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.25rem;
+  }
+
+  // No trailing space before the divider when a post omits description/tags.
+  > :last-child {
+    margin-bottom: 0;
   }
 }
 
