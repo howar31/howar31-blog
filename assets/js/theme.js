@@ -76,6 +76,12 @@
     search.innerHTML =
       '<div class="vp-search-backdrop"></div>' +
       '<div class="vp-search-card">' +
+        '<button class="vp-search-close" type="button" aria-label="關閉">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+            '<line x1="6" y1="6" x2="18" y2="18"></line>' +
+            '<line x1="18" y1="6" x2="6" y2="18"></line>' +
+          '</svg>' +
+        '</button>' +
         '<input class="vp-search-input" type="search" placeholder="搜尋文章…" aria-label="搜尋文章">' +
         '<div class="vp-search-results"></div>' +
       '</div>';
@@ -139,7 +145,7 @@
     // Focus trap: keep Tab/Shift+Tab inside the modal while it is open.
     search.addEventListener('keydown', function (e) {
       if (e.key !== 'Tab' || !search.classList.contains('is-open')) return;
-      var focusable = search.querySelectorAll('.vp-search-input, .vp-search-result');
+      var focusable = search.querySelectorAll('.vp-search-close, .vp-search-input, .vp-search-result');
       if (!focusable.length) return;
       var first = focusable[0];
       var last = focusable[focusable.length - 1];
@@ -152,6 +158,7 @@
 
     searchOpen.addEventListener('click', openSearch);
     sBackdrop.addEventListener('click', closeSearch);
+    search.querySelector('.vp-search-close').addEventListener('click', closeSearch);
     sInput.addEventListener('input', function () { renderResults(sInput.value); });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && search.classList.contains('is-open')) closeSearch();

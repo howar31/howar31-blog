@@ -1,7 +1,7 @@
 {{ define "main" }}
 <article class="post">
   <h1>{{ .Title }}</h1>
-  {{- partial "post-meta.html" . -}}
+  {{ if eq .Type "posts" }}{{- partial "post-meta.html" . -}}{{ end }}
   <div class="post-content">
     {{ .Content }}
   </div>
