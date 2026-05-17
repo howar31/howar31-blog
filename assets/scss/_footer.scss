@@ -1,10 +1,10 @@
 .vp-footer {
-  margin-top: 4rem;
+  margin-top: 5rem;
   padding: 2.5rem 1.5rem 1.5rem;
   color: var(--c-text-light);
   font-size: 0.9rem;
   border-top: 1px solid var(--c-border);
-  background-color: var(--c-bg-soft);
+  background: transparent;
 
   .vp-footer-inner {
     max-width: 1080px;
@@ -15,8 +15,8 @@
   }
 
   .vp-footer-heading {
-    font-size: 0.8rem;
-    letter-spacing: 0.08em;
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--c-text-lighter);
     margin: 0 0 0.75rem;
@@ -67,7 +67,7 @@
     align-items: center;
     gap: 0.4rem;
     padding: 0.5rem 0.9rem;
-    border-radius: 6px;
+    border-radius: var(--radius-pill);
     font-size: 0.85rem;
     font-weight: 500;
     text-decoration: none;
