@@ -62,7 +62,7 @@ semantic names (layouts and SCSS reference them widely) and add the new tokens.
 - **Mono:** JetBrains Mono — Google Fonts. Replaces Fira Code in `config.toml`
   `googleFonts` param and in SCSS `code` / `pre` font stacks.
 - **Display:** Atkinson Hyperlegible Next — self-hosted woff2 (42 KB) in
-  `assets/fonts/`, `@font-face` in `_tokens.scss`. Used for hero title + site name.
+  `static/fonts/`, `@font-face` in `_tokens.scss`. Used for hero title + site name.
 - Code blocks keep their fixed dark palette (Prism owns colors).
 
 ## 6. Theme boot
@@ -164,7 +164,7 @@ back-to-top ring, lightbox, figure tilt). Added:
 | `layouts/_default/list.html`, `terms.html`, `single.html`, `post-meta.html` | restyle |
 | `assets/scss/*` | split into partials, rewrite components |
 | `assets/js/theme.js` | nav + search |
-| `assets/fonts/AtkinsonHyperlegibleNext.woff2` | new — self-hosted display font |
+| `static/fonts/AtkinsonHyperlegibleNext.woff2` | new — self-hosted display font |
 | `content/about.md` | new — About page |
 
 ## 14. Verification
