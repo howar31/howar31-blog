@@ -93,6 +93,10 @@ pre[class*="language-"] {
   background-color: $code-bg-dark !important;
   font-family: var(--font-mono);
   font-size: 0.85em;
+  // Long code lines scroll within the block instead of overflowing the
+  // column. Also drops the <pre> min-content to 0, so it can't inflate an
+  // ancestor grid track.
+  overflow-x: auto;
 
   code[class*="language-"] {
     background: transparent;

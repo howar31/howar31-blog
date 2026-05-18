@@ -466,10 +466,21 @@ html.modal-open body {
 // Narrow screens: drop to one column, ToC moves above the article, not sticky.
 @media (max-width: $breakpoint-narrow) {
   .post-layout.has-toc {
-    grid-template-columns: 1fr;
+    // minmax(0, 1fr) — NOT bare `1fr`. A bare `1fr` track is minmax(auto, 1fr),
+    // whose `auto` minimum balloons to the min-content of the widest non-wrapping
+    // child (a long code line in <pre>), pushing the track past the viewport.
+    // `0` lets the track shrink to the container width.
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .post-layout.has-toc .post-main {
+    // `width: 100%` is required, not just `margin: 0 auto`. Auto inline-axis
+    // margins on a grid item SUPPRESS justify-self stretch, so without an
+    // explicit width the item is sized to its max-content (the widest code
+    // block) and only clamped by max-width — overflowing narrow viewports.
+    // width:100% pins it to the track; max-width still caps it on tablets,
+    // where the auto margins then re-center it.
+    width: 100%;
     margin: 0 auto;
   }
 

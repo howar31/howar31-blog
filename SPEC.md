@@ -399,7 +399,9 @@ properties + their media-query overrides) live in `_layout.scss` — see
   the modal always sits on a dark backdrop. `<= 640px` media query
   trims close-button margins and caps image height to 73vh
 
-### SCSS pitfall (document so future edits don't regress)
+### SCSS pitfalls (document so future edits don't regress)
+
+**1. Nested `&-<suffix>` after a descendant combinator (libsass)**
 
 Do **not** use `&-<suffix>` after a descendant combinator inside nested
 scopes. Libsass expands `&-suffix` using the *entire* parent selector,
@@ -424,6 +426,29 @@ explicitly instead:
 This tripped up the navbar dropdown rules in an earlier iteration; both
 the buggy selectors and the code that depended on them were removed, but
 keep this note when adding new BEM-style nested rules.
+
+**2. Grid tracks — `minmax(0, 1fr)`, never bare `1fr`**
+
+A bare `1fr` track is `minmax(auto, 1fr)`. The `auto` floor is the
+column's content min-content, so a non-wrapping child (a long `<pre>`
+code line) or a wide descendant inflates the track past the viewport.
+`body { overflow-x: clip }` then slices the content off with no
+scrollbar. iOS Safari exposes this far more readily than Chromium — it
+does not shrink the `auto` floor below content size. Always write
+`minmax(0, 1fr)` for flexible tracks: it behaves like `1fr` but lets the
+track shrink to its container. Applies to `.post-layout.has-toc`,
+`.home-layout`, and `.post-card` (all three).
+
+**3. `auto` inline margins suppress grid-item stretch**
+
+`margin: 0 auto` on a grid item *suppresses* `justify-self: stretch` —
+the item is then sized to its max-content (clamped only by `max-width`),
+overflowing narrow viewports. `.post-layout.has-toc .post-main` keeps
+`margin: 0 auto` (to re-center on tablets) **and** sets `width: 100%`,
+which pins it to the track while `max-width` still caps it. Separately,
+a grid item whose automatic minimum must collapse needs explicit
+`min-width: 0` (e.g. `.home-main`) — without it the item's min-content
+inflates the parent column.
 
 ## JS (`assets/js/theme.js`)
 

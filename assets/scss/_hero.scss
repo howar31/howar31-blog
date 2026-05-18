@@ -35,6 +35,13 @@
   align-items: start;
 }
 
+// Grid item: without min-width:0 its automatic minimum is the content
+// min-content, which lets a wide descendant (a post card) inflate the
+// column past the viewport — most visibly in iOS Safari.
+.home-main {
+  min-width: 0;
+}
+
 .home-main-header {
   display: flex;
   align-items: baseline;
@@ -105,7 +112,7 @@
   }
 
   .home-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 2rem;
   }
 }

@@ -8,13 +8,17 @@
 // Post card row
 .post-card {
   display: grid;
-  grid-template-columns: 1fr;
+  // minmax(0, …) not bare `1fr`: a bare `1fr` is minmax(auto, 1fr), whose
+  // `auto` floor is the column's content min-content. iOS Safari does not
+  // shrink that floor below content size as readily as Chromium, so a wide
+  // child pushes the card — and the whole list — past the viewport.
+  grid-template-columns: minmax(0, 1fr);
   gap: 1.5rem;
   padding: 1.5rem 0;
   border-bottom: 1px solid var(--c-border);
 
   &.has-thumb {
-    grid-template-columns: 1fr 200px;
+    grid-template-columns: minmax(0, 1fr) 200px;
   }
 
   // last-of-type (not last-child) stays correct whether or not the card
@@ -124,7 +128,7 @@
 // Mobile: collapse thumb above text
 @media (max-width: $breakpoint-mobile) {
   .post-card.has-thumb {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .post-card-thumb {
