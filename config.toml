@@ -5,6 +5,11 @@ enableRobotsTXT = true
 enableEmoji = true
 enableGitInfo = true
 
+# Taxonomy term-index pages (/categories/ and /tags/) are disabled — the blog
+# navigates via post cards and the sidebar tag cloud, not browsable indexes.
+# Individual term pages (/tags/<tag>/, /categories/<cat>/) are still generated.
+disableKinds = ["taxonomy"]
+
 # Google Analytics: previous `UA-8779590-7` was Universal Analytics, retired
 # 2023-07. Disabled until a GA4 property ID (format `G-XXXXXXX`) is issued,
 # otherwise Hugo injects a dead tracker that ad-blockers flag.
@@ -31,28 +36,8 @@ enableGitInfo = true
   kofi = "howar31"
   paypal = "https://donate.howar31.com"
 
-# Main navigation menu. Displayed in the top navbar on desktop; collapses
-# into a hamburger panel on mobile.
-[[menu.main]]
-  name = "Home"
-  url = "/"
-  weight = 10
-[[menu.main]]
-  name = "Posts"
-  url = "/posts/"
-  weight = 20
-[[menu.main]]
-  name = "Categories"
-  url = "/categories/"
-  weight = 30
-[[menu.main]]
-  name = "Tags"
-  url = "/tags/"
-  weight = 40
-[[menu.main]]
-  name = "About"
-  url = "/about/"
-  weight = 50
+# The top navbar is intentionally minimal — site name + search + GitHub +
+# theme toggle. No `[[menu.main]]` entries; `header.html` renders no nav links.
 
 # Footer "About" column.
 [[menu.footer]]

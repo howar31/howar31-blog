@@ -13,7 +13,7 @@
         <a class="home-main-more" href="{{ "/posts/" | relURL }}">All Posts →</a>
       </header>
 
-      {{- $recent := first 10 (where site.RegularPages "Type" "posts").ByDate.Reverse -}}
+      {{- $recent := first 5 (where site.RegularPages "Type" "posts").ByDate.Reverse -}}
       {{- $total := len (where site.RegularPages "Type" "posts") -}}
       <div class="post-list">
         {{- range $recent }}

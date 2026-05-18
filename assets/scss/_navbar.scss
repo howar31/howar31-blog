@@ -28,13 +28,35 @@ html:not([data-theme="dark"]) .theme-toggle-dark {
   display: none;
 }
 
-// Navbar wrapper
+// Navbar wrapper — site name (left) + action cluster (right). Sticky, blurred.
 .vp-navbar {
   height: $navbar-height;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  align-items: center;
   padding: 0 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(24px);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+
+  @supports (backdrop-filter: blur(1px)) {
+    background-color: rgba(255, 255, 255, 0);
+  }
+  @supports not (backdrop-filter: blur(1px)) {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+
+  [data-theme="dark"] & {
+    @supports (backdrop-filter: blur(1px)) {
+      background-color: rgba(2, 6, 23, 0.6);
+    }
+    @supports not (backdrop-filter: blur(1px)) {
+      background-color: rgba(2, 6, 23, 0.7);
+    }
+    border-bottom-color: rgba(30, 41, 59, 0.3);
+  }
 
   .vp-navbar-inner {
     display: flex;
@@ -51,38 +73,12 @@ html:not([data-theme="dark"]) .theme-toggle-dark {
     flex-shrink: 0;
   }
 
-  // Right-side cluster — search, GitHub, theme toggle, hamburger.
+  // Right-side cluster — search, GitHub, theme toggle.
   .vp-navbar-actions {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     margin-left: auto;
-  }
-}
-
-// Primary nav links (desktop)
-.vp-nav {
-  display: flex;
-  gap: 1.4rem;
-  flex: 1;
-}
-
-.vp-nav-link {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--c-text-light);
-  text-decoration: none;
-  padding-bottom: 2px;
-  border-bottom: 2px solid transparent;
-  transition: color .2s ease, border-bottom-color .2s ease;
-
-  &:hover {
-    color: var(--c-text);
-  }
-
-  &.is-active {
-    color: var(--c-text);
-    border-bottom-color: var(--blue-400);
   }
 }
 
@@ -113,61 +109,7 @@ html:not([data-theme="dark"]) .theme-toggle-dark {
   }
 }
 
-// Hamburger button — hidden on desktop, inherits .vp-icon-btn visuals
-.vp-nav-burger {
-  display: none;
-}
-
-// Mobile nav panel — hidden by default (handled by [hidden] attribute)
-.vp-nav-mobile {
-  display: none;
-}
-
-.vp-nav-mobile-link {
-  display: block;
-  padding: 0.7rem 0;
-  color: var(--c-text-light);
-  font-size: 0.95rem;
-  text-decoration: none;
-  border-bottom: 1px solid var(--c-border);
-
-  &:last-child {
-    border-bottom: none;
-  }
-
-  &:hover {
-    color: var(--c-text);
-  }
-}
-
-// Navbar styling
-.vp-navbar {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  backdrop-filter: blur(24px);
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-
-  @supports (backdrop-filter: blur(1px)) {
-    background-color: rgba(255, 255, 255, 0);
-  }
-  @supports not (backdrop-filter: blur(1px)) {
-    background-color: rgba(255, 255, 255, 0.9);
-  }
-  border-bottom: 1px solid rgba(226, 232, 240, 0.5);
-
-  [data-theme="dark"] & {
-    @supports (backdrop-filter: blur(1px)) {
-      background-color: rgba(2, 6, 23, 0.6);
-    }
-    @supports not (backdrop-filter: blur(1px)) {
-      background-color: rgba(2, 6, 23, 0.7);
-    }
-    border-bottom-color: rgba(30, 41, 59, 0.3);
-  }
-}
-
-// Navbar site name
+// Navbar site name — blue→violet gradient wordmark
 .vp-navbar .vp-site-name,
 .vp-site-name {
   font-weight: 700;
@@ -185,35 +127,5 @@ html:not([data-theme="dark"]) .theme-toggle-dark {
 @media (max-width: $breakpoint-mobile) {
   .vp-navbar {
     padding: 0 1rem;
-    position: sticky;
-    top: 0;
-    // Allow height to grow when mobile panel is open
-    height: auto;
-    min-height: $navbar-height;
-    justify-content: flex-start;
-
-    .vp-navbar-inner {
-      height: $navbar-height;
-      flex-shrink: 0;
-    }
-  }
-
-  // Hide desktop nav links
-  .vp-nav {
-    display: none;
-  }
-
-  // Show hamburger
-  .vp-nav-burger {
-    display: inline-flex;
-  }
-
-  // Mobile panel: shown when [hidden] attr is absent
-  .vp-nav-mobile:not([hidden]) {
-    display: flex;
-    flex-direction: column;
-    background: var(--c-bg);
-    border-top: 1px solid var(--c-border);
-    padding: 0.5rem 1rem;
   }
 }
