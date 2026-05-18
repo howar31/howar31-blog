@@ -189,11 +189,13 @@ html[data-theme="dark"],
   --code-bg-color:   #0f172a;
   --code-text-color: #cbd5e1;
 
-  // Dark mode background — deep slate canvas
+  // Dark mode background — deep slate canvas.
+  // overflow-x must be `clip` (not `hidden`): `hidden` establishes a scroll
+  // container, which breaks `position: sticky` on the navbar. `clip` does not.
   body {
     background-color: var(--bg-canvas);
     position: relative;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   // Ensure main containers don't block the glow animation
