@@ -11,6 +11,18 @@
     </div>
   </div>
 
+  {{- with site.Taxonomies.categories }}
+  <div class="side-card">
+    <div class="side-eyebrow">Categories</div>
+    <div class="side-tagcloud">
+      {{- range $term, $pages := . }}
+      <a class="vp-pill side-tag" href="{{ printf "/categories/%s/" ($term | urlize) | relURL }}">
+        {{ $term }} <span class="side-tag-count">{{ len $pages }}</span></a>
+      {{- end }}
+    </div>
+  </div>
+  {{- end }}
+
   {{- with site.Taxonomies.tags }}
   <div class="side-card">
     <div class="side-eyebrow">Tags</div>

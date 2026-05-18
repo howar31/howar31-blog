@@ -63,7 +63,7 @@ html:not([data-theme="dark"]) .theme-toggle-dark {
     align-items: center;
     gap: 2rem;
     width: 100%;
-    max-width: 1080px;
+    max-width: var(--wide-max);
     margin: 0 auto;
   }
 

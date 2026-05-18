@@ -6,14 +6,6 @@
   padding: 3rem 0 2rem;
 }
 
-.home-eyebrow {
-  font-size: 0.8125rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--c-text-lighter);
-  margin-bottom: 0.625rem;
-}
-
 .home-title {
   font-size: 2.5rem;
   font-weight: 700;
@@ -38,7 +30,7 @@
 
 .home-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 16rem;
+  grid-template-columns: minmax(0, 1fr) var(--sidebar-w);
   gap: 2.75rem;
   align-items: start;
 }
