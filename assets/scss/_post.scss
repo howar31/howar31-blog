@@ -393,12 +393,13 @@ html.modal-open body {
   margin: 0 auto;
 }
 
-// 2-column only when the post has a ToC (>= 2 top-level headings).
+// 2-column only when the post has a ToC (>= 2 ToC entries).
 .post-layout.has-toc {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 15rem;
   gap: 3rem;
-  align-items: start;
+  // No `align-items: start`: the .post-toc column must stretch to the full
+  // article height so its sticky inner panel has room to travel.
 }
 
 .post-layout.has-toc .post-main {
