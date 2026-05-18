@@ -1,0 +1,128 @@
+// Dark mode toggle button
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--c-border);
+  color: var(--c-text);
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+
+  &:hover {
+    color: var(--c-brand);
+    border-color: var(--c-brand);
+  }
+
+  .theme-toggle-light,
+  .theme-toggle-dark {
+    font-size: 1rem;
+  }
+}
+
+html[data-theme="dark"] .theme-toggle-light,
+html:not([data-theme="dark"]) .theme-toggle-dark {
+  display: none;
+}
+
+// Navbar wrapper — site name (left) + action cluster (right). Sticky, blurred.
+.vp-navbar {
+  height: $navbar-height;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(24px);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+
+  @supports (backdrop-filter: blur(1px)) {
+    background-color: rgba(255, 255, 255, 0);
+  }
+  @supports not (backdrop-filter: blur(1px)) {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+
+  [data-theme="dark"] & {
+    @supports (backdrop-filter: blur(1px)) {
+      background-color: rgba(2, 6, 23, 0.6);
+    }
+    @supports not (backdrop-filter: blur(1px)) {
+      background-color: rgba(2, 6, 23, 0.7);
+    }
+    border-bottom-color: rgba(30, 41, 59, 0.3);
+  }
+
+  // Same box model as .vp-content-wide (max-width + 1.5rem inner padding)
+  // so the site name / actions align with the page content below.
+  .vp-navbar-inner {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+    max-width: var(--wide-max);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .vp-site-name {
+    font-size: 1.25rem;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  // Right-side cluster — search, GitHub, theme toggle.
+  .vp-navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+  }
+}
+
+// Icon buttons (search, GitHub)
+.vp-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  color: var(--c-text-light);
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: color .2s ease, background-color .2s ease;
+
+  &:hover {
+    color: var(--c-brand);
+    background: var(--c-bg-soft);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--blue-400);
+    outline-offset: 2px;
+  }
+}
+
+// Navbar site name — blue→violet gradient wordmark
+.vp-navbar .vp-site-name,
+.vp-site-name {
+  font-weight: 700;
+  color: var(--blue-400);
+  background: linear-gradient(to right, var(--blue-400), var(--violet-400));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  @supports (background-clip: text) {
+    color: transparent;
+  }
+}
+

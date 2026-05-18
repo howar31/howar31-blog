@@ -5,6 +5,11 @@ enableRobotsTXT = true
 enableEmoji = true
 enableGitInfo = true
 
+# Taxonomy term-index pages (/categories/ and /tags/) are disabled — the blog
+# navigates via post cards and the sidebar tag cloud, not browsable indexes.
+# Individual term pages (/tags/<tag>/, /categories/<cat>/) are still generated.
+disableKinds = ["taxonomy"]
+
 # Google Analytics: previous `UA-8779590-7` was Universal Analytics, retired
 # 2023-07. Disabled until a GA4 property ID (format `G-XXXXXXX`) is issued,
 # otherwise Hugo injects a dead tracker that ad-blockers flag.
@@ -18,7 +23,7 @@ enableGitInfo = true
   themeColor = "#000000"
   fontAwesomeCDN = "https://use.fontawesome.com/releases/v5.8.1/css/all.css"
   fontAwesomeIntegrity = "sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
-  googleFonts = "https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap"
+  googleFonts = "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap"
 
 # Sponsor / tip links. Only verified platforms — GitHub Sponsors is NOT
 # enabled on this account (`howar31`) so do not re-add it without first
@@ -31,8 +36,10 @@ enableGitInfo = true
   kofi = "howar31"
   paypal = "https://donate.howar31.com"
 
-# Footer "About" column. The top navbar is intentionally minimal
-# (logo + theme toggle only), so no `[[menu.main]]` entries are defined.
+# The top navbar is intentionally minimal — site name + search + GitHub +
+# theme toggle. No `[[menu.main]]` entries; `header.html` renders no nav links.
+
+# Footer "About" column.
 [[menu.footer]]
   name = "howar31.com"
   url = "https://howar31.com"
@@ -84,7 +91,7 @@ enableGitInfo = true
   filename = "sitemap.xml"
 
 [outputs]
-  home = ["HTML", "RSS"]
+  home = ["HTML", "RSS", "JSON"]
   section = ["HTML", "RSS"]
 
 [pagination]

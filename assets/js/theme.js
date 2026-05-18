@@ -47,6 +47,110 @@
     else if (mq.addListener) mq.addListener(listener);
   }
 
+  // ---- Search ----------------------------------------------------------
+  var searchOpen = document.querySelector('[data-search-open]');
+  if (searchOpen) {
+    var search = document.createElement('div');
+    search.className = 'vp-search';
+    search.setAttribute('role', 'dialog');
+    search.setAttribute('aria-modal', 'true');
+    search.setAttribute('aria-label', 'Search posts');
+    search.innerHTML =
+      '<div class="vp-search-backdrop"></div>' +
+      '<div class="vp-search-card">' +
+        '<button class="vp-search-close" type="button" aria-label="Close">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+            '<line x1="6" y1="6" x2="18" y2="18"></line>' +
+            '<line x1="18" y1="6" x2="6" y2="18"></line>' +
+          '</svg>' +
+        '</button>' +
+        '<input class="vp-search-input" type="search" placeholder="Search posts…" aria-label="Search posts">' +
+        '<div class="vp-search-results"></div>' +
+      '</div>';
+    document.body.appendChild(search);
+
+    var sInput = search.querySelector('.vp-search-input');
+    var sResults = search.querySelector('.vp-search-results');
+    var sBackdrop = search.querySelector('.vp-search-backdrop');
+    var sIndex = null;
+    var lastSearchTrigger = null;
+
+    function renderResults(q) {
+      q = q.trim().toLowerCase();
+      if (!sIndex || !q) { sResults.innerHTML = ''; return; }
+      var tokens = q.split(/\s+/);
+      var hits = sIndex.filter(function (p) {
+        var hay = (p.title + ' ' + (p.summary || '') + ' ' +
+          (p.tags || []).join(' ') + ' ' + (p.categories || []).join(' ')).toLowerCase();
+        return tokens.every(function (t) { return hay.indexOf(t) !== -1; });
+      });
+      if (!hits.length) {
+        sResults.innerHTML = '<div class="vp-search-empty">No matching posts</div>';
+        return;
+      }
+      sResults.innerHTML = hits.map(function () {
+        return '<a class="vp-search-result">' +
+          '<div class="vp-search-result-title"></div>' +
+          '<div class="vp-search-result-meta"></div></a>';
+      }).join('');
+      var nodes = sResults.querySelectorAll('.vp-search-result');
+      hits.forEach(function (p, i) {
+        nodes[i].setAttribute('href', p.url);
+        nodes[i].querySelector('.vp-search-result-title').textContent = p.title;
+        nodes[i].querySelector('.vp-search-result-meta').textContent =
+          [p.date].concat(p.categories || []).join(' · ');
+      });
+    }
+
+    function openSearch() {
+      lastSearchTrigger = document.activeElement;
+      search.classList.add('is-open');
+      root.classList.add('modal-open');
+      searchOpen.setAttribute('aria-expanded', 'true');
+      if (!sIndex) {
+        fetch('/index.json').then(function (r) { return r.json(); })
+          .then(function (data) { sIndex = data; renderResults(sInput.value); })
+          .catch(function () { sIndex = null; });
+      }
+      window.requestAnimationFrame(function () { sInput.focus(); });
+    }
+    function closeSearch() {
+      search.classList.remove('is-open');
+      root.classList.remove('modal-open');
+      searchOpen.setAttribute('aria-expanded', 'false');
+      if (lastSearchTrigger && typeof lastSearchTrigger.focus === 'function') {
+        try { lastSearchTrigger.focus({ preventScroll: true }); } catch (_) { lastSearchTrigger.focus(); }
+      }
+      lastSearchTrigger = null;
+    }
+
+    // Focus trap: keep Tab/Shift+Tab inside the modal while it is open.
+    search.addEventListener('keydown', function (e) {
+      if (e.key !== 'Tab' || !search.classList.contains('is-open')) return;
+      var focusable = search.querySelectorAll('.vp-search-close, .vp-search-input, .vp-search-result');
+      if (!focusable.length) return;
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault(); last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault(); first.focus();
+      }
+    });
+
+    searchOpen.addEventListener('click', openSearch);
+    sBackdrop.addEventListener('click', closeSearch);
+    search.querySelector('.vp-search-close').addEventListener('click', closeSearch);
+    sInput.addEventListener('input', function () { renderResults(sInput.value); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && search.classList.contains('is-open')) closeSearch();
+      if (e.key === '/' && !search.classList.contains('is-open')) {
+        var tag = (e.target && e.target.tagName) || '';
+        if (tag !== 'INPUT' && tag !== 'TEXTAREA') { e.preventDefault(); openSearch(); }
+      }
+    });
+  }
+
   // ---- Back-to-top button + scroll progress ring -----------------------
   var backBtn = document.querySelector('[data-back-to-top]');
   if (backBtn) {
@@ -91,14 +195,14 @@
     modal.setAttribute('role', 'dialog');
     modal.setAttribute('aria-modal', 'true');
     modal.setAttribute('aria-hidden', 'true');
-    modal.setAttribute('aria-label', '放大圖片');
+    modal.setAttribute('aria-label', 'Enlarged image');
     modal.innerHTML =
       '<div class="vp-image-modal-backdrop"></div>' +
       '<figure class="vp-image-modal-card">' +
         '<img class="vp-image-modal-img" alt="">' +
         '<figcaption class="vp-image-modal-caption"></figcaption>' +
       '</figure>' +
-      '<button class="vp-image-modal-close" type="button" aria-label="關閉">' +
+      '<button class="vp-image-modal-close" type="button" aria-label="Close">' +
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
           '<line x1="6" y1="6" x2="18" y2="18"></line>' +
           '<line x1="18" y1="6" x2="6" y2="18"></line>' +

@@ -32,6 +32,15 @@ hugo new posts/<slug>/index.md
   `<figure>` card with the alt text as `<figcaption>`. If the alt looks
   like a filename (`*.png` / `*.jpg` / etc.) or is empty, the render hook
   emits a plain `<img>` instead — see SPEC.md → render-image hook.
+- **Headings**: use `## `–`#### ` for in-post section headings — never
+  `# ` (H1). The template already renders the post title as the page's
+  single `<h1>`. A post with ≥ 2 section headings automatically gets a
+  sticky Table of Contents in the right column (see SPEC.md → post page).
+- **UI language**: interface chrome (nav, labels, buttons, ARIA text,
+  reading-time, ToC, search) is **English only**. There is no i18n and no
+  language switcher — the design system mentioned a zh-TW/en toggle, but it
+  was intentionally not built. Article *content* may be Chinese; UI strings
+  must not. Dates render as ISO `2006-01-02`.
 - **Taxonomy naming** (both categories and tags): `lowercase-dash`. The
   frontmatter value *equals* the URL slug *equals* the displayed string —
   no humanize transform anywhere. Keep new tags in this form:
@@ -67,8 +76,13 @@ hugo new posts/<slug>/index.md
 | `content/posts/<slug>/index.md` | Blog post (+ per-post image folder) |
 | `layouts/` | Hugo templates (see SPEC.md for partials breakdown) |
 | `layouts/_default/_markup/render-image.html` | Goldmark hook: wraps captioned images in `<figure>` cards |
-| `assets/scss/main.scss` | All site styles (SCSS via Hugo Pipes → libsass) |
-| `assets/js/theme.js` | Dark-mode toggle, back-to-top, Prism `line-numbers`, image lightbox, figure tilt |
+| `layouts/partials/post-card.html` | Reusable post card partial (title, meta, summary, tags, auto thumbnail) |
+| `layouts/partials/sidebar.html` | Sidebar — About / Categories / Tags / Support cards (home + list/taxonomy pages) |
+| `layouts/index.json` | Hugo JSON output template → `/index.json` — feeds front-end search |
+| `assets/scss/main.scss` | SCSS entrypoint: 4 variables + `@import` of 12 partials (`_tokens` … `_pagination`) |
+| `assets/scss/_*.scss` | SCSS partials — design tokens, base, layout, navbar, footer, hero, post-list, sidebar, post, search, back-to-top, pagination |
+| `assets/js/theme.js` | Dark-mode toggle, search modal, back-to-top, Prism `line-numbers`, image lightbox, figure tilt |
+| `static/fonts/` | Self-hosted fonts (`AtkinsonHyperlegibleNext.woff2`) |
 | `static/` | Static files copied verbatim to `public/` (manifest, CNAME, logo, SW cleanup shim) |
 | `config.toml` | Site config: `baseURL`, `[params]`, menus, taxonomies, markup |
 | `.github/workflows/hugo.yml` | GitHub Pages deployment workflow |

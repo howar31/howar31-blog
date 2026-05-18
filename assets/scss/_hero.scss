@@ -1,0 +1,111 @@
+// --- Home page ---------------------------------------------------------
+// Two-column grid: main post list on the left, taxonomy sidebar on the right.
+// Sidebar drops below on mobile so nothing gets hidden.
+.home-hero {
+  text-align: center;
+  padding: 3rem 0 2rem;
+}
+
+.home-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  margin: 0;
+  background: linear-gradient(to right, var(--blue-400), var(--violet-400));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  @supports (background-clip: text) {
+    color: transparent;
+  }
+}
+
+.home-tagline {
+  margin-top: 0.5rem;
+  color: var(--c-text-light);
+  font-size: 1rem;
+}
+
+.home-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--sidebar-w);
+  gap: 2.75rem;
+  align-items: start;
+}
+
+.home-main-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--c-border);
+
+  h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    padding: 0;
+    border: none;
+  }
+
+  .home-main-more {
+    font-size: 0.875rem;
+    color: var(--c-text-light);
+
+    &:hover {
+      color: var(--c-brand);
+    }
+  }
+}
+
+// Home → bottom CTA button that complements the small "All Posts →" in the header.
+.home-main-cta {
+  margin-top: 2.5rem;
+  text-align: center;
+}
+
+.home-main-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1.75rem;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--blue-500), var(--violet-400));
+  color: #fff;
+  font-weight: 500;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(96, 165, 250, 0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+    box-shadow: 0 6px 18px rgba(96, 165, 250, 0.35);
+    color: #fff;
+  }
+
+  i {
+    transition: transform 0.2s ease;
+  }
+
+  &:hover i {
+    transform: translateX(3px);
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .home-hero {
+    padding: 1.5rem 0 1rem;
+  }
+
+  .home-title {
+    font-size: 1.875rem;
+  }
+
+  .home-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}

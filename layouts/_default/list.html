@@ -1,43 +1,21 @@
 {{ define "main" }}
-<section class="list">
-  <h1>{{ .Title }}</h1>
-  {{- with .Content }}
-    <div class="list-intro">{{ . }}</div>
-  {{- end }}
-  <ul class="post-list">
-    {{- range .Paginator.Pages }}
-    <li class="post-list-item">
-      <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-      <div class="post-meta">
-        <time datetime="{{ .Date.Format "2006-01-02" }}">
-          <i class="far fa-clock" aria-hidden="true"></i>
-          {{ .Date.Format "2006年01月02日" }}
-        </time>
-        {{- with .Params.categories }}
-          <span>
-            <i class="fas fa-cat" aria-hidden="true"></i>
-            {{- range $i, $c := . -}}
-              {{- if $i }}、{{ end -}}
-              <a href="{{ printf "/categories/%s/" (. | urlize) | relURL }}">{{ . }}</a>
-            {{- end -}}
-          </span>
-        {{- end }}
-        {{- with .Params.tags }}
-          <span>
-            <i class="fas fa-hashtag" aria-hidden="true"></i>
-            {{- range $i, $t := . -}}
-              {{- if $i }}、{{ end -}}
-              <a href="{{ printf "/tags/%s/" (. | urlize) | relURL }}">{{ . }}</a>
-            {{- end -}}
-          </span>
+{{- /* Section (/posts/) and taxonomy term pages — same 2-column layout as the
+       home page so the sidebar (Categories / Tags / Support) stays available
+       for cross-navigation. */ -}}
+<section class="home">
+  <div class="home-layout">
+    <section class="home-main">
+      <h1>{{ .Title }}</h1>
+      {{- with .Content }}<div class="list-intro">{{ . }}</div>{{ end }}
+      <div class="post-list">
+        {{- range .Paginator.Pages }}
+        {{ partial "post-card.html" . }}
         {{- end }}
       </div>
-      {{- with .Description }}
-        <p>{{ . }}</p>
-      {{- end }}
-    </li>
-    {{- end }}
-  </ul>
-  {{- template "_internal/pagination.html" . -}}
+      {{- template "_internal/pagination.html" . -}}
+    </section>
+
+    {{ partial "sidebar.html" . }}
+  </div>
 </section>
 {{ end }}

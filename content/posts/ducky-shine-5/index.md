@@ -7,7 +7,7 @@ categories:
 
 [本篇 PTT 討論文](https://www.ptt.cc/bbs/Key_Mou_Pad/M.1440466748.A.0A7.html)
 
-# Ducky Shine 5 Mechanical Keyboard
+## Ducky Shine 5 Mechanical Keyboard
 
 Ducky Shine 系列最新第 5 代在台灣正式上市，在台灣首發限量一百支特別序號版，九月之後會在澳洲進行國際首發，以及一般版本的上市。
 
@@ -24,7 +24,7 @@ Ducky Shine 系列最新第 5 代在台灣正式上市，在台灣首發限量�
 - [Ducky Shine 5 官方網頁](http://www.duckychannel.com.tw/page-tw/ducky-shine-5/)
 - [Ducky Shine 5 official webpage](http://www.duckychannel.com.tw/page-en/ducky-shine-5/)
 
-# 簡單開箱
+## 簡單開箱
 
 臨時才決定要買，跑了原價屋和 PC Party 都沒有英文版的，後來在朋友推薦下打電話到硬派精璽詢問，剛好剩下最後一支英文茶軸，就下訂了！
 
@@ -145,7 +145,7 @@ Mini USB 的部分是側向插入，空間有點小不好插，但是插進去�
 
 ![Shine 5 First Launch in Taiwan 082/100](./images/P_20150824_125619_1_p1.jpg)
 
-# 通電實測
+## 通電實測
 
 先來個 Shine 5 (下) 和 Shine 2 (上) 合照。(有幾張照片糊掉了 sorry orz)
 
@@ -201,7 +201,7 @@ Cherry MX RGB 茶軸特寫。
 
 除了燈光以外， Shine 5 還有蠻強大的巨集功能以及 USB 輸出字元加速功能，而且都不需要另外安裝驅動程式或軟體，可以將自訂的個人風格直接保存在鍵盤中。
 
-# 後記感想
+## 後記感想
 
 其實從來沒想過自己會買機械鍵盤來用，更沒想過第一支機械鍵盤就是 RGB 鍵盤，Ducky Shine 2 7燈8軸 特別版實在太推坑了，一把就可以比較八種軸，還有七色 LED 燈光展示 (雖然單色 LED 和 RGB LED 視覺效果有一點差異) ，剛好又碰上 Shine 5 上市，種種巧合機緣讓我短短五天內就加入機械鍵盤行列。
 

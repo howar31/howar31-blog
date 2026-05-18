@@ -5,8 +5,6 @@ categories:
   - wordpress
 ---
 
-# 修改Windows遠端桌面連線Port
-
 1. Open Registry Editor: `Win + R` > `regedit`
 2. Navigate to registry on the left: `HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Terminal Server\WinStations\`
 3. Select entry on the right: `PortNumber`

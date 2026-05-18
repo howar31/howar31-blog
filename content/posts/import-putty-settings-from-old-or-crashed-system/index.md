@@ -5,8 +5,6 @@ categories:
   - wordpress
 ---
 
-# 從老舊或損毀的系統中取回Putty設定
-
 > Reference: [Putty: Import settings from old HDD or crashed system](http://www.miniservernation.com/2012/05/putty-import-settings-from-old-hdd-or-crashed-system/)
 
 Putty只有單一一個exe檔即可執行，不需要外掛dll等附加檔案，但是Putty的設定檔卻都存在Windows的登錄檔(Registry)裡面，不但造成可攜性(portability)降低、也讓系統損毀或更換時轉移設定的麻煩。
