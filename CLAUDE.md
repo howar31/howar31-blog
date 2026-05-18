@@ -40,7 +40,7 @@ hugo new posts/<slug>/index.md
   reading-time, ToC, search) is **English only**. There is no i18n and no
   language switcher — the design system mentioned a zh-TW/en toggle, but it
   was intentionally not built. Article *content* may be Chinese; UI strings
-  must not. (Exception: the brand date format `2006年01月02日`.)
+  must not. Dates render as ISO `2006-01-02`.
 - **Taxonomy naming** (both categories and tags): `lowercase-dash`. The
   frontmatter value *equals* the URL slug *equals* the displayed string —
   no humanize transform anywhere. Keep new tags in this form:

@@ -214,8 +214,8 @@ All interface chrome — navbar, labels, buttons, ARIA text, reading-time, the
 post ToC, the search modal — is **English only**. There is no i18n and no
 language switcher: the design-system handoff mentioned a zh-TW/en toggle, but
 it was intentionally not built. Article *content* may be Chinese; UI strings
-must not be. The one deliberate exception is the brand date format
-`2006年01月02日` (post meta + `index.json`).
+must not be. Dates render as ISO `2006-01-02` (post meta, post cards,
+`index.json`); the `<time datetime>` attribute carries the same value.
 
 ## Layout responsibilities
 
