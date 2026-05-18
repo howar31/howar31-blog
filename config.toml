@@ -95,4 +95,4 @@ disableKinds = ["taxonomy"]
   section = ["HTML", "RSS"]
 
 [pagination]
-  pagerSize = 20
+  pagerSize = 10

@@ -245,7 +245,8 @@ must not be. Dates render as ISO `2006-01-02` (post meta, post cards,
 - **`list.html`** — Used for `/posts/` and every taxonomy term page
   (`/categories/<x>/`, `/tags/<x>/`). Renders the 2-column layout (main +
   `sidebar.html`); the main column is the page `<h1>` plus a paginated
-  post-card list (20 per page), each post rendered by the `post-card.html`
+  post-card list (10 per page, `[pagination] pagerSize`), each post
+  rendered by the `post-card.html`
   partial.
 - **`index.json`** — Hugo JSON output template. Emits `/index.json`: a JSON
   array of `{title, url, date, summary, tags, categories}` for every post.
