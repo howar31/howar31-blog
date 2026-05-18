@@ -12,7 +12,7 @@ future agents quickly without having to re-derive everything from the code.
 | JS | Plain ES5-ish (defer) | Hugo `minify` + `fingerprint` |
 | Syntax highlighter | **Prism.js 1.29.0** (client-side) | Core + 20 language grammars + 4 plugins, bundled at build time |
 | Prism theme | `prism-themes@1.9.0/themes/prism-dracula.min.css` | Force `background-color: #0f172a` so it matches site regardless of page theme |
-| Icon font | FontAwesome 5.8.1 (CDN) | Used for post meta, navbar (search / GitHub) icons, sponsor buttons |
+| Icon font | FontAwesome 5.8.1 (CDN) | Used for post meta, navbar (search) icon, sponsor buttons |
 | Body font | Google Fonts **Noto Sans TC** | Loaded via `[params.googleFonts]` URL in `config.toml` |
 | Code font | Google Fonts **JetBrains Mono** | Replaces previous Fira Code; same Google Fonts request |
 | Display font | **Atkinson Hyperlegible Next** (self-hosted) | `static/fonts/AtkinsonHyperlegibleNext.woff2`; used for home hero title via `--font-display` |
@@ -46,7 +46,7 @@ howar31-blog/
 │   │       └── render-image.html        # Goldmark hook: image → figure card
 │   ├── partials/
 │   │   ├── head.html                    # <head>: theme boot, SCSS pipe, Prism CSS bundle, meta
-│   │   ├── header.html                  # Minimal navbar: gradient site name + search + GitHub + theme toggle
+│   │   ├── header.html                  # Minimal navbar: gradient site name + search + theme toggle
 │   │   ├── footer.html                  # About + Sponsor columns + © line
 │   │   ├── post-card.html               # Reusable post card (title, meta, summary, tags, thumbnail)
 │   │   ├── post-meta.html               # .blog-post-meta under each post h1
@@ -104,8 +104,7 @@ howar31-blog/
 - `[permalinks] posts = "/posts/:contentbasename/"` → URL uses parent folder
   name (slug) not title-derived
 - `[[menu.main]]` — **not defined**. The top navbar is intentionally minimal
-  (site name + search + GitHub + theme toggle); `header.html` renders no nav
-  links
+  (site name + search + theme toggle); `header.html` renders no nav links
 - `[[menu.footer]]`: About column (howar31.com / GitHub / Source Code)
 - `[params.sponsor]`: `kofi = "howar31"`, `paypal = "https://donate.howar31.com"`
   — verified identifiers only. Do **not** add `githubSponsors`; not enabled
@@ -232,8 +231,9 @@ must not be. Dates render as ISO `2006-01-02` (post meta, post cards,
   fetches Prism CSS bundle, adds FA + Google Fonts (Noto Sans TC +
   JetBrains Mono), OG / PWA meta, RSS link, GA block in production.
 - **`header.html`** — Minimal navbar: gradient site name (`.vp-site-name`) +
-  an action cluster of a search-trigger icon button (`[data-search-open]`),
-  a GitHub icon link, and the theme toggle. No nav links, no mobile menu.
+  an action cluster of a search-trigger icon button (`[data-search-open]`)
+  and the theme toggle. No nav links, no mobile menu. The GitHub link lives
+  in the sidebar About card and the footer, not the navbar.
 - **`footer.html`** — Two-column grid (`repeat(auto-fit, minmax(14rem, 1fr))`).
   "About" column iterates `site.Menus.footer`; "Support this blog" renders
   Ko-fi + PayPal buttons when the relevant params are set. Bottom line is
