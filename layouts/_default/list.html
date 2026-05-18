@@ -1,12 +1,21 @@
 {{ define "main" }}
-<section class="list">
-  <h1>{{ .Title }}</h1>
-  {{- with .Content }}<div class="list-intro">{{ . }}</div>{{ end }}
-  <div class="post-list">
-    {{- range .Paginator.Pages }}
-    {{ partial "post-card.html" . }}
-    {{- end }}
+{{- /* Section (/posts/) and taxonomy term pages — same 2-column layout as the
+       home page so the sidebar (Categories / Tags / Support) stays available
+       for cross-navigation. */ -}}
+<section class="home">
+  <div class="home-layout">
+    <section class="home-main">
+      <h1>{{ .Title }}</h1>
+      {{- with .Content }}<div class="list-intro">{{ . }}</div>{{ end }}
+      <div class="post-list">
+        {{- range .Paginator.Pages }}
+        {{ partial "post-card.html" . }}
+        {{- end }}
+      </div>
+      {{- template "_internal/pagination.html" . -}}
+    </section>
+
+    {{ partial "sidebar.html" . }}
   </div>
-  {{- template "_internal/pagination.html" . -}}
 </section>
 {{ end }}
