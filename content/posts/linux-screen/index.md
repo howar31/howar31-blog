@@ -5,8 +5,6 @@ categories:
   - wordpress
 ---
 
-# Linux Session Manager - Screen
-
 **screen** 是在Linux上用來做window或session管理的指令，可以用單一實體terminal模擬多個sessions同時多工執行
 
 ## 常用指令

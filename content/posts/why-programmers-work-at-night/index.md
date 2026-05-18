@@ -5,8 +5,6 @@ categories:
   - wordpress
 ---
 
-# 為何程式設計師總在深夜工作
-
 [Swizec Teller](http://www.businessinsider.com/author/swizec-teller), [A Geek With A Hat](http://swizec.com/blog) JAN. 14, 2013, 8:05 PM
 
 > 原文網址 [http://www.businessinsider.com/why-programmers-work-at-night-2013-1](http://www.businessinsider.com/why-programmers-work-at-night-2013-1)
