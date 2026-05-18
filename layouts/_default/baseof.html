@@ -8,7 +8,7 @@
       {{- /* Home, section (/posts/) and taxonomy term pages use the wider
              container for the 2-column main+sidebar grid; single posts and
              other pages use the narrow reading-width container. */ -}}
-      <div class="{{ if in (slice "home" "section" "term") .Kind }}vp-content-wide{{ else }}vp-content theme-default-content{{ end }}">
+      <div class="{{ if in (slice "home" "section" "term") .Kind }}vp-content-wide{{ else if eq .Type "posts" }}vp-content-post{{ else }}vp-content theme-default-content{{ end }}">
         {{- block "main" . }}{{- end }}
       </div>
     </main>

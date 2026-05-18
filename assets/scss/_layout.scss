@@ -41,3 +41,11 @@
   margin: 0 auto;
   padding: 0 1.5rem;
 }
+
+// Single post: container holding the prose + optional ToC 2-column layout.
+// Fixed max-width (does not scale to 4K) — the prose stays at reading width.
+.vp-content-post {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}

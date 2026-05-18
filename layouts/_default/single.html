@@ -1,9 +1,25 @@
 {{ define "main" }}
+{{- /* Show the Table of Contents only when the post has enough structure
+       (>= 2 ToC entries); short posts render single-column. */ -}}
+{{- $tocHTML := .TableOfContents | string -}}
+{{- $showToc := ge (len (findRE "<li" $tocHTML)) 2 -}}
 <article class="post">
-  <h1>{{ .Title }}</h1>
-  {{ if eq .Type "posts" }}{{- partial "post-meta.html" . -}}{{ end }}
-  <div class="post-content">
-    {{ .Content }}
+  <div class="post-layout{{ if $showToc }} has-toc{{ end }}">
+    <div class="post-main">
+      <h1>{{ .Title }}</h1>
+      {{ if eq .Type "posts" }}{{- partial "post-meta.html" . -}}{{ end }}
+      <div class="post-content">
+        {{ .Content }}
+      </div>
+    </div>
+    {{- if $showToc }}
+    <aside class="post-toc" aria-label="目錄">
+      <nav class="post-toc-inner">
+        <div class="post-toc-title">目錄</div>
+        {{ .TableOfContents }}
+      </nav>
+    </aside>
+    {{- end }}
   </div>
 </article>
 {{ end }}
