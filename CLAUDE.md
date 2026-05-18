@@ -65,15 +65,14 @@ hugo new posts/<slug>/index.md
 | Path | Purpose |
 |---|---|
 | `content/posts/<slug>/index.md` | Blog post (+ per-post image folder) |
-| `content/about.md` | About page — linked from navbar, served at `/about/` |
 | `layouts/` | Hugo templates (see SPEC.md for partials breakdown) |
 | `layouts/_default/_markup/render-image.html` | Goldmark hook: wraps captioned images in `<figure>` cards |
 | `layouts/partials/post-card.html` | Reusable post card partial (title, meta, summary, tags, auto thumbnail) |
-| `layouts/partials/sidebar.html` | Home sidebar: About card, tag cloud, support card |
+| `layouts/partials/sidebar.html` | Sidebar — About / Categories / Tags / Support cards (home + list/taxonomy pages) |
 | `layouts/index.json` | Hugo JSON output template → `/index.json` — feeds front-end search |
 | `assets/scss/main.scss` | SCSS entrypoint: 4 variables + `@import` of 12 partials (`_tokens` … `_pagination`) |
 | `assets/scss/_*.scss` | SCSS partials — design tokens, base, layout, navbar, footer, hero, post-list, sidebar, post, search, back-to-top, pagination |
-| `assets/js/theme.js` | Dark-mode toggle, mobile-nav toggle, search modal, back-to-top, Prism `line-numbers`, image lightbox, figure tilt |
+| `assets/js/theme.js` | Dark-mode toggle, search modal, back-to-top, Prism `line-numbers`, image lightbox, figure tilt |
 | `static/fonts/` | Self-hosted fonts (`AtkinsonHyperlegibleNext.woff2`) |
 | `static/` | Static files copied verbatim to `public/` (manifest, CNAME, logo, SW cleanup shim) |
 | `config.toml` | Site config: `baseURL`, `[params]`, menus, taxonomies, markup |

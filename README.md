@@ -16,7 +16,7 @@ For a concise index of conventions and commands see [CLAUDE.md](./CLAUDE.md).
   (Dracula theme), line numbers, copy button, language badge; the whole
   Prism bundle is fetched once at build time via `resources.GetRemote` and
   served from the site's own origin
-- **FontAwesome v5.8.1** (CDN) — icons for post meta, theme toggle, sponsor buttons
+- **FontAwesome v5.8.1** (CDN) — icons for post meta, navbar buttons, sponsor buttons
 - **GitHub Actions** — deploys to GitHub Pages on push to `master`
 
 No Node.js, no npm, no bundler.
@@ -51,17 +51,18 @@ howar31-blog/
 │       ├── _index.md             # Overrides /posts/ heading → "Recent Posts"
 │       └── <slug>/index.md       # 54 posts; images sit in the same folder
 ├── layouts/
-│   ├── index.html                # Home: 2-column (main + taxonomy sidebar)
+│   ├── index.html                # Home: 2-column (recent posts + sidebar)
+│   ├── index.json                # JSON search index → /index.json
 │   ├── _default/
-│   │   ├── baseof.html · single.html · list.html · terms.html
+│   │   ├── baseof.html · single.html · list.html
 │   │   └── _markup/render-image.html  # Wraps captioned images in <figure> cards
-│   ├── partials/                 # head · header · footer · post-meta · back-to-top
+│   ├── partials/                 # head · header · footer · post-meta · post-card · sidebar · back-to-top
 │   └── shortcodes/               # tip · warning  (replace VuePress ::: containers)
 ├── assets/
-│   ├── scss/main.scss            # All styles (dark-mode glow, navbar, figure cards, lightbox)
-│   └── js/theme.js               # Dark-mode toggle, back-to-top, Prism line-numbers, lightbox, figure tilt
+│   ├── scss/                     # main.scss entrypoint + 12 partials (_tokens … _pagination)
+│   └── js/theme.js               # Dark-mode toggle, search, back-to-top, Prism line-numbers, lightbox, figure tilt
 ├── archetypes/default.md         # Template used by `hugo new`
-├── static/                       # Copied verbatim: CNAME, manifest.json, logo/, SW cleanup shim
+├── static/                       # Copied verbatim: CNAME, manifest.json, logo/, fonts/, SW cleanup shim
 ├── .github/workflows/hugo.yml    # Pages deployment
 ├── README.md / CLAUDE.md / SPEC.md
 ```
@@ -91,9 +92,9 @@ tags:
 ```
 
 **Taxonomy naming**: always lowercase-dash (`vuepress`, `dev-notes`, `ci-cd`).
-The frontmatter value equals the URL slug and equals the text shown in sidebar /
-terms page / post meta — no transform anywhere in the templates. Keep it
-consistent when adding new terms.
+The frontmatter value equals the URL slug and equals the text shown in the
+sidebar, on term pages, and in post meta — no transform anywhere in the
+templates. Keep it consistent when adding new terms.
 
 ### Images
 
