@@ -32,6 +32,15 @@ hugo new posts/<slug>/index.md
   `<figure>` card with the alt text as `<figcaption>`. If the alt looks
   like a filename (`*.png` / `*.jpg` / etc.) or is empty, the render hook
   emits a plain `<img>` instead — see SPEC.md → render-image hook.
+- **Headings**: use `## `–`#### ` for in-post section headings — never
+  `# ` (H1). The template already renders the post title as the page's
+  single `<h1>`. A post with ≥ 2 section headings automatically gets a
+  sticky Table of Contents in the right column (see SPEC.md → post page).
+- **UI language**: interface chrome (nav, labels, buttons, ARIA text,
+  reading-time, ToC, search) is **English only**. There is no i18n and no
+  language switcher — the design system mentioned a zh-TW/en toggle, but it
+  was intentionally not built. Article *content* may be Chinese; UI strings
+  must not. (Exception: the brand date format `2006年01月02日`.)
 - **Taxonomy naming** (both categories and tags): `lowercase-dash`. The
   frontmatter value *equals* the URL slug *equals* the displayed string —
   no humanize transform anywhere. Keep new tags in this form:

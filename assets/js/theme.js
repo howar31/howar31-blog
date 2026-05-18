@@ -54,17 +54,17 @@
     search.className = 'vp-search';
     search.setAttribute('role', 'dialog');
     search.setAttribute('aria-modal', 'true');
-    search.setAttribute('aria-label', '搜尋文章');
+    search.setAttribute('aria-label', 'Search posts');
     search.innerHTML =
       '<div class="vp-search-backdrop"></div>' +
       '<div class="vp-search-card">' +
-        '<button class="vp-search-close" type="button" aria-label="關閉">' +
+        '<button class="vp-search-close" type="button" aria-label="Close">' +
           '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
             '<line x1="6" y1="6" x2="18" y2="18"></line>' +
             '<line x1="18" y1="6" x2="6" y2="18"></line>' +
           '</svg>' +
         '</button>' +
-        '<input class="vp-search-input" type="search" placeholder="搜尋文章…" aria-label="搜尋文章">' +
+        '<input class="vp-search-input" type="search" placeholder="Search posts…" aria-label="Search posts">' +
         '<div class="vp-search-results"></div>' +
       '</div>';
     document.body.appendChild(search);
@@ -85,7 +85,7 @@
         return tokens.every(function (t) { return hay.indexOf(t) !== -1; });
       });
       if (!hits.length) {
-        sResults.innerHTML = '<div class="vp-search-empty">找不到符合的文章</div>';
+        sResults.innerHTML = '<div class="vp-search-empty">No matching posts</div>';
         return;
       }
       sResults.innerHTML = hits.map(function () {
@@ -195,14 +195,14 @@
     modal.setAttribute('role', 'dialog');
     modal.setAttribute('aria-modal', 'true');
     modal.setAttribute('aria-hidden', 'true');
-    modal.setAttribute('aria-label', '放大圖片');
+    modal.setAttribute('aria-label', 'Enlarged image');
     modal.innerHTML =
       '<div class="vp-image-modal-backdrop"></div>' +
       '<figure class="vp-image-modal-card">' +
         '<img class="vp-image-modal-img" alt="">' +
         '<figcaption class="vp-image-modal-caption"></figcaption>' +
       '</figure>' +
-      '<button class="vp-image-modal-close" type="button" aria-label="關閉">' +
+      '<button class="vp-image-modal-close" type="button" aria-label="Close">' +
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
           '<line x1="6" y1="6" x2="18" y2="18"></line>' +
           '<line x1="18" y1="6" x2="6" y2="18"></line>' +

@@ -40,7 +40,7 @@ howar31-blog/
 │   ├── index.json                       # JSON output template: /index.json for search
 │   ├── _default/
 │   │   ├── baseof.html                  # HTML skeleton + Prism JS bundle
-│   │   ├── single.html                  # Post page (narrow, single column)
+│   │   ├── single.html                  # Post page — prose + optional sticky ToC (2-column)
 │   │   ├── list.html                    # /posts/ + taxonomy term pages (2-column, with sidebar)
 │   │   └── _markup/
 │   │       └── render-image.html        # Goldmark hook: image → figure card
@@ -60,13 +60,13 @@ howar31-blog/
 │   │   ├── main.scss                    # SCSS entrypoint: 4 variables + @import of 12 partials
 │   │   ├── _tokens.scss                 # Design-system tokens: color scales, glass/shadow/radius/type; dark canonical
 │   │   ├── _base.scss                   # CSS reset, body, typography, links
-│   │   ├── _layout.scss                 # Page structure + responsive --wide-max/--sidebar-w steps
+│   │   ├── _layout.scss                 # Containers (vp-content/-wide/-post) + responsive --wide-max/--sidebar-w steps
 │   │   ├── _navbar.scss                 # .vp-navbar, .vp-site-name, .vp-icon-btn, .theme-toggle
 │   │   ├── _footer.scss                 # .vp-footer
 │   │   ├── _hero.scss                   # .home-hero, .home-layout (2-column grid)
 │   │   ├── _post-list.scss              # .post-list, .post-card, .vp-pill
 │   │   ├── _sidebar.scss                # .home-sidebar, .side-card
-│   │   ├── _post.scss                   # .post-content, .post-figure, .vp-image-modal, shortcodes
+│   │   ├── _post.scss                   # .post-content, .post-layout + ToC, .post-figure, .vp-image-modal, shortcodes
 │   │   ├── _search.scss                 # .vp-search modal
 │   │   ├── _back-to-top.scss            # .back-to-top
 │   │   └── _pagination.scss             # Hugo internal pagination
@@ -148,8 +148,9 @@ partial; its main column is the page `<h1>` plus the paginated post-card list.
 ### Responsive width
 
 `baseof.html` picks the container class by page kind: `home`, `section` and
-`term` pages get `.vp-content-wide`; everything else (single posts and other
-`page`-kind content) gets the narrow `.vp-content` (`740px`, reading width).
+`term` pages get `.vp-content-wide`; single posts (`.Type == "posts"`) get
+`.vp-content-post` (fixed `1080px`, holds the prose + ToC 2-column — see
+"Post page"); any other page gets the narrow `.vp-content` (`740px`).
 
 `.vp-content-wide` and the sidebar column step up on large / 4K displays via
 CSS custom properties (`--wide-max`, `--sidebar-w`) defined with media-query
@@ -166,6 +167,28 @@ The navbar (`.vp-navbar-inner`) and footer (`.vp-footer-inner`,
 `.vp-footer-bottom`) use the same `--wide-max` max-width and the same
 `0 1.5rem` inner padding as `.vp-content-wide`, so the chrome and the page
 content stay edge-aligned at every width.
+
+## Post page (`single.html`)
+
+A single post renders a 2-column layout: the prose column keeps the 740px
+reading width (`.post-main`), with a sticky **Table of Contents** in the
+right column (`.post-toc`). The ToC is Hugo's `.TableOfContents` (H2–H4, per
+`[markup.tableOfContents]`) — the article's own outline, not the browse
+sidebar.
+
+- `single.html` shows the ToC only when the post has **≥ 2** ToC entries
+  (`findRE "<li"` over `.TableOfContents`); shorter posts render the prose
+  single-column.
+- The container is `.vp-content-post` (fixed `1080px`, does not scale to 4K).
+- `.post-layout.has-toc` is the 2-column grid; the `.post-toc` column must
+  stretch (no `align-items: start`) so the sticky `.post-toc-inner` has room
+  to travel.
+- `.post-content h2/h3/h4` carry `scroll-margin-top` so anchor jumps clear
+  the sticky navbar.
+- Below 960px (`$breakpoint-narrow`) it collapses to one column and the ToC
+  drops above the article, no longer sticky.
+- Post section headings must be `##`–`####`. A body `#` (H1) adds a stray
+  second `<h1>` and is excluded from the ToC (which starts at H2).
 
 ## Taxonomy convention (important)
 
@@ -185,13 +208,23 @@ When adding a new post, keep all taxonomy values lowercase-dash. Don't mix
 Title Case (`- Vuepress`) or acronyms (`- CSS`); the displayed text would
 drift from other places rendered differently.
 
+## UI language
+
+All interface chrome — navbar, labels, buttons, ARIA text, reading-time, the
+post ToC, the search modal — is **English only**. There is no i18n and no
+language switcher: the design-system handoff mentioned a zh-TW/en toggle, but
+it was intentionally not built. Article *content* may be Chinese; UI strings
+must not be. The one deliberate exception is the brand date format
+`2006年01月02日` (post meta + `index.json`).
+
 ## Layout responsibilities
 
 - **`baseof.html`** — HTML skeleton; delegates `head`, `header`, `footer`,
   `back-to-top` to partials; injects compiled `theme.js` and the Prism
   bundle (built at template render time via `resources.GetRemote` → `Concat`
   → `minify` → `fingerprint`). Selects the container class by page kind:
-  `home` / `section` / `term` → `vp-content-wide`; everything else →
+  `home` / `section` / `term` → `vp-content-wide`; single posts
+  (`.Type == "posts"`) → `vp-content-post`; everything else →
   `vp-content theme-default-content`.
 - **`head.html`** — Inline FOUC-prevention script reads
   `localStorage['howar31-theme']` and defaults to **dark** when no stored
@@ -205,9 +238,10 @@ drift from other places rendered differently.
   "About" column iterates `site.Menus.footer`; "Support this blog" renders
   Ko-fi + PayPal buttons when the relevant params are set. Bottom line is
   `© YEAR author. description`.
-- **`single.html`** — `<article>` with `<h1>`, `post-meta`, `.Content`.
-  First Markdown `# title` line is stripped at content-migration time so
-  there is only one `h1`. Narrow single-column reading layout.
+- **`single.html`** — `<article>` → `.post-layout` holding `.post-main`
+  (`<h1>`, `post-meta`, `.post-content`) and, when the post has ≥ 2 ToC
+  entries, a `.post-toc` aside with `.TableOfContents`. The template `<h1>`
+  is the page's only `<h1>`. See "Post page" for the 2-column / ToC details.
 - **`list.html`** — Used for `/posts/` and every taxonomy term page
   (`/categories/<x>/`, `/tags/<x>/`). Renders the 2-column layout (main +
   `sidebar.html`); the main column is the page `<h1>` plus a paginated

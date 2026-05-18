@@ -96,6 +96,13 @@ The frontmatter value equals the URL slug and equals the text shown in the
 sidebar, on term pages, and in post meta — no transform anywhere in the
 templates. Keep it consistent when adding new terms.
 
+### Headings
+
+Use `##`–`####` for in-post section headings — never `#` (H1). The page
+title is already rendered as the single `<h1>`; a `#` in the body adds a
+second one. A post with **two or more** section headings automatically
+gets a sticky Table of Contents in the right column on wide screens.
+
 ### Images
 
 Drop images into the post folder and reference them relatively
