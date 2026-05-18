@@ -33,7 +33,6 @@ html:not([data-theme="dark"]) .theme-toggle-dark {
   height: $navbar-height;
   display: flex;
   align-items: center;
-  padding: 0 1.5rem;
   position: sticky;
   top: 0;
   z-index: 50;
@@ -58,6 +57,8 @@ html:not([data-theme="dark"]) .theme-toggle-dark {
     border-bottom-color: rgba(30, 41, 59, 0.3);
   }
 
+  // Same box model as .vp-content-wide (max-width + 1.5rem inner padding)
+  // so the site name / actions align with the page content below.
   .vp-navbar-inner {
     display: flex;
     align-items: center;
@@ -65,6 +66,7 @@ html:not([data-theme="dark"]) .theme-toggle-dark {
     width: 100%;
     max-width: var(--wide-max);
     margin: 0 auto;
+    padding: 0 1.5rem;
   }
 
   .vp-site-name {
@@ -124,8 +126,3 @@ html:not([data-theme="dark"]) .theme-toggle-dark {
   }
 }
 
-@media (max-width: $breakpoint-mobile) {
-  .vp-navbar {
-    padding: 0 1rem;
-  }
-}

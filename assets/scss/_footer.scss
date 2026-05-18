@@ -1,6 +1,8 @@
 .vp-footer {
   margin-top: 5rem;
-  padding: 2.5rem 1.5rem 1.5rem;
+  // Horizontal padding lives on the inner/bottom blocks (same box model as
+  // .vp-content-wide) so footer content aligns with the page content above.
+  padding: 2.5rem 0 1.5rem;
   color: var(--c-text-light);
   font-size: 0.9rem;
   border-top: 1px solid var(--c-border);
@@ -9,6 +11,7 @@
   .vp-footer-inner {
     max-width: var(--wide-max);
     margin: 0 auto;
+    padding: 0 1.5rem;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
     gap: 2.5rem;
@@ -111,7 +114,7 @@
   .vp-footer-bottom {
     max-width: var(--wide-max);
     margin: 2rem auto 0;
-    padding-top: 1.25rem;
+    padding: 1.25rem 1.5rem 0;
     border-top: 1px solid var(--c-border);
     text-align: center;
     font-size: 0.85rem;
