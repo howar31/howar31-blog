@@ -1,5 +1,13 @@
 # Howar31 Blog
 
+[![License](https://img.shields.io/github/license/howar31/howar31-blog?style=flat-square)](./LICENSE)
+[![Made with Hugo](https://img.shields.io/badge/made%20with-Hugo-FF4088?style=flat-square&logo=hugo&logoColor=white)](https://gohugo.io/)
+[![Deploy](https://img.shields.io/github/actions/workflow/status/howar31/howar31-blog/hugo.yml?style=flat-square&label=deploy)](https://github.com/howar31/howar31-blog/actions/workflows/hugo.yml)
+[![Website](https://img.shields.io/website?url=https%3A%2F%2Fblog.howar31.com&style=flat-square&label=blog.howar31.com)](https://blog.howar31.com/)
+[![Last commit](https://img.shields.io/github/last-commit/howar31/howar31-blog?style=flat-square)](https://github.com/howar31/howar31-blog/commits/master)
+[![Stars](https://img.shields.io/github/stars/howar31/howar31-blog?style=flat-square)](https://github.com/howar31/howar31-blog/stargazers)
+[![Sponsor on Ko-fi](https://img.shields.io/badge/sponsor-Ko--fi-FF5E5B?style=flat-square&logo=ko-fi&logoColor=white)](https://ko-fi.com/howar31)
+
 Personal blog built with [Hugo](https://gohugo.io/), deployed to GitHub Pages
 under the custom domain `blog.howar31.com`.
 
@@ -152,6 +160,12 @@ Independent, no ads. If something here saved you time:
 
 - ☕ [Ko-fi](https://ko-fi.com/howar31)
 - 💸 [PayPal](https://donate.howar31.com)
+
+## License
+
+Blog content is released under [CC BY 4.0](./LICENSE) — reuse and translate
+freely, just credit Howar31 and link back. The same notice covers the small
+amount of theme code bundled in this repo.
 
 ## Links
 

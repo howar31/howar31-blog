@@ -642,6 +642,20 @@ After the first deploy, repo **Settings → Pages**:
 - Custom domain: `blog.howar31.com`
 - Enforce HTTPS: on
 
+## Licensing
+
+`LICENSE` at the repo root is the canonical **CC BY 4.0** text (downloaded
+from `creativecommons.org/licenses/by/4.0/legalcode.txt`). The licence
+covers the blog content — prose, images authored by Howar31, and the small
+amount of theme code bundled in this repo. Reuse and translation are
+allowed with attribution; downstream content that reuses a post must credit
+Howar31 and link back.
+
+This is intentionally a **content** licence, not a permissive code licence
+(MIT/Apache), because the value here is the writing. Future agents adding
+substantial new code (e.g. spinning the theme off as a reusable package)
+should flag the relicensing question before doing so.
+
 ## Key decisions
 
 ### Performance: zero third-party requests on the blog chrome

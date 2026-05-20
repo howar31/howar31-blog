@@ -99,6 +99,7 @@ hugo new posts/<slug>/index.md
 | `static/` | Static files copied verbatim to `public/` (manifest, CNAME, logo, SW cleanup shim) |
 | `config.toml` | Site config: `baseURL`, `[params]`, menus, taxonomies, markup |
 | `.github/workflows/hugo.yml` | GitHub Pages deployment workflow |
+| `LICENSE` | CC BY 4.0 — covers blog *content*. Code is incidental and falls under the same notice. |
 
 ## Known open items
 
