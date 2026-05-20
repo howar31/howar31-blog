@@ -12,16 +12,19 @@ future agents quickly without having to re-derive everything from the code.
 | JS | Plain ES5-ish (defer) | Hugo `minify` + `fingerprint` |
 | Syntax highlighter | **Prism.js 1.29.0** (client-side) | Core + 20 language grammars + 4 plugins, bundled at build time |
 | Prism theme | `prism-themes@1.9.0/themes/prism-dracula.min.css` | Force `background-color: #0f172a` so it matches site regardless of page theme |
-| Icon font | FontAwesome 5.8.1 (CDN) | Used for post meta, navbar (search) icon, sponsor buttons |
-| Body font | Google Fonts **Noto Sans TC** | Loaded via `[params.googleFonts]` URL in `config.toml` |
-| Code font | Google Fonts **JetBrains Mono** | Replaces previous Fira Code; same Google Fonts request |
+| Icons | **Font Awesome Free 5.15.4** SVG sources, inlined at render time | 17 SVGs in `assets/icons/{solid,regular,brands}/`; emitted by `layouts/partials/icon.html`. No CDN, no webfont. |
+| Body font | OS system fonts | `--font-sans` resolves to PingFang TC / Microsoft JhengHei UI / system Noto; **no Google Fonts request** |
+| Code font | **JetBrains Mono** Latin 400/700 (self-hosted) | `static/fonts/jetbrains-mono/jetbrains-mono-latin-{400,700}-normal.woff2`; preloaded; `unicode-range` skips CJK |
 | Display font | **Atkinson Hyperlegible Next** (self-hosted) | `static/fonts/AtkinsonHyperlegibleNext.woff2`; used for home hero title via `--font-display` |
+| Avatar pipeline | Hugo `images.Resize` from `assets/images/avatar.png` | One 256×256 master; sidebar uses 64/128 WebP, favicons use 32/144/180 PNG |
 | Hosting | GitHub Pages via `upload-pages-artifact` + `deploy-pages` | Custom domain `blog.howar31.com` (CNAME in `static/`) |
 
 No Node.js is executed at build or runtime. All remote third-party code
 (Prism, prism-themes) is fetched once at build time via
 `resources.GetRemote`, concatenated, minified, fingerprinted, served from
-the site's own origin with SRI.
+the site's own origin with SRI. The blog chrome makes **zero** third-party
+HTTP requests at page-load time (Font Awesome CDN, Google Fonts and any
+external font CSS were removed during the performance pass).
 
 ## Directory layout
 
@@ -45,12 +48,13 @@ howar31-blog/
 │   │   └── _markup/
 │   │       └── render-image.html        # Goldmark hook: image → figure card
 │   ├── partials/
-│   │   ├── head.html                    # <head>: theme boot, SCSS pipe, Prism CSS bundle, meta
+│   │   ├── head.html                    # <head>: theme boot, SCSS pipe, Prism CSS bundle, font preloads, meta
 │   │   ├── header.html                  # Minimal navbar: gradient site name + search + theme toggle
 │   │   ├── footer.html                  # About + Sponsor columns + © line
 │   │   ├── post-card.html               # Reusable post card (title, meta, summary, tags, thumbnail)
 │   │   ├── post-meta.html               # .blog-post-meta under each post h1
 │   │   ├── sidebar.html                 # Sidebar: About / Categories / Tags / Support cards
+│   │   ├── icon.html                    # Inline FA SVG renderer: {{ partial "icon" "fas fa-search" }}
 │   │   └── back-to-top.html             # SVG circle scroll-progress button
 │   └── shortcodes/
 │       ├── tip.html                     # {{< tip "…" >}} callout
@@ -70,14 +74,19 @@ howar31-blog/
 │   │   ├── _search.scss                 # .vp-search modal
 │   │   ├── _back-to-top.scss            # .back-to-top
 │   │   └── _pagination.scss             # Hugo internal pagination
+│   ├── icons/{solid,regular,brands}/    # Font Awesome Free 5.15.4 SVG sources (inlined via layouts/partials/icon.html — no FA CDN)
+│   ├── images/avatar.png                # 256×256 master — Hugo generates 32/64/128/144/180 variants on demand
 │   └── js/theme.js                      # All runtime JS (no Prism logic here)
 ├── static/                              # Passed through untouched
 │   ├── CNAME                            # blog.howar31.com
 │   ├── manifest.json                    # PWA manifest
 │   ├── service-worker.js                # Cleanup shim: unregisters old VuePress SW + clears caches
 │   ├── fonts/
-│   │   └── AtkinsonHyperlegibleNext.woff2  # Self-hosted display font
-│   └── logo/…                           # Site icons (avatar, apple-touch, etc.)
+│   │   ├── AtkinsonHyperlegibleNext.woff2          # Self-hosted display font
+│   │   └── jetbrains-mono/
+│   │       ├── jetbrains-mono-latin-400-normal.woff2  # Code body weight
+│   │       └── jetbrains-mono-latin-700-normal.woff2  # Prism keyword weight
+│   └── logo/…                           # Static site icons (og-image.jpg, icon.png)
 └── .github/workflows/hugo.yml           # CI: install Hugo → build --minify → deploy Pages
 ```
 
@@ -109,8 +118,11 @@ howar31-blog/
 - `[params.sponsor]`: `kofi = "howar31"`, `paypal = "https://donate.howar31.com"`
   — verified identifiers only. Do **not** add `githubSponsors`; not enabled
   on the user's account
-- `[params.googleFonts]` — URL loading **Noto Sans TC** + **JetBrains Mono**
-  via Google Fonts; injected in `head.html` via `<link rel="stylesheet">`
+- `[params]` intentionally **does not define** `fontAwesomeCDN` /
+  `fontAwesomeIntegrity` / `googleFonts` / `avatar`. Earlier versions kept
+  these; they were removed once icons went inline-SVG, fonts were
+  self-hosted, and the avatar moved into the Hugo asset pipeline. Do not
+  re-add without first changing the code that would consume them
 - `[outputs] home = ["HTML", "RSS", "JSON"]` — the JSON output type feeds
   `layouts/index.json` → `/index.json` → front-end search
 
@@ -228,8 +240,11 @@ must not be. Dates render as ISO `2006-01-02` (post meta, post cards,
 - **`head.html`** — Inline FOUC-prevention script reads
   `localStorage['howar31-theme']` and defaults to **dark** when no stored
   preference exists (`var theme = stored || 'dark'`). Compiles `main.scss`,
-  fetches Prism CSS bundle, adds FA + Google Fonts (Noto Sans TC +
-  JetBrains Mono), OG / PWA meta, RSS link, GA block in production.
+  builds the Prism CSS bundle, preloads the self-hosted display font and
+  the JetBrains Mono Latin-400 woff2, derives the favicon / apple-touch /
+  msapplication tile icons from `assets/images/avatar.png` via
+  `images.Resize`, emits OG / PWA meta, the RSS `<link>` and the GA block
+  in production. Does **not** request any third-party CSS or font.
 - **`header.html`** — Minimal navbar: gradient site name (`.vp-site-name`) +
   an action cluster of a search-trigger icon button (`[data-search-open]`)
   and the theme toggle. No nav links, no mobile menu. The GitHub link lives
@@ -275,11 +290,20 @@ must not be. Dates render as ISO `2006-01-02` (post meta, post cards,
   **HTML attributes** not CSS, because iOS Safari ≤ 16 does not support the
   CSS SVG Geometry module. `theme.js` computes scroll ratio and updates
   `stroke-dashoffset`.
+- **`icon.html`** — Inline-SVG icon renderer. Call signature:
+  `{{ partial "icon" "fas fa-search" }}` or with extra classes:
+  `{{ partial "icon" "fas fa-arrow-up back-to-top-icon" }}`. Splits the
+  argument into FA style (`fas` / `far` / `fab`) → folder
+  (`solid` / `regular` / `brands`) and icon slug, reads
+  `assets/icons/<folder>/<slug>.svg`, strips the licence comment, injects
+  `class="icon icon-<slug>[ <extra>]"` plus `aria-hidden="true"` and
+  `focusable="false"`. Adding a new icon means dropping the matching SVG
+  into the right folder; nothing else needs editing.
 
 ## Shortcodes
 
-- **`tip`** → `<div class="hint-container tip">` with FA lightbulb
-- **`warning`** → `<div class="hint-container warning">` with triangle icon
+- **`tip`** → `<div class="hint-container tip">` with inline `fa-lightbulb` SVG (via `icon.html` partial)
+- **`warning`** → `<div class="hint-container warning">` with inline `fa-exclamation-triangle` SVG
 
 Both accept an optional positional arg as title:
 `{{< tip "Edit — 2019-07-05" >}}...{{< /tip >}}`.
@@ -329,6 +353,16 @@ properties + their media-query overrides) live in `_layout.scss` — see
 ### `_tokens.scss` — design-system foundation
 
 - Self-hosts the **Atkinson Hyperlegible Next** display font via `@font-face`.
+- Self-hosts **JetBrains Mono** Latin 400 and 700 via two `@font-face` rules
+  pointing at `static/fonts/jetbrains-mono/…`. Both use `font-display: swap`
+  and a `unicode-range` covering Basic Latin plus typographic punctuation;
+  CJK in code blocks falls through to the system mono fallback chain
+  (`PingFang TC` / `Microsoft JhengHei` / `Sarasa Mono TC` / `Consolas`).
+- `--font-sans` is a pure system-font stack (no Google Fonts); zh-TW
+  glyphs resolve to `PingFang TC` on Apple, `Microsoft JhengHei UI` on
+  Windows, and the system Noto on Android. This is intentional — the
+  previous Google Fonts request for `Noto Sans TC` was the single largest
+  render-blocking resource and was removed for that reason.
 - `:root` block defines the full design-system token set: color scales
   (`--blue-*`, `--violet-*`, `--slate-*`), glass tokens (`--glass-bg`,
   `--glass-border`, `--glass-blur`), shadow tokens (`--shadow-card`,
@@ -607,6 +641,39 @@ After the first deploy, repo **Settings → Pages**:
 - Source: GitHub Actions (not branch)
 - Custom domain: `blog.howar31.com`
 - Enforce HTTPS: on
+
+## Key decisions
+
+### Performance: zero third-party requests on the blog chrome
+
+Identified during a PageSpeed audit. Three render-blocking / heavy
+third-party resources used to load on every page; all are gone now.
+
+- **Font Awesome CDN** (`use.fontawesome.com/.../all.css`, ~55 KB raw,
+  served without gzip from the third party). Inventory found only 17
+  unique icons in the layouts. Replaced with FA Free 5.15.4 SVG sources
+  inlined at render time via `layouts/partials/icon.html`. SVGs live in
+  `assets/icons/{solid,regular,brands}/`. CSS hook: `.icon` (`width:1em;
+  height:1em; fill:currentColor; vertical-align:-0.125em`) in `_base.scss`.
+- **Google Fonts `Noto Sans TC` + `JetBrains Mono`** (a render-blocking
+  `<link rel="stylesheet">` plus CJK woff2 downloads). `Noto Sans TC` was
+  dropped — `--font-sans` is now a pure system stack (PingFang TC /
+  Microsoft JhengHei UI / system Noto). `JetBrains Mono` Latin 400 + 700
+  woff2 were pulled from `@fontsource/jetbrains-mono@5.0.20` and committed
+  under `static/fonts/jetbrains-mono/`. Only the 400 weight is preloaded;
+  700 streams in on demand for Prism keyword highlights.
+- **Oversized avatar** — the master is a single 256×256 PNG in
+  `assets/images/avatar.png`. `head.html` derives 32-px favicon, 144-px
+  msapplication tile and 180-px apple-touch via `images.Resize`;
+  `sidebar.html` emits a 64-px + 128-px WebP `srcset` with `loading="lazy"
+  decoding="async"`. The sidebar avatar transfer shrank from 96 KB to
+  ~1.3 KB.
+
+Net result: the blog's HTML, CSS and JS now load only from
+`blog.howar31.com`. The only remaining third-party network calls are
+analytics (if a GA4 ID is set later) and the `posts/made-with-love` demo
+post, which intentionally embeds a Font Awesome `<link>` in its Markdown
+body to illustrate an icon snippet — that is content, not chrome.
 
 ## Known limitations / follow-ups
 

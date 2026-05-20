@@ -2,11 +2,11 @@
 {{- $tags := .Params.tags -}}
 <div class="blog-post-meta">
   <div class="meta-row">
-    <span class="meta-item"><i class="far fa-calendar-alt" aria-hidden="true"></i>
+    <span class="meta-item">{{ partial "icon" "far fa-calendar-alt" }}
       <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time></span>
-    <span class="meta-item"><i class="far fa-clock" aria-hidden="true"></i> {{ .ReadingTime }} min read</span>
+    <span class="meta-item">{{ partial "icon" "far fa-clock" }} {{ .ReadingTime }} min read</span>
     {{- with $categories }}
-    <span class="meta-item"><i class="fas fa-cat" aria-hidden="true"></i>
+    <span class="meta-item">{{ partial "icon" "fas fa-cat" }}
       {{- range $i, $c := . }}{{ if $i }}、{{ end }}<a href="{{ printf "/categories/%s/" ($c | urlize) | relURL }}">{{ $c }}</a>{{ end -}}
     </span>
     {{- end }}
@@ -16,7 +16,7 @@
   <div class="meta-tags">
     {{- range . }}
     <a class="vp-pill" href="{{ printf "/tags/%s/" (. | urlize) | relURL }}">
-      <i class="fas fa-hashtag" aria-hidden="true"></i>{{ . }}</a>
+      {{ partial "icon" "fas fa-hashtag" }}{{ . }}</a>
     {{- end }}
   </div>
   {{- end }}

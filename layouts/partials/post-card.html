@@ -5,11 +5,11 @@
   <div class="post-card-body">
     <h3 class="post-card-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
     <div class="post-card-meta">
-      <span><i class="far fa-calendar-alt" aria-hidden="true"></i>
+      <span>{{ partial "icon" "far fa-calendar-alt" }}
         <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time></span>
-      <span><i class="far fa-clock" aria-hidden="true"></i> {{ .ReadingTime }} min read</span>
+      <span>{{ partial "icon" "far fa-clock" }} {{ .ReadingTime }} min read</span>
       {{- with .Params.categories }}
-      <span><i class="fas fa-cat" aria-hidden="true"></i>
+      <span>{{ partial "icon" "fas fa-cat" }}
         {{- range $i, $c := . }}{{ if $i }}、{{ end }}<a href="{{ printf "/categories/%s/" ($c | urlize) | relURL }}">{{ $c }}</a>{{ end -}}
       </span>
       {{- end }}
@@ -19,7 +19,7 @@
     <div class="post-card-tags">
       {{- range . }}
       <a class="vp-pill" href="{{ printf "/tags/%s/" (. | urlize) | relURL }}">
-        <i class="fas fa-hashtag" aria-hidden="true"></i>{{ . }}</a>
+        {{ partial "icon" "fas fa-hashtag" }}{{ . }}</a>
       {{- end }}
     </div>
     {{- end }}

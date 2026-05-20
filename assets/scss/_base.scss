@@ -31,6 +31,17 @@ body {
   overflow-x: clip;
 }
 
+// Inline FA SVG replacement (see layouts/partials/icon.html). `currentColor`
+// + 1em sizing matches how the old <i class="fa..."> behaved.
+.icon {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+  vertical-align: -0.125em;
+}
+
+.footer-heart { color: var(--c-brand); }
+
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   line-height: 1.25;

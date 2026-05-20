@@ -16,7 +16,11 @@ For a concise index of conventions and commands see [CLAUDE.md](./CLAUDE.md).
   (Dracula theme), line numbers, copy button, language badge; the whole
   Prism bundle is fetched once at build time via `resources.GetRemote` and
   served from the site's own origin
-- **FontAwesome v5.8.1** (CDN) — icons for post meta, navbar buttons, sponsor buttons
+- **Font Awesome Free 5.15.4 (SVGs)** — 17 icons inlined at build time via
+  `layouts/partials/icon.html`; no CDN request, no webfont
+- **Self-hosted fonts** — Atkinson Hyperlegible Next (display) and
+  JetBrains Mono Latin 400/700 (code blocks); zh-TW body text uses the OS
+  system font (PingFang TC / Microsoft JhengHei / system Noto)
 - **GitHub Actions** — deploys to GitHub Pages on push to `master`
 
 No Node.js, no npm, no bundler.
@@ -60,9 +64,11 @@ howar31-blog/
 │   └── shortcodes/               # tip · warning  (replace VuePress ::: containers)
 ├── assets/
 │   ├── scss/                     # main.scss entrypoint + 12 partials (_tokens … _pagination)
+│   ├── icons/                    # Font Awesome Free 5.15.4 SVG sources (solid / regular / brands)
+│   ├── images/avatar.png         # Source for sidebar avatar + favicons (Hugo resizes on demand)
 │   └── js/theme.js               # Dark-mode toggle, search, back-to-top, Prism line-numbers, lightbox, figure tilt
 ├── archetypes/default.md         # Template used by `hugo new`
-├── static/                       # Copied verbatim: CNAME, manifest.json, logo/, fonts/, SW cleanup shim
+├── static/                       # Copied verbatim: CNAME, manifest.json, logo/, fonts/ (Atkinson + JetBrains Mono), SW cleanup shim
 ├── .github/workflows/hugo.yml    # Pages deployment
 ├── README.md / CLAUDE.md / SPEC.md
 ```

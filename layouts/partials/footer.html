@@ -10,9 +10,9 @@
           <a href="{{ .URL }}"{{ if hasPrefix .URL "http" }} rel="noopener" target="_blank"{{ end }}>
             {{- with .Pre -}}
               {{- $icon := . -}}
-              {{- if eq $icon "github" -}}<i class="fab fa-github" aria-hidden="true"></i>
-              {{- else if eq $icon "globe" -}}<i class="fas fa-globe" aria-hidden="true"></i>
-              {{- else if eq $icon "code" -}}<i class="fas fa-code" aria-hidden="true"></i>
+              {{- if eq $icon "github" -}}{{ partial "icon" "fab fa-github" }}
+              {{- else if eq $icon "globe" -}}{{ partial "icon" "fas fa-globe" }}
+              {{- else if eq $icon "code" -}}{{ partial "icon" "fas fa-code" }}
               {{- end -}}
             {{- end -}}
             {{ .Name }}
@@ -31,13 +31,13 @@
         {{- /* Ko-fi first: lower friction (guest checkout, donor messages). */ -}}
         {{- with $sponsor.kofi }}
         <a class="vp-sponsor-btn sponsor-kofi" href="https://ko-fi.com/{{ . }}" rel="noopener" target="_blank" aria-label="Buy me a coffee on Ko-fi">
-          <i class="fas fa-coffee" aria-hidden="true"></i>
+          {{ partial "icon" "fas fa-coffee" }}
           <span>Ko-fi</span>
         </a>
         {{- end }}
         {{- with $sponsor.paypal }}
         <a class="vp-sponsor-btn sponsor-paypal" href="{{ . }}" rel="noopener" target="_blank" aria-label="Tip via PayPal">
-          <i class="fab fa-paypal" aria-hidden="true"></i>
+          {{ partial "icon" "fab fa-paypal" }}
           <span>PayPal</span>
         </a>
         {{- end }}
@@ -48,7 +48,7 @@
 
   <div class="vp-footer-bottom">
     <p>
-      <i class="fas fa-heart" style="color: var(--c-brand);" aria-hidden="true"></i>
+      {{ partial "icon" "fas fa-heart footer-heart" }}
       &copy; {{ now.Year }} {{ site.Params.author }}. {{ site.Params.description }}
     </p>
   </div>

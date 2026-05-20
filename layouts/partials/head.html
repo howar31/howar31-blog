@@ -28,11 +28,9 @@
   {{- $main := resources.Get "scss/main.scss" | toCSS $opts | resources.Fingerprint -}}
   <link rel="stylesheet" href="{{ $main.RelPermalink }}" integrity="{{ $main.Data.Integrity }}">
 
-  <link rel="stylesheet" href="{{ site.Params.fontAwesomeCDN }}"
-        integrity="{{ site.Params.fontAwesomeIntegrity }}" crossorigin="anonymous">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="{{ site.Params.googleFonts }}">
+  {{- /* Preload self-hosted display + mono so first paint can use them. */ -}}
+  <link rel="preload" href="{{ "fonts/AtkinsonHyperlegibleNext.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ "fonts/jetbrains-mono/jetbrains-mono-latin-400-normal.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
 
   {{- /*
     Prism CSS — fetched at build time via resources.GetRemote, concatenated,
@@ -60,15 +58,22 @@
   {{- $prismCss := $prismCssParts | resources.Concat "css/prism.css" | minify | fingerprint -}}
   <link rel="stylesheet" href="{{ $prismCss.RelPermalink }}" integrity="{{ $prismCss.Data.Integrity }}" crossorigin="anonymous">
 
+  {{- /* Avatar source lives in assets/images/avatar.png (256×256). Hugo
+    pre-renders the platform-icon sizes we actually need so the wire is
+    not paying for a 96 KB master image. */ -}}
+  {{- $avatar := resources.Get "images/avatar.png" -}}
+  {{- $favicon := $avatar.Resize "32x32 png" -}}
+  {{- $appleIcon := $avatar.Resize "180x180 png" -}}
+  {{- $tileIcon := $avatar.Resize "144x144 png" -}}
   <link rel="manifest" href="{{ "manifest.json" | relURL }}">
-  <link rel="icon" href="{{ site.Params.avatar | relURL }}">
-  <link rel="apple-touch-icon" href="{{ site.Params.avatar | relURL }}">
+  <link rel="icon" href="{{ $favicon.RelPermalink }}">
+  <link rel="apple-touch-icon" href="{{ $appleIcon.RelPermalink }}">
 
   <meta name="theme-color" content="{{ site.Params.themeColor }}">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="msapplication-TileImage" content="{{ site.Params.avatar | relURL }}">
+  <meta name="msapplication-TileImage" content="{{ $tileIcon.RelPermalink }}">
   <meta name="msapplication-TileColor" content="{{ site.Params.themeColor }}">
 
   <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">

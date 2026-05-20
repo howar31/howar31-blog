@@ -45,6 +45,16 @@ hugo new posts/<slug>/index.md
   frontmatter value *equals* the URL slug *equals* the displayed string —
   no humanize transform anywhere. Keep new tags in this form:
   `- dev-notes` ✓, not `- Dev Notes` ✗.
+- **Icons**: use the inline-SVG partial, never raw `<i class="fa...">`. The
+  Font Awesome CDN was removed; only icons present in `assets/icons/` work.
+  To add a new icon, download the FA Free 5.15.4 SVG into the matching
+  `solid` / `regular` / `brands` subfolder.
+
+  ```html
+  {{ partial "icon" "fas fa-search" }}
+  {{ partial "icon" "fas fa-arrow-up back-to-top-icon" }}  <!-- extra classes -->
+  ```
+
 - **Callouts** use Hugo shortcodes, not VuePress `:::` containers:
 
   ```markdown
@@ -82,7 +92,10 @@ hugo new posts/<slug>/index.md
 | `assets/scss/main.scss` | SCSS entrypoint: 4 variables + `@import` of 12 partials (`_tokens` … `_pagination`) |
 | `assets/scss/_*.scss` | SCSS partials — design tokens, base, layout, navbar, footer, hero, post-list, sidebar, post, search, back-to-top, pagination |
 | `assets/js/theme.js` | Dark-mode toggle, search modal, back-to-top, Prism `line-numbers`, image lightbox, figure tilt |
-| `static/fonts/` | Self-hosted fonts (`AtkinsonHyperlegibleNext.woff2`) |
+| `assets/icons/{solid,regular,brands}/` | Font Awesome Free 5.15.4 SVG sources; inlined via `layouts/partials/icon.html` |
+| `assets/images/avatar.png` | Avatar master (256×256); Hugo resizes to 32/64/128/144/180 on demand |
+| `layouts/partials/icon.html` | Inline-SVG icon partial: `{{ partial "icon" "fas fa-search" }}` |
+| `static/fonts/` | Self-hosted fonts: `AtkinsonHyperlegibleNext.woff2`, `jetbrains-mono/jetbrains-mono-latin-{400,700}-normal.woff2` |
 | `static/` | Static files copied verbatim to `public/` (manifest, CNAME, logo, SW cleanup shim) |
 | `config.toml` | Site config: `baseURL`, `[params]`, menus, taxonomies, markup |
 | `.github/workflows/hugo.yml` | GitHub Pages deployment workflow |

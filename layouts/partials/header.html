@@ -4,11 +4,11 @@
 
     <div class="vp-navbar-actions">
       <button type="button" class="vp-icon-btn" data-search-open aria-label="Search" title="Search" aria-expanded="false">
-        <i class="fas fa-search" aria-hidden="true"></i>
+        {{ partial "icon" "fas fa-search" }}
       </button>
       <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle dark mode" title="Toggle dark mode">
-        <i class="far fa-sun theme-toggle-light" aria-hidden="true"></i>
-        <i class="far fa-moon theme-toggle-dark" aria-hidden="true"></i>
+        {{ partial "icon" "far fa-sun theme-toggle-light" }}
+        {{ partial "icon" "far fa-moon theme-toggle-dark" }}
       </button>
     </div>
   </div>

@@ -1,0 +1,26 @@
+{{- /*
+  Inline FA SVG icon. Replaces the Font Awesome CDN — same call sites
+  use `{{ partial "icon" "fas fa-search" }}` (or with trailing extra
+  classes: `"fas fa-arrow-up back-to-top-icon"`).
+  SVG sources live in assets/icons/{solid,regular,brands}/.
+*/ -}}
+{{- $parts := split . " " -}}
+{{- $style := index $parts 0 -}}
+{{- $name := strings.TrimPrefix "fa-" (index $parts 1) -}}
+{{- $extra := "" -}}
+{{- if gt (len $parts) 2 -}}
+  {{- $extra = delimit (after 2 $parts) " " -}}
+{{- end -}}
+{{- $dir := index (dict "fas" "solid" "far" "regular" "fab" "brands") $style -}}
+{{- $path := printf "icons/%s/%s.svg" $dir $name -}}
+{{- with resources.Get $path -}}
+  {{- $svg := .Content -}}
+  {{- $svg = replaceRE "<!--.*?-->" "" $svg -}}
+  {{- $cls := printf "icon icon-%s" $name -}}
+  {{- if ne $extra "" -}}{{- $cls = printf "%s %s" $cls $extra -}}{{- end -}}
+  {{- $attrs := printf `class=%q aria-hidden="true" focusable="false"` $cls -}}
+  {{- $svg = replaceRE "<svg " (printf "<svg %s " $attrs) $svg -}}
+  {{- $svg | safeHTML -}}
+{{- else -}}
+  {{- errorf "icon partial: source not found at %s" $path -}}
+{{- end -}}

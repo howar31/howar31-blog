@@ -1,7 +1,7 @@
 {{- $title := .Get 0 | default "Tip" -}}
 <div class="hint-container tip">
   <p class="hint-container-title">
-    <i class="fas fa-lightbulb" aria-hidden="true"></i>
+    {{ partial "icon" "fas fa-lightbulb" }}
     {{ $title }}
   </p>
   {{ .Inner | markdownify }}
