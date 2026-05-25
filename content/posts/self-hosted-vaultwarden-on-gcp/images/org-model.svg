@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="800" viewBox="0 0 900 400" font-family="-apple-system, 'PingFang TC', 'Microsoft JhengHei', sans-serif">
+  <defs>
+    <marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#64748b"/>
+    </marker>
+    <style>
+      .t{fill:#1e293b;font-size:15px;font-weight:600;}
+      .ts{fill:#475569;font-size:12px;}
+      .title{fill:#0f172a;font-size:19px;font-weight:700;}
+      .edge{stroke:#64748b;stroke-width:1.5;fill:none;}
+      .pill{fill:#eff6ff;stroke:#3b82f6;stroke-width:1.2;}
+      .pillv{fill:#f5f3ff;stroke:#8b5cf6;stroke-width:1.2;}
+      .pt{fill:#1e3a8a;font-size:12.5px;}
+      .pv{fill:#5b21b6;font-size:12.5px;}
+    </style>
+  </defs>
+  <rect x="0" y="0" width="900" height="400" fill="#f8fafc"/>
+  <text x="450" y="34" text-anchor="middle" class="title">分享模型四層</text>
+
+  <!-- 4 layers -->
+  <rect x="20" y="62" width="185" height="74" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="112" y="92" text-anchor="middle" class="t">Organization</text>
+  <text x="112" y="114" text-anchor="middle" class="ts">整個部門一個容器</text>
+
+  <line x1="205" y1="99" x2="236" y2="99" class="edge" marker-end="url(#ah3)"/>
+  <rect x="238" y="62" width="185" height="74" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="330" y="92" text-anchor="middle" class="t">Collection</text>
+  <text x="330" y="114" text-anchor="middle" class="ts">分「哪些密碼」</text>
+
+  <line x1="423" y1="99" x2="454" y2="99" class="edge" marker-end="url(#ah3)"/>
+  <rect x="456" y="62" width="185" height="74" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="548" y="92" text-anchor="middle" class="t">Group</text>
+  <text x="548" y="114" text-anchor="middle" class="ts">分「誰」· 把人打包</text>
+
+  <line x1="641" y1="99" x2="672" y2="99" class="edge" marker-end="url(#ah3)"/>
+  <rect x="674" y="62" width="206" height="74" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="777" y="92" text-anchor="middle" class="t">Permission</text>
+  <text x="777" y="114" text-anchor="middle" class="ts">View / Edit / Manage</text>
+
+  <!-- example label -->
+  <text x="40" y="186" class="t">範例:群組 × Collection × 權限</text>
+
+  <!-- Frontend row -->
+  <rect x="40" y="204" width="150" height="40" rx="8" fill="#e0e7ff" stroke="#6366f1" stroke-width="1.3"/>
+  <text x="115" y="229" text-anchor="middle" class="t">Frontend 群組</text>
+  <line x1="190" y1="224" x2="214" y2="224" class="edge" marker-end="url(#ah3)"/>
+  <rect x="218" y="206" width="140" height="36" rx="18" class="pill"/>
+  <text x="288" y="229" text-anchor="middle" class="pt">00 Everyone</text>
+  <rect x="368" y="206" width="150" height="36" rx="18" class="pill"/>
+  <text x="443" y="229" text-anchor="middle" class="pt">30 Dev-Shared</text>
+  <rect x="528" y="206" width="140" height="36" rx="18" class="pill"/>
+  <text x="598" y="229" text-anchor="middle" class="pt">31 Frontend</text>
+  <text x="690" y="229" class="ts">→ Edit items</text>
+
+  <!-- Bots row -->
+  <rect x="40" y="262" width="150" height="40" rx="8" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.3"/>
+  <text x="115" y="287" text-anchor="middle" class="t">Bots 群組</text>
+  <line x1="190" y1="282" x2="214" y2="282" class="edge" marker-end="url(#ah3)"/>
+  <rect x="218" y="264" width="160" height="36" rx="18" class="pillv"/>
+  <text x="298" y="287" text-anchor="middle" class="pv">90 Automation</text>
+  <text x="392" y="287" class="ts">→ View items（唯讀）</text>
+
+  <!-- note -->
+  <rect x="40" y="324" width="820" height="50" rx="10" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="450" y="354" text-anchor="middle" class="ts">管理層用「角色」(Owner / Admin) 給權限;其他人用「群組 + Collection」。最敏感的 Collection 不指派給任何群組。</text>
+</svg>

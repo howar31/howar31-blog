@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="760" viewBox="0 0 900 380" font-family="-apple-system, 'PingFang TC', 'Microsoft JhengHei', sans-serif">
+  <defs>
+    <marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#64748b"/>
+    </marker>
+    <style>
+      .t{fill:#1e293b;font-size:15px;}
+      .ts{fill:#475569;font-size:12.5px;}
+      .title{fill:#0f172a;font-size:19px;font-weight:700;}
+      .edge{stroke:#64748b;stroke-width:1.5;fill:none;}
+      .ok{font-size:15px;font-weight:700;fill:#15803d;}
+      .no{font-size:15px;font-weight:700;fill:#b91c1c;}
+    </style>
+  </defs>
+  <rect x="0" y="0" width="900" height="380" fill="#f8fafc"/>
+  <text x="450" y="34" text-anchor="middle" class="title">為什麼 IAP 只能守 /admin</text>
+
+  <!-- IAP gates -->
+  <rect x="395" y="78" width="110" height="52" rx="10" fill="#fff7ed" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="450" y="110" text-anchor="middle" class="t">IAP 閘門</text>
+  <rect x="395" y="198" width="110" height="52" rx="10" fill="#fff7ed" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="450" y="230" text-anchor="middle" class="t">IAP 閘門</text>
+
+  <!-- Row A: browser passes -->
+  <rect x="40" y="74" width="330" height="60" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="205" y="99" text-anchor="middle" class="t">瀏覽器 Web Vault</text>
+  <text x="205" y="119" text-anchor="middle" class="ts">已用 Google 登入,請求帶 cookie</text>
+  <line x1="370" y1="104" x2="393" y2="104" class="edge" marker-end="url(#ah2)"/>
+  <line x1="505" y1="104" x2="528" y2="104" class="edge" marker-end="url(#ah2)"/>
+  <rect x="530" y="74" width="330" height="60" rx="10" fill="#f0fdf4" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="695" y="100" text-anchor="middle" class="ok">✓ 通過</text>
+  <text x="695" y="120" text-anchor="middle" class="ts">順利進入後台</text>
+
+  <!-- Row B: native clients fail -->
+  <rect x="40" y="194" width="330" height="60" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="205" y="219" text-anchor="middle" class="t">手機 · 桌面 · 外掛 · CLI</text>
+  <text x="205" y="239" text-anchor="middle" class="ts">無法帶 Google OAuth 憑證</text>
+  <line x1="370" y1="224" x2="393" y2="224" class="edge" marker-end="url(#ah2)"/>
+  <line x1="505" y1="224" x2="528" y2="224" class="edge" marker-end="url(#ah2)"/>
+  <rect x="530" y="194" width="330" height="60" rx="10" fill="#fef2f2" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="695" y="220" text-anchor="middle" class="no">✗ 被擋</text>
+  <text x="695" y="240" text-anchor="middle" class="ts">收到 302 / HTML,API 失效</text>
+
+  <!-- conclusion -->
+  <rect x="40" y="290" width="820" height="62" rx="10" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="450" y="316" text-anchor="middle" class="t">結論:IAP 只套在 /admin(純瀏覽器後台)</text>
+  <text x="450" y="338" text-anchor="middle" class="ts">一般用戶端走公開路徑,認證交給 Vaultwarden 自身的 SSO + 個人主密碼</text>
+</svg>
