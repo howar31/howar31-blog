@@ -77,7 +77,11 @@ hugo new posts/<slug>/index.md
   `chore:` / `refactor:`). One commit per feature. Follow the `/commit`
   skill.
 - **Branch workflow**: feature branches → PR into `master`. Never push
-  directly to `master` without explicit confirmation.
+  directly to `master` without explicit confirmation. **Exception —
+  content-only changes** (only files under `content/posts/`: writing or
+  editing posts): commit straight to `master`, no PR. Opening a PR triggers
+  Gemini review, which is needless overhead for prose; reserve PRs for
+  code / theme / config changes.
 
 ## Where things live
 
