@@ -150,12 +150,12 @@ SSO_AUTHORITY=https://accounts.google.com
 SSO_CLIENT_ID=<OAuth client id>
 SSO_CLIENT_SECRET=<secret>
 SSO_AUTHORIZE_EXTRA_PARAMS="access_type=offline&prompt=consent&hd=example.com"
-SSO_ONLY=false
+SSO_ONLY=true
 ```
 
 要把登入鎖在公司網域,最乾淨是把 GCP 的 OAuth 同意畫面設成 **Internal**;若同意畫面是共用的、不方便改,就靠 `SIGNUPS_DOMAINS_WHITELIST=example.com`(官方文件指明此白名單會套用於 SSO 註冊)在應用層擋掉非公司網域的帳號。
 
-保留 `SSO_ONLY=false`(不強制只能 SSO),好處有二:一是 SSO 萬一出狀況還有 email/密碼登入當 break-glass,二是**自動化的 bot 帳號得靠密碼 + API key 登入**(後面管理章節會談)。
+設 `SSO_ONLY=true` 讓 SSO 真正把關——同事離職停用 Google 帳號就立刻斷,Google 端強制的 2FA 也擋得住;否則使用者只要知道自己的主密碼,就能用 email + 主密碼繞過 SSO 登入。實測 token 端點確認:**`SSO_ONLY=true` 只擋掉 password grant,API key(`client_credentials`)grant 完全不受影響**,所以後面會談到的自動化 bot 帳號照常能用 CLI 登入,不會被綁住。代價是使用者層級的 email/密碼 break-glass 沒了——Google OIDC 萬一掛掉使用者得等 Google 修好(伺服器後台 `/admin` 仍可經 IAP + `ADMIN_TOKEN` 進去,不受影響)。
 
 {{< warning "主密碼拿不掉" >}}
 即使上了 SSO,使用者**仍要記一組自己的主密碼**。SSO 只負責「證明你是誰」,金庫是端對端加密、要靠主密碼派生的金鑰在用戶端解密——伺服器與 Google 都拿不到。Bitwarden 商業版那種「SSO 完全免主密碼」(Key Connector)Vaultwarden 沒有實作。
@@ -252,7 +252,7 @@ SSO_ONLY=false
 
 ### 自動化 / Bot 帳號的最小權限
 
-CI、排程、AI agent 這類非人帳號也常需要讀某些 secret。Vaultwarden 沒有「機器帳號」的概念(那是 Bitwarden Secrets Manager,未實作),所以 bot 用一般 User 帳號,透過 Bitwarden CLI(`bw`)的個人 API key + 主密碼登入(這正是前面保留密碼登入的用處)。
+CI、排程、AI agent 這類非人帳號也常需要讀某些 secret。Vaultwarden 沒有「機器帳號」的概念(那是 Bitwarden Secrets Manager,未實作),所以 bot 用一般 User 帳號,透過 Bitwarden CLI(`bw`)的個人 API key + 主密碼登入。**API key 走 `client_credentials` grant、不受 `SSO_ONLY` 影響**,因此即使前面把 SSO 強制成唯一登入路徑,bot 仍能正常認證。
 
 隔離做法:開一個專屬 collection(例如 `90 Automation`)、一個唯讀的 `Bots` 群組只綁這個 collection、每支 bot 一個獨立帳號(便於稽核與個別撤銷),絕不給 Admin/Owner。被盜的 bot 憑證最多只能讀到那幾筆,改不了、也碰不到其他組。
 
