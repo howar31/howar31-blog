@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="680" viewBox="0 0 580 340" font-family="-apple-system, 'PingFang TC', 'Microsoft JhengHei', sans-serif">
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#64748b"/>
+    </marker>
+    <style>
+      .box{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.5;}
+      .gate{fill:#eff6ff;stroke:#3b82f6;stroke-width:1.5;}
+      .t{fill:#1e293b;font-size:13.5px;}
+      .edge{stroke:#64748b;stroke-width:1.5;fill:none;}
+      .cross{stroke:#64748b;stroke-width:2;fill:none;}
+    </style>
+  </defs>
+  <rect x="0" y="0" width="580" height="340" fill="#f8fafc"/>
+
+  <!-- Phase 1: spec/plan -->
+  <rect x="100" y="50" width="160" height="36" rx="10" class="box"/>
+  <text x="180" y="73" text-anchor="middle" class="t">spec 撰寫</text>
+  <line x1="180" y1="86" x2="180" y2="103" class="edge" marker-end="url(#ah)"/>
+
+  <polygon points="180,106 250,124 180,142 110,124" class="gate"/>
+  <text x="180" y="128" text-anchor="middle" class="t">user review</text>
+  <line x1="180" y1="142" x2="180" y2="159" class="edge" marker-end="url(#ah)"/>
+
+  <rect x="100" y="162" width="160" height="36" rx="10" class="box"/>
+  <text x="180" y="185" text-anchor="middle" class="t">plan 撰寫</text>
+  <line x1="180" y1="198" x2="180" y2="215" class="edge" marker-end="url(#ah)"/>
+
+  <polygon points="180,218 250,236 180,254 110,236" class="gate"/>
+  <text x="180" y="240" text-anchor="middle" class="t">user review</text>
+  <line x1="180" y1="254" x2="180" y2="271" class="edge" marker-end="url(#ah)"/>
+
+  <rect x="100" y="274" width="160" height="36" rx="10" class="box"/>
+  <text x="180" y="297" text-anchor="middle" class="t">dispatch subagent</text>
+
+  <!-- Phase 2: impl/review -->
+  <rect x="350" y="50" width="160" height="36" rx="10" class="box"/>
+  <text x="430" y="73" text-anchor="middle" class="t">implementation</text>
+  <line x1="430" y1="86" x2="430" y2="103" class="edge" marker-end="url(#ah)"/>
+
+  <polygon points="430,106 500,124 430,142 360,124" class="gate"/>
+  <text x="430" y="128" text-anchor="middle" class="t">spec compliance</text>
+  <line x1="430" y1="142" x2="430" y2="159" class="edge" marker-end="url(#ah)"/>
+
+  <polygon points="430,162 500,180 430,198 360,180" class="gate"/>
+  <text x="430" y="184" text-anchor="middle" class="t">code quality</text>
+  <line x1="430" y1="198" x2="430" y2="215" class="edge" marker-end="url(#ah)"/>
+
+  <polygon points="430,218 500,236 430,254 360,236" class="gate"/>
+  <text x="430" y="240" text-anchor="middle" class="t">user 最終 review</text>
+  <line x1="430" y1="254" x2="430" y2="271" class="edge" marker-end="url(#ah)"/>
+
+  <rect x="350" y="274" width="160" height="36" rx="10" class="box"/>
+  <text x="430" y="297" text-anchor="middle" class="t">merge</text>
+
+  <!-- Cross-arrow: dispatch → implementation (phase boundary) -->
+  <path d="M 260 292 H 305 V 22 H 430 V 47" class="cross" marker-end="url(#ah)"/>
+</svg>

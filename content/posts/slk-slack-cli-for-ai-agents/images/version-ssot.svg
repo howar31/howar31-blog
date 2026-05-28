@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="880" viewBox="0 0 900 440" font-family="-apple-system, 'PingFang TC', 'Microsoft JhengHei', sans-serif">
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#64748b"/>
+    </marker>
+    <style>
+      .ssot{fill:#fef3c7;stroke:#f59e0b;stroke-width:1.5;}
+      .script{fill:#eff6ff;stroke:#3b82f6;stroke-width:1.5;}
+      .file{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.5;}
+      .guard{fill:#ecfdf5;stroke:#10b981;stroke-width:1.5;}
+      .t{fill:#1e293b;font-size:15px;}
+      .tb{fill:#1e293b;font-size:16px;font-weight:700;}
+      .edge{stroke:#64748b;stroke-width:1.5;fill:none;}
+      .dashed{stroke:#94a3b8;stroke-width:1.5;fill:none;stroke-dasharray:6,4;}
+    </style>
+  </defs>
+  <rect x="0" y="0" width="900" height="440" fill="#f8fafc"/>
+
+  <!-- Row 1: VERSION SSOT -->
+  <rect x="360" y="30" width="180" height="40" rx="10" class="ssot"/>
+  <text x="450" y="56" text-anchor="middle" class="tb">VERSION</text>
+
+  <!-- arrows VERSION → scripts -->
+  <line x1="450" y1="70" x2="180" y2="135" class="edge" marker-end="url(#ah)"/>
+  <line x1="450" y1="70" x2="450" y2="135" class="edge" marker-end="url(#ah)"/>
+  <line x1="450" y1="70" x2="720" y2="135" class="edge" marker-end="url(#ah)"/>
+
+  <!-- Row 2: scripts -->
+  <rect x="80" y="140" width="200" height="40" rx="10" class="script"/>
+  <text x="180" y="166" text-anchor="middle" class="t">sync-version.sh</text>
+
+  <rect x="350" y="140" width="200" height="40" rx="10" class="script"/>
+  <text x="450" y="166" text-anchor="middle" class="t">generate-skills</text>
+
+  <rect x="620" y="140" width="200" height="40" rx="10" class="script"/>
+  <text x="720" y="166" text-anchor="middle" class="t">generate-manifest</text>
+
+  <!-- arrows scripts → files -->
+  <line x1="180" y1="180" x2="180" y2="245" class="edge" marker-end="url(#ah)"/>
+  <line x1="450" y1="180" x2="450" y2="245" class="edge" marker-end="url(#ah)"/>
+  <line x1="720" y1="180" x2="720" y2="245" class="edge" marker-end="url(#ah)"/>
+
+  <!-- Row 3: generated files -->
+  <rect x="80" y="250" width="200" height="40" rx="10" class="file"/>
+  <text x="180" y="276" text-anchor="middle" class="t">SECURITY.md</text>
+
+  <rect x="350" y="250" width="200" height="40" rx="10" class="file"/>
+  <text x="450" y="276" text-anchor="middle" class="t">skills/ tree</text>
+
+  <rect x="620" y="250" width="200" height="40" rx="10" class="file"/>
+  <text x="720" y="276" text-anchor="middle" class="t">README manifest scope</text>
+
+  <!-- dashed arrows files → CI guards -->
+  <line x1="180" y1="290" x2="180" y2="355" class="dashed" marker-end="url(#ah)"/>
+  <line x1="450" y1="290" x2="450" y2="355" class="dashed" marker-end="url(#ah)"/>
+  <line x1="720" y1="290" x2="720" y2="355" class="dashed" marker-end="url(#ah)"/>
+
+  <!-- Row 4: CI guards -->
+  <rect x="80" y="360" width="200" height="40" rx="10" class="guard"/>
+  <text x="180" y="386" text-anchor="middle" class="t">version-sync CI guard</text>
+
+  <rect x="350" y="360" width="200" height="40" rx="10" class="guard"/>
+  <text x="450" y="386" text-anchor="middle" class="t">skill CI guard</text>
+
+  <rect x="620" y="360" width="200" height="40" rx="10" class="guard"/>
+  <text x="720" y="386" text-anchor="middle" class="t">manifest CI guard</text>
+</svg>

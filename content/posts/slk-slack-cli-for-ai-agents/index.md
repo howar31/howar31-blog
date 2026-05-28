@@ -17,6 +17,11 @@ tags:
   - dev-notes
 ---
 
+<style>
+.vp-image-modal-card { max-width: 96vw; }
+.vp-image-modal-img { max-height: 92vh; }
+</style>
+
 ## 1. Slack MCP 在 agent 工作流裡的 token 成本
 
 要讓 AI coding agent 接 Slack 做事情有現成的方案：官方提供 Slack MCP connector，agent 透過它呼叫 `conversations.history`、`chat.postMessage` 等 API。實際接上後，token 成本來自兩個地方。
@@ -41,21 +46,7 @@ slk 是我為這個落差寫的 CLI。Agent 透過 Bash 呼叫，每次只計算
 
 MCP 跟 CLI 在 agent 工作流裡計費的位置不一樣。MCP 的 tool 描述跟 input schema 必須一直掛在 system prompt 才能讓 agent 知道工具存在、知道每個參數的型別跟用法，這份描述每一輪都會被計費，跟那一輪有沒有實際用到 Slack 無關。CLI 走的是另一條路：工具的存在感由 `slk --help` 與 agent-facing 的 skill prompt 提供，agent 透過 Bash 呼叫，schema 不需要常駐在 context，只有實際 call 才產生 token。對偶爾才碰 Slack 的對話，這個差距是固定省下；對頻繁用 Slack 的對話，多次往返的累積成本跟 MCP 拉開差距。
 
-```mermaid
-flowchart LR
-  subgraph M[MCP 路徑]
-    direction TB
-    M1["system prompt<br/>+ 5–10K tok schemas<br/>（每輪固定）"]
-    M2["每次 call<br/>帶完整 envelope"]
-    M1 --> M2
-  end
-  subgraph C[CLI 路徑]
-    direction TB
-    C1["system prompt<br/>無 Slack schemas"]
-    C2["Bash → slk<br/>只計實際輸出"]
-    C1 --> C2
-  end
-```
+![MCP 與 CLI 兩條路徑的 token 計費差異](./images/mcp-vs-cli-paths.svg)
 
 形狀的決定權也不同。MCP 為協議完整性最佳化，Slack API 回什麼，connector 大致 forward 什麼出來，欄位齊全、shape 符合 protocol、對接其他 MCP client 一致。CLI 為 agent 可用性最佳化，輸出形狀完全由工具端決定。slk 用 concise 模式做預設，每則訊息只給 `user`、`text`、`ts`、`channel`、`thread` 五欄；需要結構化餵下一個指令時走 jsonl，要給人看時走 table，要原始 envelope 時掛 `--raw`。決定權留在 CLI，不交給 protocol。
 
@@ -173,18 +164,7 @@ impl 才是真正動手的階段。動手之前 spec 跟 plan 都過了 user rev
 
 整條節奏的 gate 結構長這樣：
 
-```mermaid
-flowchart TB
-  S[spec 撰寫] --> SR{user review}
-  SR -- 通過 --> P[plan 撰寫]
-  P --> PR{user review}
-  PR -- 通過 --> D[dispatch subagent]
-  D --> I[implementation]
-  I --> SC{spec compliance review}
-  SC -- 通過 --> CQ{code quality review}
-  CQ -- 通過 --> UR{user 最終 review}
-  UR -- 通過 --> M[merge]
-```
+![spec、plan、impl 三段流程與審查 gate](./images/dev-gate-flow.svg)
 
 ### 4.2 Subagent 分工
 
@@ -255,18 +235,7 @@ Slack canvas 在 API 層回傳的是 Quip 的 HTML，不是 markdown 也不是 S
 
 ### 6.1 VERSION SSOT 加上 CI 三 guard
 
-```mermaid
-flowchart TB
-  V[VERSION] --> S1[sync-version.sh]
-  V --> S2[generate-skills]
-  V --> S3[generate-manifest]
-  S1 --> F1[SECURITY.md]
-  S2 --> F2[skills/ tree]
-  S3 --> F3[README manifest scope]
-  F1 -.-> G1[version-sync CI guard]
-  F2 -.-> G2[skill CI guard]
-  F3 -.-> G3[manifest CI guard]
-```
+![VERSION 檔 fan-out 到衍生檔，再被 CI guard 鎖住](./images/version-ssot.svg)
 
 slk 的版本來源是 repo 根目錄一個 `VERSION` 檔，內容只有一行語意化版號。其他「會出現版號」的地方都從這個檔案派生：
 
@@ -280,16 +249,7 @@ slk 的版本來源是 repo 根目錄一個 `VERSION` 檔，內容只有一行�
 
 ### 6.2 VERSION-driven release
 
-```mermaid
-flowchart LR
-  A[PR merge to main] --> B{VERSION changed?}
-  B -- no --> N[no release]
-  B -- yes --> C[derive tag from VERSION]
-  C --> D[goreleaser]
-  D --> E[npm publish]
-  D --> F[Homebrew tap update]
-  D --> G[GitHub Release]
-```
+![VERSION 檔變動觸發 release pipeline 各通道](./images/version-driven-release.svg)
 
 有了 SSOT，release trigger 就可以單純綁在那一個檔案上。流程是：PR merge 到 `main` 之後，GitHub Actions 偵測 `VERSION` 這次有沒有變動；若有變動，job 會 derive 出 `v<VERSION>` tag、跑 goreleaser、發 npm 套件、更新 Homebrew tap formula。若 `VERSION` 沒動就什麼都不做，一般的 feature / fix PR 不會誤觸 release。
 

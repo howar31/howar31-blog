@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="680" viewBox="0 0 720 340" font-family="-apple-system, 'PingFang TC', 'Microsoft JhengHei', sans-serif">
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#64748b"/>
+    </marker>
+    <style>
+      .panel-warn{fill:#fef2f2;stroke:#ef4444;stroke-width:1.5;}
+      .panel-good{fill:#eff6ff;stroke:#3b82f6;stroke-width:1.5;}
+      .box{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.5;}
+      .ph{fill:#0f172a;font-size:18px;font-weight:700;}
+      .t{fill:#1e293b;font-size:15px;}
+      .ts{fill:#475569;font-size:12.5px;}
+      .edge{stroke:#64748b;stroke-width:1.5;fill:none;}
+    </style>
+  </defs>
+  <rect x="0" y="0" width="720" height="340" fill="#f8fafc"/>
+
+  <!-- MCP panel -->
+  <rect x="40" y="30" width="300" height="280" rx="14" class="panel-warn"/>
+  <text x="190" y="58" text-anchor="middle" class="ph">MCP 路徑</text>
+
+  <rect x="70" y="80" width="240" height="80" rx="10" class="box"/>
+  <text x="190" y="108" text-anchor="middle" class="t">system prompt</text>
+  <text x="190" y="128" text-anchor="middle" class="t">+ 5–10K tok schemas</text>
+  <text x="190" y="148" text-anchor="middle" class="ts">（每輪固定）</text>
+
+  <line x1="190" y1="160" x2="190" y2="195" class="edge" marker-end="url(#ah)"/>
+
+  <rect x="70" y="200" width="240" height="80" rx="10" class="box"/>
+  <text x="190" y="230" text-anchor="middle" class="t">每次 call</text>
+  <text x="190" y="250" text-anchor="middle" class="t">帶完整 envelope</text>
+
+  <!-- CLI panel -->
+  <rect x="380" y="30" width="300" height="280" rx="14" class="panel-good"/>
+  <text x="530" y="58" text-anchor="middle" class="ph">CLI 路徑</text>
+
+  <rect x="410" y="80" width="240" height="80" rx="10" class="box"/>
+  <text x="530" y="115" text-anchor="middle" class="t">system prompt</text>
+  <text x="530" y="135" text-anchor="middle" class="t">無 Slack schemas</text>
+
+  <line x1="530" y1="160" x2="530" y2="195" class="edge" marker-end="url(#ah)"/>
+
+  <rect x="410" y="200" width="240" height="80" rx="10" class="box"/>
+  <text x="530" y="235" text-anchor="middle" class="t">Bash → slk</text>
+  <text x="530" y="255" text-anchor="middle" class="t">只計實際輸出</text>
+</svg>

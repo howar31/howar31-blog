@@ -32,6 +32,19 @@ hugo new posts/<slug>/index.md
   `<figure>` card with the alt text as `<figcaption>`. If the alt looks
   like a filename (`*.png` / `*.jpg` / etc.) or is empty, the render hook
   emits a plain `<img>` instead — see SPEC.md → render-image hook.
+- **Diagrams — no Mermaid**: GitHub Pages does **not** render ``` ```mermaid ```
+  fences. Hand-author SVG into the post's `images/` folder and reference
+  with a descriptive alt (`![架構圖](./images/foo.svg)`) so the render-image
+  hook wraps it. Recipe: light background panel (e.g. `#f8fafc`) + dark
+  text so it reads on the dark theme; explicit `width`/`height` on the
+  `<svg>` root at **~2× the `viewBox`** so the lightbox `<img>` has enough
+  natural size to enlarge; per-post scoped `<style>` raising
+  `.vp-image-modal-card { max-width: 96vw }` and
+  `.vp-image-modal-img { max-height: 92vh }`; SVG font stack
+  `-apple-system,'PingFang TC','Microsoft JhengHei',sans-serif`. **Before
+  every commit**, verify no markdown post still contains a `mermaid`
+  fence — convert each to SVG first. Confirmed working in post
+  `self-hosted-vaultwarden-on-gcp`.
 - **Headings**: use `## `–`#### ` for in-post section headings — never
   `# ` (H1). The template already renders the post title as the page's
   single `<h1>`. A post with ≥ 2 section headings automatically gets a
