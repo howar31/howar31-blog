@@ -98,12 +98,16 @@ title: "My new post"
 date: 2026-04-22
 description: "Short summary shown in list pages and <meta name=description>."
 categories:
-  - vuepress          # lowercase-dash; value = URL slug = displayed string
+  - hugo              # platform era — hugo | vuepress | wordpress; new posts = hugo
 tags:
-  - hugo
+  - dev-notes         # topic tags, lowercase-dash; value = URL slug = displayed string
   - migration
 ---
 ```
+
+**Categories vs tags**: `categories` is a fixed set — `hugo` / `vuepress` /
+`wordpress` — marking the blog platform era a post was published under, not
+its topic. New posts use `hugo`; the post's subject goes in `tags`.
 
 **Taxonomy naming**: always lowercase-dash (`vuepress`, `dev-notes`, `ci-cd`).
 The frontmatter value equals the URL slug and equals the text shown in the

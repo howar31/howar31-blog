@@ -58,6 +58,13 @@ hugo new posts/<slug>/index.md
   language switcher — the design system mentioned a zh-TW/en toggle, but it
   was intentionally not built. Article *content* may be Chinese; UI strings
   must not. Dates render as ISO `2006-01-02`.
+- **Category = platform era** (`categories` frontmatter): a fixed, closed
+  set of exactly three values — `wordpress`, `vuepress`, `hugo` — denoting
+  the blog architecture the post was published under, NOT a topical label.
+  Every post carries exactly one. The current architecture is Hugo, so
+  every new post uses `- hugo`; historical posts keep `wordpress` /
+  `vuepress` (do not mass-retag them). Topic belongs in `tags`, never in
+  `categories` (e.g. `ai-agent` is a tag). Reject any other category value.
 - **Taxonomy naming** (both categories and tags): `lowercase-dash`. The
   frontmatter value *equals* the URL slug *equals* the displayed string —
   no humanize transform anywhere. Keep new tags in this form:

@@ -211,9 +211,14 @@ dashes. No humanize transform anywhere in templates.
 - Displayed in the sidebar, on term pages, and in post-meta: `vuepress`,
   `dev-notes`, `css`
 
-Three categories in use: `hugo` (1 post, the current era), `vuepress`
-(11 posts, 2019-2026 VuePress v1/v2 era) and `wordpress` (42 archive
-posts from the pre-VuePress WordPress era).
+**`categories` is a closed set of exactly three values** — `hugo`,
+`vuepress`, `wordpress` — denoting the blog platform era a post was
+published under, not a topical label. Every post carries exactly one; a
+post's topic goes in `tags`, never in `categories`. New posts use `hugo`
+(the current architecture); historical posts keep their era and are not
+retagged. Current counts: `hugo` (4 posts, the current Hugo era),
+`vuepress` (11 posts, 2019-2026 VuePress v1/v2 era) and `wordpress`
+(42 archive posts from the pre-VuePress WordPress era).
 
 When adding a new post, keep all taxonomy values lowercase-dash. Don't mix
 Title Case (`- Vuepress`) or acronyms (`- CSS`); the displayed text would

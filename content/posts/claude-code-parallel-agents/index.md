@@ -3,7 +3,7 @@ title: "讓 Claude Code 同時做很多事：subagents、worktrees、workflows�
 date: 2026-06-03
 description: Claude Code 提供四種讓單一對話變成平行作業的手段：subagents、git worktrees、workflows、agent teams。本文以白話與示意圖整理它們各自的定義、差異、用法、token 成本與適用場景。
 categories:
-  - ai-agent
+  - hugo
 tags:
   - claude-code
   - ai-agent
