@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1520" height="920" viewBox="0 0 760 460" font-family="-apple-system, 'PingFang TC', 'Microsoft JhengHei', sans-serif">
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#64748b"/>
+    </marker>
+    <style>
+      .start{fill:#e2e8f0;stroke:#94a3b8;stroke-width:1.6;}
+      .dia{fill:#ffffff;stroke:#94a3b8;stroke-width:1.6;}
+      .c-sub{fill:#eff6ff;stroke:#3b82f6;stroke-width:1.8;}
+      .c-wt{fill:#ecfdf5;stroke:#10b981;stroke-width:1.8;}
+      .c-wf{fill:#f5f3ff;stroke:#8b5cf6;stroke-width:1.8;}
+      .c-at{fill:#fffbeb;stroke:#f59e0b;stroke-width:1.8;}
+      .t{fill:#1e293b;font-size:13px;}
+      .res{fill:#0f172a;font-size:15px;font-weight:700;}
+      .ts{fill:#475569;font-size:11.5px;}
+      .edge{stroke:#64748b;stroke-width:1.6;fill:none;}
+      .yn{fill:#64748b;font-size:12.5px;font-weight:700;}
+    </style>
+  </defs>
+  <rect x="0" y="0" width="760" height="460" fill="#f8fafc"/>
+
+  <!-- start -->
+  <rect x="300" y="20" width="160" height="36" rx="10" class="start"/>
+  <text x="380" y="43" text-anchor="middle" class="t" font-weight="700">我想平行做事</text>
+  <line x1="380" y1="56" x2="380" y2="72" class="edge" marker-end="url(#ah)"/>
+
+  <!-- Q1 -->
+  <polygon points="380,74 492,114 380,154 268,114" class="dia"/>
+  <text x="380" y="110" text-anchor="middle" class="t">要在不同 git 分支</text>
+  <text x="380" y="128" text-anchor="middle" class="t">各改各的檔案？</text>
+  <line x1="492" y1="114" x2="558" y2="114" class="edge" marker-end="url(#ah)"/>
+  <text x="524" y="106" text-anchor="middle" class="yn">是</text>
+  <line x1="380" y1="154" x2="380" y2="174" class="edge" marker-end="url(#ah)"/>
+  <text x="392" y="170" class="yn">否</text>
+  <rect x="558" y="92" width="184" height="46" rx="11" class="c-wt"/>
+  <text x="650" y="113" text-anchor="middle" class="res">Worktree</text>
+  <text x="650" y="130" text-anchor="middle" class="ts">不同分支平行改檔</text>
+
+  <!-- Q2 -->
+  <polygon points="380,176 492,216 380,256 268,216" class="dia"/>
+  <text x="380" y="212" text-anchor="middle" class="t">需要多個 AI</text>
+  <text x="380" y="230" text-anchor="middle" class="t">互相討論協作？</text>
+  <line x1="492" y1="216" x2="558" y2="216" class="edge" marker-end="url(#ah)"/>
+  <text x="524" y="208" text-anchor="middle" class="yn">是</text>
+  <line x1="380" y1="256" x2="380" y2="276" class="edge" marker-end="url(#ah)"/>
+  <text x="392" y="272" class="yn">否</text>
+  <rect x="558" y="194" width="184" height="46" rx="11" class="c-at"/>
+  <text x="650" y="215" text-anchor="middle" class="res">Agent team</text>
+  <text x="650" y="232" text-anchor="middle" class="ts">多 AI 協作（最貴·實驗性）</text>
+
+  <!-- Q3 -->
+  <polygon points="380,278 492,318 380,358 268,318" class="dia"/>
+  <text x="380" y="314" text-anchor="middle" class="t">對一大批東西跑</text>
+  <text x="380" y="332" text-anchor="middle" class="t">同一套固定流程？</text>
+  <line x1="492" y1="318" x2="558" y2="318" class="edge" marker-end="url(#ah)"/>
+  <text x="524" y="310" text-anchor="middle" class="yn">是</text>
+  <line x1="380" y1="358" x2="380" y2="378" class="edge" marker-end="url(#ah)"/>
+  <text x="392" y="374" class="yn">否</text>
+  <rect x="558" y="296" width="184" height="46" rx="11" class="c-wf"/>
+  <text x="650" y="317" text-anchor="middle" class="res">Workflow</text>
+  <text x="650" y="334" text-anchor="middle" class="ts">大規模、可重複的固定流程</text>
+
+  <!-- default: subagent -->
+  <rect x="288" y="380" width="184" height="54" rx="12" class="c-sub"/>
+  <text x="380" y="404" text-anchor="middle" class="res">Subagent</text>
+  <text x="380" y="422" text-anchor="middle" class="ts">外包一件有明確產出的小事</text>
+</svg>

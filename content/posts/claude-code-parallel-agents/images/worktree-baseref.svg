@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="760" viewBox="0 0 720 380" font-family="-apple-system, 'PingFang TC', 'Microsoft JhengHei', sans-serif">
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#64748b"/>
+    </marker>
+    <style>
+      .src{fill:#ffffff;stroke:#94a3b8;stroke-width:1.6;}
+      .srca{fill:#fffbeb;stroke:#f59e0b;stroke-width:1.6;}
+      .wt{fill:#ecfdf5;stroke:#10b981;stroke-width:1.6;}
+      .ph{fill:#0f172a;font-size:16px;font-weight:700;}
+      .t{fill:#1e293b;font-size:14px;}
+      .ts{fill:#475569;font-size:12.5px;}
+      .code{fill:#7c3aed;font-size:14px;font-weight:700;}
+      .edge{stroke:#64748b;stroke-width:1.8;fill:none;}
+      .div{stroke:#cbd5e1;stroke-width:1.4;stroke-dasharray:5 4;}
+      .note{fill:#fef2f2;stroke:#ef4444;stroke-width:1.4;}
+    </style>
+  </defs>
+  <rect x="0" y="0" width="720" height="380" fill="#f8fafc"/>
+  <text x="360" y="32" text-anchor="middle" class="ph">Claude Code 開新 worktree：內容從哪條分支來？</text>
+
+  <line x1="360" y1="50" x2="360" y2="290" class="div"/>
+
+  <!-- LEFT: fresh -->
+  <rect x="110" y="56" width="180" height="44" rx="10" class="src"/>
+  <text x="200" y="83" text-anchor="middle" class="t">origin/main（乾淨）</text>
+  <line x1="200" y1="100" x2="200" y2="156" class="edge" marker-end="url(#ah)"/>
+  <text x="214" y="132" class="code">baseRef: "fresh"</text>
+  <rect x="90" y="158" width="220" height="72" rx="12" class="wt"/>
+  <text x="200" y="186" text-anchor="middle" class="t" font-weight="700">新 worktree</text>
+  <text x="200" y="208" text-anchor="middle" class="t">＝ 乾淨的 main 副本</text>
+  <text x="200" y="252" text-anchor="middle" class="ts">預設值，與目前分支無關</text>
+
+  <!-- RIGHT: head -->
+  <rect x="430" y="56" width="200" height="44" rx="10" class="srca"/>
+  <text x="530" y="83" text-anchor="middle" class="t">feature-x（目前 HEAD）</text>
+  <line x1="530" y1="100" x2="530" y2="156" class="edge" marker-end="url(#ah)"/>
+  <text x="544" y="132" class="code">baseRef: "head"</text>
+  <rect x="420" y="158" width="220" height="72" rx="12" class="wt"/>
+  <text x="530" y="186" text-anchor="middle" class="t" font-weight="700">新 worktree</text>
+  <text x="530" y="208" text-anchor="middle" class="t">＝ 帶 feature-x 的內容</text>
+  <text x="530" y="252" text-anchor="middle" class="ts">需手動設定為 head</text>
+
+  <!-- common caveat -->
+  <rect x="120" y="300" width="480" height="48" rx="12" class="note"/>
+  <text x="360" y="322" text-anchor="middle" class="t">⚠ 兩種情況都一樣：原資料夾「還沒 commit」的改動，不會跟著進新 worktree</text>
+  <text x="360" y="340" text-anchor="middle" class="ts">實際行為依版本而定，以官方文件與實測為準</text>
+</svg>

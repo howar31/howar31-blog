@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="680" viewBox="0 0 720 340" font-family="-apple-system, 'PingFang TC', 'Microsoft JhengHei', sans-serif">
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#64748b"/>
+    </marker>
+    <style>
+      .box{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.5;}
+      .ph{fill:#0f172a;font-size:16px;font-weight:700;}
+      .t{fill:#1e293b;font-size:15px;}
+      .ts{fill:#475569;font-size:12.5px;}
+      .edge{stroke:#64748b;stroke-width:1.5;fill:none;}
+      .limit{stroke:#ef4444;stroke-width:1.5;stroke-dasharray:6 4;}
+      .lt{fill:#ef4444;font-size:12.5px;font-weight:700;}
+      .bar-a{fill:#bfdbfe;stroke:#3b82f6;stroke-width:1.2;}
+      .bar-b{fill:#bbf7d0;stroke:#10b981;stroke-width:1.2;}
+      .bar-c{fill:#fde68a;stroke:#f59e0b;stroke-width:1.2;}
+    </style>
+  </defs>
+  <rect x="0" y="0" width="720" height="340" fill="#f8fafc"/>
+
+  <!-- AI brain -->
+  <rect x="50" y="126" width="150" height="84" rx="14" class="box"/>
+  <text x="125" y="166" text-anchor="middle" class="t" font-weight="700">Claude</text>
+  <text x="125" y="188" text-anchor="middle" class="ts">（一個大腦）</text>
+  <text x="125" y="250" text-anchor="middle" class="ts">一次只做一件事</text>
+
+  <line x1="200" y1="168" x2="305" y2="168" class="edge" marker-end="url(#ah)"/>
+
+  <!-- context window container -->
+  <rect x="320" y="36" width="350" height="272" rx="14" class="box"/>
+  <text x="495" y="62" text-anchor="middle" class="ph">context window（對話視窗）</text>
+
+  <line x1="340" y1="128" x2="650" y2="128" class="limit"/>
+  <text x="648" y="120" text-anchor="end" class="lt">容量上限</text>
+
+  <rect x="350" y="140" width="290" height="40" rx="6" class="bar-c"/>
+  <text x="495" y="165" text-anchor="middle" class="t">指令輸出（滿屏 log）</text>
+
+  <rect x="350" y="186" width="290" height="40" rx="6" class="bar-b"/>
+  <text x="495" y="211" text-anchor="middle" class="t">讀過的檔案</text>
+
+  <rect x="350" y="232" width="290" height="40" rx="6" class="bar-a"/>
+  <text x="495" y="257" text-anchor="middle" class="t">對話歷史</text>
+</svg>

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1480" height="640" viewBox="0 0 740 320" font-family="-apple-system, 'PingFang TC', 'Microsoft JhengHei', sans-serif">
+  <defs>
+    <style>
+      .base{fill:#e2e8f0;stroke:#94a3b8;stroke-width:1.2;}
+      .sub{fill:#bfdbfe;stroke:#3b82f6;stroke-width:1.2;}
+      .wf{fill:#ddd6fe;stroke:#8b5cf6;stroke-width:1.2;}
+      .at{fill:#fde68a;stroke:#f59e0b;stroke-width:1.2;}
+      .name{fill:#0f172a;font-size:14px;font-weight:700;}
+      .t{fill:#1e293b;font-size:12.5px;}
+      .ts{fill:#475569;font-size:12px;}
+      .big{fill:#b45309;font-size:15px;font-weight:700;}
+    </style>
+  </defs>
+  <rect x="0" y="0" width="740" height="320" fill="#f8fafc"/>
+
+  <!-- baseline -->
+  <text x="180" y="64" text-anchor="end" class="name">單一對話</text>
+  <rect x="195" y="48" width="70" height="30" rx="5" class="base"/>
+  <text x="275" y="68" class="ts">基準 1×</text>
+
+  <!-- subagent -->
+  <text x="180" y="124" text-anchor="end" class="name">Subagent</text>
+  <rect x="195" y="108" width="82" height="30" rx="5" class="sub"/>
+  <text x="287" y="128" class="ts">低：雜訊留在小幫手，只回摘要</text>
+
+  <!-- workflow -->
+  <text x="180" y="184" text-anchor="end" class="name">Workflow</text>
+  <rect x="195" y="168" width="210" height="30" rx="5" class="wf"/>
+  <text x="415" y="188" class="ts">中：隨小幫手數量；協調由程式做，免費</text>
+
+  <!-- agent team -->
+  <text x="180" y="244" text-anchor="end" class="name">Agent team</text>
+  <rect x="195" y="228" width="490" height="30" rx="5" class="at"/>
+  <text x="440" y="248" text-anchor="middle" class="big">≈ 7×（plan mode）</text>
+
+  <text x="195" y="290" class="t">高：每個隊員是完整 AI + 互傳訊息，各自的記憶體都要重算</text>
+  <text x="685" y="306" text-anchor="end" class="ts">（長度為示意，非精確比例）</text>
+</svg>

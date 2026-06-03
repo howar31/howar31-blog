@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="680" viewBox="0 0 720 340" font-family="-apple-system, 'PingFang TC', 'Microsoft JhengHei', sans-serif">
+  <defs>
+    <marker id="lp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#8b5cf6"/>
+    </marker>
+    <style>
+      .panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.5;}
+      .panel-good{fill:#ecfdf5;stroke:#10b981;stroke-width:1.5;}
+      .ctx{fill:#ffffff;stroke:#94a3b8;stroke-width:1.4;}
+      .wf{fill:#f5f3ff;stroke:#8b5cf6;stroke-width:1.6;}
+      .dec{fill:#e2e8f0;stroke:#94a3b8;stroke-width:1;}
+      .res{fill:#bfdbfe;stroke:#3b82f6;stroke-width:1;}
+      .fin{fill:#bbf7d0;stroke:#10b981;stroke-width:1.2;}
+      .var{fill:#ddd6fe;stroke:#8b5cf6;stroke-width:1;}
+      .ph{fill:#0f172a;font-size:15px;font-weight:700;}
+      .t{fill:#1e293b;font-size:13px;}
+      .ts{fill:#475569;font-size:12px;}
+      .loop{stroke:#8b5cf6;stroke-width:1.6;fill:none;}
+    </style>
+  </defs>
+  <rect x="0" y="0" width="720" height="340" fill="#f8fafc"/>
+
+  <!-- LEFT: turn-by-turn -->
+  <rect x="30" y="30" width="300" height="288" rx="14" class="panel"/>
+  <text x="180" y="56" text-anchor="middle" class="ph">逐輪由 AI 決策</text>
+  <text x="180" y="76" text-anchor="middle" class="ts">對話視窗</text>
+  <rect x="72" y="86" width="216" height="24" rx="5" class="dec"/><text x="180" y="103" text-anchor="middle" class="t">決策 1</text>
+  <rect x="72" y="114" width="216" height="24" rx="5" class="res"/><text x="180" y="131" text-anchor="middle" class="t">結果 1</text>
+  <rect x="72" y="142" width="216" height="24" rx="5" class="dec"/><text x="180" y="159" text-anchor="middle" class="t">決策 2</text>
+  <rect x="72" y="170" width="216" height="24" rx="5" class="res"/><text x="180" y="187" text-anchor="middle" class="t">結果 2</text>
+  <rect x="72" y="198" width="216" height="24" rx="5" class="dec"/><text x="180" y="215" text-anchor="middle" class="t">決策 3</text>
+  <rect x="72" y="226" width="216" height="24" rx="5" class="res"/><text x="180" y="243" text-anchor="middle" class="t">結果 3</text>
+  <text x="180" y="284" text-anchor="middle" class="t" font-weight="700">中間結果全都佔記憶體</text>
+  <text x="180" y="303" text-anchor="middle" class="ts">越跑越肥</text>
+
+  <!-- RIGHT: workflow -->
+  <rect x="390" y="30" width="300" height="288" rx="14" class="panel-good"/>
+  <text x="540" y="56" text-anchor="middle" class="ph">改用 workflow</text>
+  <text x="540" y="76" text-anchor="middle" class="ts">對話視窗</text>
+  <rect x="432" y="86" width="216" height="56" rx="8" class="ctx"/>
+  <rect x="444" y="100" width="192" height="28" rx="6" class="fin"/>
+  <text x="540" y="119" text-anchor="middle" class="t">最終答案</text>
+
+  <rect x="420" y="160" width="240" height="118" rx="12" class="wf"/>
+  <text x="540" y="182" text-anchor="middle" class="ts">腳本 runtime（背景執行）</text>
+  <rect x="466" y="194" width="180" height="22" rx="5" class="var"/><text x="556" y="210" text-anchor="middle" class="ts">結果 1</text>
+  <rect x="466" y="220" width="180" height="22" rx="5" class="var"/><text x="556" y="236" text-anchor="middle" class="ts">結果 2</text>
+  <rect x="466" y="246" width="180" height="22" rx="5" class="var"/><text x="556" y="262" text-anchor="middle" class="ts">結果 3（腳本變數）</text>
+  <path d="M 452 252 q -16 -34 0 -56" class="loop" marker-end="url(#lp)"/>
+
+  <text x="540" y="302" text-anchor="middle" class="t" font-weight="700">記憶體只留最終答案</text>
+</svg>

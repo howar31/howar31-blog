@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="760" viewBox="0 0 720 380" font-family="-apple-system, 'PingFang TC', 'Microsoft JhengHei', sans-serif">
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#94a3b8"/>
+    </marker>
+    <style>
+      .sub{fill:#eff6ff;stroke:#3b82f6;stroke-width:1.5;}
+      .merge{fill:#ffffff;stroke:#94a3b8;stroke-width:1.5;}
+      .good{fill:#ecfdf5;stroke:#10b981;stroke-width:1.6;}
+      .wf{fill:#f5f3ff;stroke:#8b5cf6;stroke-width:1.6;}
+      .ph{fill:#7c3aed;font-size:13px;font-weight:700;}
+      .t{fill:#1e293b;font-size:13px;}
+      .ts{fill:#475569;font-size:12.5px;}
+      .edge{stroke:#94a3b8;stroke-width:1.4;fill:none;}
+      .drive{stroke:#c4b5fd;stroke-width:1.4;stroke-dasharray:5 4;fill:none;}
+    </style>
+  </defs>
+  <rect x="0" y="0" width="720" height="380" fill="#f8fafc"/>
+
+  <!-- phase headers -->
+  <text x="130" y="40" text-anchor="middle" class="ph">① 平行掃描</text>
+  <text x="320" y="40" text-anchor="middle" class="ph">② 合併</text>
+  <text x="500" y="40" text-anchor="middle" class="ph">③ 平行驗證</text>
+  <text x="650" y="40" text-anchor="middle" class="ph">輸出</text>
+
+  <!-- col1: parallel scan -->
+  <rect x="65" y="55" width="130" height="38" rx="9" class="sub"/>
+  <text x="130" y="79" text-anchor="middle" class="t">掃描 A</text>
+  <rect x="65" y="103" width="130" height="38" rx="9" class="sub"/>
+  <text x="130" y="127" text-anchor="middle" class="t">掃描 B</text>
+  <rect x="65" y="151" width="130" height="38" rx="9" class="sub"/>
+  <text x="130" y="175" text-anchor="middle" class="t">掃描 C</text>
+
+  <!-- col2: merge -->
+  <rect x="255" y="103" width="130" height="38" rx="9" class="merge"/>
+  <text x="320" y="127" text-anchor="middle" class="t">合併結果</text>
+
+  <!-- col3: parallel verify -->
+  <rect x="435" y="80" width="130" height="38" rx="9" class="sub"/>
+  <text x="500" y="104" text-anchor="middle" class="t">驗證 1</text>
+  <rect x="435" y="128" width="130" height="38" rx="9" class="sub"/>
+  <text x="500" y="152" text-anchor="middle" class="t">驗證 2</text>
+
+  <!-- result -->
+  <rect x="595" y="100" width="110" height="46" rx="11" class="good"/>
+  <text x="650" y="128" text-anchor="middle" class="t">最終結果</text>
+
+  <!-- arrows col1 -> col2 -->
+  <line x1="195" y1="74" x2="255" y2="118" class="edge" marker-end="url(#ah)"/>
+  <line x1="195" y1="122" x2="255" y2="122" class="edge" marker-end="url(#ah)"/>
+  <line x1="195" y1="170" x2="255" y2="126" class="edge" marker-end="url(#ah)"/>
+  <!-- arrows col2 -> col3 -->
+  <line x1="385" y1="118" x2="435" y2="99" class="edge" marker-end="url(#ah)"/>
+  <line x1="385" y1="126" x2="435" y2="147" class="edge" marker-end="url(#ah)"/>
+  <!-- arrows col3 -> result -->
+  <line x1="565" y1="99" x2="595" y2="120" class="edge" marker-end="url(#ah)"/>
+  <line x1="565" y1="147" x2="595" y2="126" class="edge" marker-end="url(#ah)"/>
+
+  <!-- orchestrator bar -->
+  <line x1="130" y1="300" x2="130" y2="195" class="drive"/>
+  <line x1="320" y1="300" x2="320" y2="147" class="drive"/>
+  <line x1="500" y1="300" x2="500" y2="172" class="drive"/>
+  <line x1="650" y1="300" x2="650" y2="150" class="drive"/>
+  <rect x="50" y="302" width="655" height="54" rx="12" class="wf"/>
+  <text x="377" y="326" text-anchor="middle" class="t" font-weight="700">Workflow 腳本：用程式控制順序／平行／迴圈</text>
+  <text x="377" y="345" text-anchor="middle" class="ts">協調由程式完成，不花 token；中間結果存在腳本變數，不進對話視窗</text>
+</svg>

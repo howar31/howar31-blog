@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1360" height="680" viewBox="0 0 680 340" font-family="-apple-system, 'PingFang TC', 'Microsoft JhengHei', sans-serif">
+  <defs>
+    <style>
+      .panel-warn{fill:#fef2f2;stroke:#ef4444;stroke-width:1.5;}
+      .panel-good{fill:#ecfdf5;stroke:#10b981;stroke-width:1.5;}
+      .box{fill:#ffffff;stroke:#cbd5e1;stroke-width:1.4;}
+      .ph{fill:#0f172a;font-size:16px;font-weight:700;}
+      .t{fill:#1e293b;font-size:13px;}
+      .ts{fill:#475569;font-size:12.5px;}
+      .full{fill:#fecaca;stroke:none;}
+      .sum{fill:#bbf7d0;stroke:#10b981;stroke-width:1.2;}
+      .limit{stroke:#ef4444;stroke-width:1.5;stroke-dasharray:6 4;}
+      .lt{fill:#ef4444;font-size:12px;font-weight:700;}
+    </style>
+  </defs>
+  <rect x="0" y="0" width="680" height="340" fill="#f8fafc"/>
+
+  <!-- WITHOUT subagent -->
+  <rect x="30" y="36" width="300" height="278" rx="14" class="panel-warn"/>
+  <text x="180" y="62" text-anchor="middle" class="ph">直接在主對話跑測試</text>
+  <rect x="54" y="86" width="252" height="206" rx="10" class="box"/>
+  <line x1="54" y1="104" x2="306" y2="104" class="limit"/>
+  <text x="300" y="100" text-anchor="end" class="lt">容量上限</text>
+  <rect x="66" y="112" width="228" height="170" rx="6" class="full"/>
+  <text x="180" y="190" text-anchor="middle" class="t">幾千行 log</text>
+  <text x="180" y="210" text-anchor="middle" class="t">占滿主對話記憶體</text>
+
+  <!-- WITH subagent -->
+  <rect x="350" y="36" width="300" height="278" rx="14" class="panel-good"/>
+  <text x="500" y="62" text-anchor="middle" class="ph">改用 subagent</text>
+  <rect x="374" y="86" width="252" height="206" rx="10" class="box"/>
+  <rect x="386" y="248" width="228" height="34" rx="6" class="sum"/>
+  <text x="500" y="270" text-anchor="middle" class="t">3 個測試失敗：X、Y、Z</text>
+  <text x="500" y="160" text-anchor="middle" class="ts">（其餘空間保持乾淨）</text>
+</svg>
