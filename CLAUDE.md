@@ -9,6 +9,8 @@ Static personal blog. Hugo (extended) → GitHub Pages → custom domain
 `blog.howar31.com`. Migrated from VuePress v2 RC in April 2026.
 No Node.js runtime, no npm, no bundler.
 
+@.claude/writing-voice.md
+
 ## Commands
 
 ```bash
@@ -44,7 +46,9 @@ hugo new posts/<slug>/index.md
   `-apple-system,'PingFang TC','Microsoft JhengHei',sans-serif`. **Before
   every commit**, verify no markdown post still contains a `mermaid`
   fence — convert each to SVG first. Confirmed working in post
-  `self-hosted-vaultwarden-on-gcp`.
+  `self-hosted-vaultwarden-on-gcp`. Diagrams = hand-authored SVG (this
+  recipe); real UI = screenshots (PNG already has large natural size, so
+  skip the 2× `width`/`height` step).
 - **Headings**: use `## `–`#### ` for in-post section headings — never
   `# ` (H1). The template already renders the post title as the page's
   single `<h1>`. A post with ≥ 2 section headings automatically gets a
