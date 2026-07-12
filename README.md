@@ -61,7 +61,7 @@ howar31-blog/
 ├── content/
 │   └── posts/
 │       ├── _index.md             # Overrides /posts/ heading → "Recent Posts"
-│       └── <slug>/index.md       # 54 posts; images sit in the same folder
+│       └── <slug>/index.md       # 58 posts; images sit in the same folder
 ├── layouts/
 │   ├── index.html                # Home: 2-column (recent posts + sidebar)
 │   ├── index.json                # JSON search index → /index.json

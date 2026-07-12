@@ -216,7 +216,7 @@ dashes. No humanize transform anywhere in templates.
 published under, not a topical label. Every post carries exactly one; a
 post's topic goes in `tags`, never in `categories`. New posts use `hugo`
 (the current architecture); historical posts keep their era and are not
-retagged. Current counts: `hugo` (4 posts, the current Hugo era),
+retagged. Current counts: `hugo` (5 posts, the current Hugo era),
 `vuepress` (11 posts, 2019-2026 VuePress v1/v2 era) and `wordpress`
 (42 archive posts from the pre-VuePress WordPress era).
 

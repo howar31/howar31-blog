@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 340" width="1920" height="680" role="img" aria-label="兩種開發模式：計畫式功能 slice 與微調 loop">
+  <style>
+    text { font-family: -apple-system,'PingFang TC','Microsoft JhengHei',sans-serif; fill: #0f172a; font-size: 12px; }
+    .row-title { font-size: 14px; font-weight: 700; }
+    .sub { fill: #64748b; font-size: 12px; }
+    .arrow { stroke: #94a3b8; stroke-width: 2; fill: none; }
+  </style>
+  <rect x="0.5" y="0.5" width="959" height="339" rx="12" fill="#f8fafc" stroke="#e2e8f0"/>
+
+  <text x="50" y="46" class="row-title">計畫式功能 slice：事前寫清楚，subagent 照計畫走</text>
+  <rect x="50" y="62" width="110" height="48" rx="8" fill="#eff6ff" stroke="#93c5fd"/>
+  <text x="105" y="91" text-anchor="middle">brainstorm</text>
+  <path class="arrow" d="M 160 86 L 174 86 M 168 80 L 178 86 L 168 92"/>
+  <rect x="178" y="62" width="96" height="48" rx="8" fill="#eff6ff" stroke="#93c5fd"/>
+  <text x="226" y="91" text-anchor="middle">設計文件</text>
+  <path class="arrow" d="M 274 86 L 288 86 M 282 80 L 292 86 L 282 92"/>
+  <rect x="292" y="62" width="96" height="48" rx="8" fill="#eff6ff" stroke="#93c5fd"/>
+  <text x="340" y="91" text-anchor="middle">實作計畫</text>
+  <path class="arrow" d="M 388 86 L 402 86 M 396 80 L 406 86 L 396 92"/>
+  <rect x="406" y="62" width="150" height="48" rx="8" fill="#eff6ff" stroke="#93c5fd"/>
+  <text x="481" y="91" text-anchor="middle">subagent 逐任務實作</text>
+  <path class="arrow" d="M 556 86 L 570 86 M 564 80 L 574 86 L 564 92"/>
+  <rect x="574" y="62" width="110" height="48" rx="8" fill="#eff6ff" stroke="#93c5fd"/>
+  <text x="629" y="91" text-anchor="middle">兩階段 review</text>
+  <path class="arrow" d="M 684 86 L 698 86 M 692 80 L 702 86 L 692 92"/>
+  <rect x="702" y="62" width="130" height="48" rx="8" fill="#eff6ff" stroke="#93c5fd"/>
+  <text x="767" y="91" text-anchor="middle">adversarial review</text>
+  <path class="arrow" d="M 832 86 L 846 86 M 840 80 L 850 86 L 840 92"/>
+  <rect x="850" y="62" width="70" height="48" rx="8" fill="#eff6ff" stroke="#93c5fd"/>
+  <text x="885" y="91" text-anchor="middle">驗收</text>
+  <text x="50" y="140" class="sub">設計文件記下「做什麼、不做什麼、被否決的方案」；計畫展開成 checkbox 任務，每個任務含 TDD 步驟與 commit 訊息</text>
+
+  <text x="50" y="192" class="row-title">微調 loop：一次一項，上機驗證後才 commit</text>
+  <rect x="50" y="208" width="150" height="48" rx="8" fill="#f0fdf4" stroke="#86efac"/>
+  <text x="125" y="237" text-anchor="middle">一次一項（附截圖）</text>
+  <path class="arrow" d="M 200 232 L 214 232 M 208 226 L 218 232 L 208 238"/>
+  <rect x="218" y="208" width="96" height="48" rx="8" fill="#f0fdf4" stroke="#86efac"/>
+  <text x="266" y="237" text-anchor="middle">討論定案</text>
+  <path class="arrow" d="M 314 232 L 328 232 M 322 226 L 332 232 L 322 238"/>
+  <rect x="332" y="208" width="70" height="48" rx="8" fill="#f0fdf4" stroke="#86efac"/>
+  <text x="367" y="237" text-anchor="middle">實作</text>
+  <path class="arrow" d="M 402 232 L 416 232 M 410 226 L 420 232 L 410 238"/>
+  <rect x="420" y="208" width="96" height="48" rx="8" fill="#f0fdf4" stroke="#86efac"/>
+  <text x="468" y="237" text-anchor="middle">上機驗證</text>
+  <path class="arrow" d="M 516 232 L 530 232 M 524 226 L 534 232 L 524 238"/>
+  <rect x="534" y="208" width="130" height="48" rx="8" fill="#f0fdf4" stroke="#86efac"/>
+  <text x="599" y="237" text-anchor="middle">一項一 commit</text>
+  <path class="arrow" d="M 599 256 L 599 288 L 125 288 L 125 262 M 119 270 L 125 260 L 131 270"/>
+  <text x="360" y="282" class="sub" text-anchor="middle">下一項</text>
+  <text x="50" y="322" class="sub">工具手感、視覺細節、設計調整多走這條；中期有一整段約一週全部以此模式進行</text>
+</svg>

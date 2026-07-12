@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 430" width="1920" height="860" role="img" aria-label="驗證分工：AI agent 自行驗證與人工上機驗證的循環">
+  <style>
+    text { font-family: -apple-system,'PingFang TC','Microsoft JhengHei',sans-serif; fill: #0f172a; font-size: 13px; }
+    .heading { font-size: 15px; font-weight: 700; }
+    .item { fill: #334155; }
+    .label { fill: #64748b; font-size: 12px; }
+    .arrow { stroke: #94a3b8; stroke-width: 2; fill: none; }
+  </style>
+  <rect x="0.5" y="0.5" width="959" height="429" rx="12" fill="#f8fafc" stroke="#e2e8f0"/>
+
+  <rect x="50" y="60" width="380" height="240" rx="10" fill="#eff6ff" stroke="#bfdbfe"/>
+  <text x="240" y="92" text-anchor="middle" class="heading">AI agent 自行驗證</text>
+  <text x="80" y="130" class="item">flutter analyze + 全測試套件</text>
+  <text x="80" y="162" class="item">建置：macOS 本機、Windows over SSH</text>
+  <text x="80" y="194" class="item">自行讀 log 與 perf 數據</text>
+  <text x="80" y="226" class="item">後期：Windows 以 input injection self-drive 部分 E2E</text>
+  <text x="80" y="258" class="item">每次 commit 前全部跑過</text>
+
+  <rect x="530" y="60" width="380" height="240" rx="10" fill="#fef2f2" stroke="#fecaca"/>
+  <text x="720" y="92" text-anchor="middle" class="heading">人工上機驗證</text>
+  <text x="560" y="130" class="item">GUI 視覺、動畫、多螢幕情境</text>
+  <text x="560" y="162" class="item">原生行為：TCC、輸入法、剪貼簿</text>
+  <text x="560" y="194" class="item">錄影實際輸出的畫質與音訊</text>
+  <text x="560" y="226" class="item">overlay 凍結畫面（agent 截不到）</text>
+  <text x="560" y="258" class="item">回饋常以截圖描述</text>
+
+  <path class="arrow" d="M 430 140 L 524 140 M 516 134 L 526 140 L 516 146"/>
+  <text x="480" y="128" text-anchor="middle" class="label">交付完整 slice</text>
+  <path class="arrow" d="M 530 232 L 436 232 M 444 226 L 434 232 L 444 238"/>
+  <text x="480" y="256" text-anchor="middle" class="label">回饋與修正</text>
+
+  <rect x="50" y="336" width="860" height="56" rx="10" fill="#f1f5f9" stroke="#cbd5e1"/>
+  <text x="480" y="370" text-anchor="middle" class="item">原則：能自行驗證的先驗完再交付；一次交付完整功能，不分批送驗；人只驗 agent 構不到的部分</text>
+</svg>

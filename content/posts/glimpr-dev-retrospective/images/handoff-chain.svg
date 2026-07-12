@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 350" width="1920" height="700" role="img" aria-label="session 之間以 handoff 文件接力，耐久知識升級為長期記憶">
+  <style>
+    text { font-family: -apple-system,'PingFang TC','Microsoft JhengHei',sans-serif; fill: #0f172a; font-size: 13px; }
+    .sub { fill: #64748b; font-size: 12px; }
+    .arrow { stroke: #94a3b8; stroke-width: 2; fill: none; }
+  </style>
+  <rect x="0.5" y="0.5" width="959" height="349" rx="12" fill="#f8fafc" stroke="#e2e8f0"/>
+
+  <text x="60" y="46" class="sub">session 的邊界 = context 用盡，不是工作完成</text>
+
+  <rect x="60" y="64" width="170" height="64" rx="10" fill="#eff6ff" stroke="#93c5fd"/>
+  <text x="145" y="92" text-anchor="middle" font-weight="700">session 1</text>
+  <text x="145" y="114" text-anchor="middle" class="sub">context 滿收場</text>
+  <path class="arrow" d="M 230 96 L 246 96 M 240 90 L 250 96 L 240 102"/>
+  <rect x="250" y="72" width="80" height="48" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-dasharray="4 3"/>
+  <text x="290" y="100" text-anchor="middle" class="sub">handoff</text>
+  <path class="arrow" d="M 330 96 L 346 96 M 340 90 L 350 96 L 340 102"/>
+
+  <rect x="350" y="64" width="170" height="64" rx="10" fill="#eff6ff" stroke="#93c5fd"/>
+  <text x="435" y="92" text-anchor="middle" font-weight="700">session 2</text>
+  <text x="435" y="114" text-anchor="middle" class="sub">讀檔接續</text>
+  <path class="arrow" d="M 520 96 L 536 96 M 530 90 L 540 96 L 530 102"/>
+  <rect x="540" y="72" width="80" height="48" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-dasharray="4 3"/>
+  <text x="580" y="100" text-anchor="middle" class="sub">handoff</text>
+  <path class="arrow" d="M 620 96 L 636 96 M 630 90 L 640 96 L 630 102"/>
+
+  <rect x="640" y="64" width="170" height="64" rx="10" fill="#eff6ff" stroke="#93c5fd"/>
+  <text x="725" y="92" text-anchor="middle" font-weight="700">session 3</text>
+  <text x="725" y="114" text-anchor="middle" class="sub">讀檔接續</text>
+  <path class="arrow" d="M 810 96 L 830 96 M 824 90 L 834 96 L 824 102"/>
+  <text x="852" y="101" class="sub">…共 68 份</text>
+
+  <path class="arrow" d="M 145 128 L 145 212 M 139 204 L 145 214 L 151 204"/>
+  <path class="arrow" d="M 435 128 L 435 212 M 429 204 L 435 214 L 441 204"/>
+  <path class="arrow" d="M 725 128 L 725 212 M 719 204 L 725 214 L 731 204"/>
+  <text x="480" y="178" text-anchor="middle" class="sub">耐久知識（架構決策、平台限制、驗證方法）升級為記憶</text>
+
+  <rect x="60" y="216" width="800" height="56" rx="10" fill="#faf5ff" stroke="#d8b4fe"/>
+  <text x="460" y="250" text-anchor="middle" font-weight="700">長期記憶（single source of truth）</text>
+
+  <text x="60" y="308" class="sub">handoff 只留暫態的續傳狀態：任務進度、決策（含被否決方案）、確認過的死路、下一步</text>
+  <text x="60" y="332" class="sub">中期重構的原因：前期 handoff 之間出現知識重複與彼此矛盾</text>
+</svg>

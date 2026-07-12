@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 300" width="1920" height="600" role="img" aria-label="Flow B 與一般截圖工具的互動順序對比">
+  <style>
+    text { font-family: -apple-system,'PingFang TC','Microsoft JhengHei',sans-serif; fill: #0f172a; font-size: 13px; }
+    .row-title { font-size: 14px; font-weight: 700; }
+    .sub { fill: #64748b; font-size: 12px; }
+    .arrow { stroke: #94a3b8; stroke-width: 2; fill: none; }
+  </style>
+  <rect x="0.5" y="0.5" width="959" height="299" rx="12" fill="#f8fafc" stroke="#e2e8f0"/>
+
+  <text x="60" y="50" class="row-title">一般截圖工具：先框選，再標註</text>
+  <rect x="60" y="66" width="140" height="52" rx="8" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="130" y="97" text-anchor="middle">按下快捷鍵</text>
+  <path class="arrow" d="M 200 92 L 216 92 M 210 86 L 220 92 L 210 98"/>
+  <rect x="220" y="66" width="150" height="52" rx="8" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="295" y="97" text-anchor="middle">先框選範圍</text>
+  <path class="arrow" d="M 370 92 L 386 92 M 380 86 L 390 92 L 380 98"/>
+  <rect x="390" y="66" width="200" height="52" rx="8" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="490" y="97" text-anchor="middle">只能在框內標註</text>
+  <path class="arrow" d="M 590 92 L 606 92 M 600 86 L 610 92 L 600 98"/>
+  <rect x="610" y="66" width="130" height="52" rx="8" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="675" y="97" text-anchor="middle">輸出</text>
+  <text x="390" y="142" class="sub">框選之外的內容無法再標註，選錯範圍只能重來</text>
+
+  <text x="60" y="184" class="row-title">Glimpr Flow B：先凍結，標註完才框選</text>
+  <rect x="60" y="200" width="140" height="52" rx="8" fill="#eff6ff" stroke="#93c5fd"/>
+  <text x="130" y="231" text-anchor="middle">按下快捷鍵</text>
+  <path class="arrow" d="M 200 226 L 216 226 M 210 220 L 220 226 L 210 232"/>
+  <rect x="220" y="200" width="190" height="52" rx="8" fill="#eff6ff" stroke="#93c5fd"/>
+  <text x="315" y="231" text-anchor="middle">全螢幕凍結 &lt; 100 ms</text>
+  <path class="arrow" d="M 410 226 L 426 226 M 420 220 L 430 226 L 420 232"/>
+  <rect x="430" y="200" width="190" height="52" rx="8" fill="#eff6ff" stroke="#93c5fd"/>
+  <text x="525" y="231" text-anchor="middle">在任何位置標註</text>
+  <path class="arrow" d="M 620 226 L 636 226 M 630 220 L 640 226 L 630 232"/>
+  <rect x="640" y="200" width="220" height="52" rx="8" fill="#eff6ff" stroke="#93c5fd"/>
+  <text x="750" y="231" text-anchor="middle">最後才框選輸出範圍</text>
+  <text x="60" y="282" class="sub">凍結畫面就是畫布，標註不受輸出範圍限制</text>
+</svg>

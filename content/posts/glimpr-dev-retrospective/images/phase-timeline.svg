@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 470" width="1920" height="940" role="img" aria-label="Glimpr 開發時間軸：2026-05-31 開工到 07-12 v1.0.0 公開上線">
+  <style>
+    text { font-family: -apple-system,'PingFang TC','Microsoft JhengHei',sans-serif; fill: #0f172a; font-size: 14px; }
+    .date { fill: #64748b; font-size: 13px; }
+    .title { font-size: 16px; font-weight: 700; }
+  </style>
+  <rect x="0.5" y="0.5" width="959" height="469" rx="12" fill="#f8fafc" stroke="#e2e8f0"/>
+  <line x1="170" y1="46" x2="170" y2="438" stroke="#cbd5e1" stroke-width="2"/>
+
+  <text x="155" y="57" text-anchor="end" class="date">05-31</text>
+  <circle cx="170" cy="52" r="6" fill="#3b82f6" stroke="#f8fafc" stroke-width="2"/>
+  <text x="188" y="57">Phase 1：capture pipeline，一天內從 brainstorm 到可用</text>
+
+  <text x="155" y="95" text-anchor="end" class="date">06-01</text>
+  <circle cx="170" cy="90" r="6" fill="#3b82f6" stroke="#f8fafc" stroke-width="2"/>
+  <text x="188" y="95">Phase 2：凍結 overlay，撞上「第二個視窗不畫」的牆</text>
+
+  <text x="155" y="133" text-anchor="end" class="date">06-01～02</text>
+  <circle cx="170" cy="128" r="6" fill="#3b82f6" stroke="#f8fafc" stroke-width="2"/>
+  <text x="188" y="133">Phase 3：標註編輯器、多螢幕跟隨</text>
+
+  <text x="155" y="171" text-anchor="end" class="date">06-02～05</text>
+  <circle cx="170" cy="166" r="6" fill="#3b82f6" stroke="#f8fafc" stroke-width="2"/>
+  <text x="188" y="171">Phase 4：menu bar 常駐、Settings、自訂快捷鍵、window snap</text>
+
+  <text x="155" y="209" text-anchor="end" class="date">06-05～06</text>
+  <circle cx="170" cy="204" r="6" fill="#3b82f6" stroke="#f8fafc" stroke-width="2"/>
+  <text x="188" y="209">Phase 5：獨立 Image Editor（抽取共用 EditorCore）</text>
+
+  <text x="155" y="247" text-anchor="end" class="date">06-06～12</text>
+  <circle cx="170" cy="242" r="6" fill="#10b981" stroke="#f8fafc" stroke-width="2"/>
+  <text x="188" y="247">微調 pass、效能優化、i18n（en / zh-TW）</text>
+
+  <text x="155" y="285" text-anchor="end" class="date">06-13～20</text>
+  <circle cx="170" cy="280" r="6" fill="#ef4444" stroke="#f8fafc" stroke-width="2"/>
+  <text x="188" y="285">螢幕錄影 v1 → v2、設計系統統一</text>
+
+  <text x="155" y="323" text-anchor="end" class="date">06-24</text>
+  <circle cx="170" cy="318" r="6" fill="#a855f7" stroke="#f8fafc" stroke-width="2"/>
+  <text x="188" y="323">architecture checkpoint：凍結架構，Windows port 據此繼承</text>
+
+  <text x="155" y="361" text-anchor="end" class="date">06-25～30</text>
+  <circle cx="170" cy="356" r="6" fill="#0ea5e9" stroke="#f8fafc" stroke-width="2"/>
+  <text x="188" y="361">Phase 6：Windows port（S0 到 S6 切片）</text>
+
+  <text x="155" y="399" text-anchor="end" class="date">07-01～08</text>
+  <circle cx="170" cy="394" r="6" fill="#f59e0b" stroke="#f8fafc" stroke-width="2"/>
+  <text x="188" y="399">收尾硬化：HDR、element snap、測試覆蓋 48.7% → 78.3%</text>
+
+  <text x="155" y="437" text-anchor="end" class="date">07-09～12</text>
+  <circle cx="170" cy="432" r="6" fill="#6366f1" stroke="#f8fafc" stroke-width="2"/>
+  <text x="188" y="437" font-weight="700">發佈工程 → v1.0.0 公開上線</text>
+</svg>

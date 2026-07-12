@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" width="1920" height="840" role="img" aria-label="tag 觸發的發佈 pipeline：version gate 之後分出 macOS 與 Windows 兩線，最後冪等建立 GitHub Release">
+  <style>
+    text { font-family: -apple-system,'PingFang TC','Microsoft JhengHei',sans-serif; fill: #0f172a; font-size: 12px; }
+    .heading { font-size: 14px; font-weight: 700; }
+    .sub { fill: #64748b; font-size: 12px; }
+    .arrow { stroke: #94a3b8; stroke-width: 2; fill: none; }
+  </style>
+  <rect x="0.5" y="0.5" width="959" height="419" rx="12" fill="#f8fafc" stroke="#e2e8f0"/>
+
+  <rect x="40" y="178" width="150" height="56" rx="8" fill="#eff6ff" stroke="#93c5fd"/>
+  <text x="115" y="202" text-anchor="middle" font-weight="700">push tag vX.Y.Z</text>
+  <text x="115" y="222" text-anchor="middle" class="sub">唯一的觸發</text>
+  <path class="arrow" d="M 190 206 L 214 206 M 208 200 L 218 206 L 208 212"/>
+
+  <rect x="220" y="178" width="170" height="56" rx="8" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="305" y="202" text-anchor="middle" font-weight="700">version gate</text>
+  <text x="305" y="222" text-anchor="middle" class="sub">tag 必須等於 pubspec 版號</text>
+
+  <path class="arrow" d="M 390 196 L 425 196 L 425 125 L 450 125 M 444 119 L 454 125 L 444 131"/>
+  <path class="arrow" d="M 390 216 L 425 216 L 425 295 L 450 295 M 444 289 L 454 295 L 444 301"/>
+
+  <rect x="458" y="70" width="330" height="110" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="623" y="98" text-anchor="middle" class="heading">macOS leg</text>
+  <text x="478" y="126">Developer ID 簽章 + hardened runtime 驗證</text>
+  <text x="478" y="152">DMG → notarize → staple</text>
+
+  <rect x="458" y="240" width="330" height="110" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="623" y="268" text-anchor="middle" class="heading">Windows leg</text>
+  <text x="478" y="296">Inno Setup 安裝檔 + portable zip</text>
+  <text x="478" y="322">v1 不簽章，SmartScreen 提示寫進 release notes</text>
+
+  <path class="arrow" d="M 788 125 L 806 125 L 806 198 L 818 198 M 812 192 L 822 198 L 812 204"/>
+  <path class="arrow" d="M 788 295 L 806 295 L 806 218 L 818 218 M 812 212 L 822 218 L 812 224"/>
+
+  <rect x="826" y="172" width="110" height="68" rx="8" fill="#f0fdf4" stroke="#86efac"/>
+  <text x="881" y="200" text-anchor="middle" font-weight="700">GitHub Release</text>
+  <text x="881" y="222" text-anchor="middle" class="sub">冪等建立</text>
+
+  <text x="480" y="388" text-anchor="middle" class="sub">資產檔名固定不帶版號 → releases/latest deep link 永遠有效；-rc 後綴自動 prerelease；推出去的 tag 永不移動</text>
+  <text x="480" y="410" text-anchor="middle" class="sub">v1.0.0 之後：release job 另對安裝檔產生 Ed25519 detached signature 供 in-app 自動更新驗證（非 OS code signing）</text>
+</svg>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 430" width="1920" height="860" role="img" aria-label="native 與 Flutter 的分工邊界與量測依據">
+  <style>
+    text { font-family: -apple-system,'PingFang TC','Microsoft JhengHei',sans-serif; fill: #0f172a; font-size: 13px; }
+    .heading { font-size: 15px; font-weight: 700; }
+    .item { fill: #334155; }
+    .sub { fill: #64748b; font-size: 12px; }
+    .arrow { stroke: #94a3b8; stroke-width: 2; fill: none; }
+  </style>
+  <rect x="0.5" y="0.5" width="959" height="429" rx="12" fill="#f8fafc" stroke="#e2e8f0"/>
+
+  <rect x="50" y="56" width="370" height="230" rx="10" fill="#eff6ff" stroke="#bfdbfe"/>
+  <text x="235" y="88" text-anchor="middle" class="heading">Flutter / Dart：邏輯、編排、UI</text>
+  <text x="80" y="124" class="item">編輯器 EditorCore（兩平台共用同一套）</text>
+  <text x="80" y="152" class="item">Settings、快捷鍵調度、完成流程</text>
+  <text x="80" y="180" class="item">i18n、主題、更新編排</text>
+  <text x="80" y="216" class="sub">跨平台一致性的所在</text>
+  <text x="80" y="240" class="sub">量測成本趨近於零</text>
+
+  <rect x="540" y="56" width="370" height="230" rx="10" fill="#f1f5f9" stroke="#cbd5e1"/>
+  <text x="725" y="88" text-anchor="middle" class="heading">native（Swift / C++）：像素與視窗</text>
+  <text x="570" y="124" class="item">截圖 ScreenCaptureKit / WGC</text>
+  <text x="570" y="152" class="item">錄影 AVAssetWriter / Media Foundation</text>
+  <text x="570" y="180" class="item">overlay / pin 視窗、tray、全域快捷鍵</text>
+  <text x="570" y="208" class="item">clipboard、HDR、self-update</text>
+  <text x="570" y="240" class="sub">常駐資源與 OS 邊界只有原生層碰得到</text>
+
+  <text x="480" y="150" text-anchor="middle" class="sub">platform channel</text>
+  <path class="arrow" d="M 428 170 L 532 170 M 436 164 L 426 170 L 436 176 M 524 164 L 534 170 L 524 176"/>
+  <text x="480" y="196" text-anchor="middle" class="sub">raw bytes（BGRA）</text>
+
+  <rect x="50" y="316" width="860" height="80" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+  <text x="70" y="344" font-weight="700">量測依據</text>
+  <text x="70" y="372" class="item">JPEG encode：純 Dart 9.4 s → 原生 ImageIO 518 ms</text>
+  <text x="500" y="372" class="item">凍結路徑傳圖：PNG 往返 250 ms → raw BGRA 14 ms</text>
+</svg>

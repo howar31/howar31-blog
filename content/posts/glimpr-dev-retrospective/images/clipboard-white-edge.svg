@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" width="1920" height="800" role="img" aria-label="通訊軟體白邊的兩個根因：小數座標裁切與剪貼簿格式表面">
+  <style>
+    text { font-family: -apple-system,'PingFang TC','Microsoft JhengHei',sans-serif; fill: #0f172a; font-size: 12px; }
+    .heading { font-size: 14px; font-weight: 700; }
+    .sub { fill: #64748b; font-size: 12px; }
+    .good { fill: #15803d; }
+    .arrow { stroke: #94a3b8; stroke-width: 2; fill: none; }
+  </style>
+  <rect x="0.5" y="0.5" width="959" height="399" rx="12" fill="#f8fafc" stroke="#e2e8f0"/>
+
+  <rect x="50" y="56" width="400" height="280" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+  <text x="250" y="86" text-anchor="middle" class="heading">原因一：小數座標裁切</text>
+  <g stroke="#e2e8f0" stroke-width="1">
+    <rect x="85" y="104" width="240" height="120" fill="#eff6ff"/>
+    <line x1="115" y1="104" x2="115" y2="224"/>
+    <line x1="145" y1="104" x2="145" y2="224"/>
+    <line x1="175" y1="104" x2="175" y2="224"/>
+    <line x1="205" y1="104" x2="205" y2="224"/>
+    <line x1="235" y1="104" x2="235" y2="224"/>
+    <line x1="265" y1="104" x2="265" y2="224"/>
+    <line x1="295" y1="104" x2="295" y2="224"/>
+    <line x1="85" y1="134" x2="325" y2="134"/>
+    <line x1="85" y1="164" x2="325" y2="164"/>
+    <line x1="85" y1="194" x2="325" y2="194"/>
+  </g>
+  <rect x="295" y="104" width="30" height="120" fill="#fca5a5" opacity="0.45"/>
+  <line x1="311" y1="98" x2="311" y2="230" stroke="#b91c1c" stroke-width="2" stroke-dasharray="5 3"/>
+  <text x="340" y="140" class="sub">裁切邊界落在</text>
+  <text x="340" y="158" class="sub">像素中間</text>
+  <text x="85" y="254">無條件進位 → 右／下緣多出一排半透明像素</text>
+  <text x="85" y="278">會壓平 alpha 的 app 就顯示成一條白線</text>
+  <text x="85" y="310" class="good">修法：裁切座標一律 snap 到整數像素</text>
+
+  <rect x="510" y="56" width="400" height="280" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+  <text x="710" y="86" text-anchor="middle" class="heading">原因二：剪貼簿格式表面</text>
+  <rect x="535" y="104" width="170" height="40" rx="8" fill="#fef2f2" stroke="#fecaca"/>
+  <text x="620" y="129" text-anchor="middle">宣告帶 alpha 的格式</text>
+  <path class="arrow" d="M 705 124 L 725 124 M 719 118 L 729 124 L 719 130"/>
+  <rect x="730" y="104" width="155" height="40" rx="8" fill="#fef2f2" stroke="#fecaca"/>
+  <text x="807" y="129" text-anchor="middle">對方 app 一律上 matte</text>
+  <text x="535" y="176" class="sub">Windows 原生截圖寫的是零 alpha mask 的 CF_DIB</text>
+  <text x="535" y="198" class="sub">→ 只有 Glimpr 的圖被 matte 出白邊</text>
+  <rect x="535" y="220" width="210" height="40" rx="8" fill="#f0fdf4" stroke="#86efac"/>
+  <text x="640" y="245" text-anchor="middle">改寫成與原生一致的 CF_DIB</text>
+  <path class="arrow" d="M 745 240 L 765 240 M 759 234 L 769 240 L 759 246"/>
+  <rect x="770" y="220" width="115" height="40" rx="8" fill="#f0fdf4" stroke="#86efac"/>
+  <text x="827" y="245" text-anchor="middle">白邊消失</text>
+  <text x="535" y="310" class="sub">教訓：比對過內容的 byte-identity，沒比對格式表面</text>
+
+  <text x="480" y="370" text-anchor="middle" class="sub">第一次調查結論是「對方 app 自己的 matte」，直到與原生截圖的剪貼簿逐項對照才翻案</text>
+</svg>

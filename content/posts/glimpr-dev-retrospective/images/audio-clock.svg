@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 380" width="1920" height="760" role="img" aria-label="混音破音的根因與修法：樣本不連續與連續游標的對比">
+  <style>
+    text { font-family: -apple-system,'PingFang TC','Microsoft JhengHei',sans-serif; fill: #0f172a; font-size: 12px; }
+    .heading { font-size: 14px; font-weight: 700; }
+    .sub { fill: #64748b; font-size: 12px; }
+    .bad { fill: #b91c1c; }
+    .good { fill: #15803d; }
+  </style>
+  <rect x="0.5" y="0.5" width="959" height="379" rx="12" fill="#f8fafc" stroke="#e2e8f0"/>
+
+  <rect x="50" y="56" width="400" height="240" rx="10" fill="#fef2f2" stroke="#fecaca"/>
+  <text x="250" y="86" text-anchor="middle" class="heading">之前：兩個時鐘、依 dequeue 時間擺放</text>
+  <text x="75" y="118">WGC 影像與 WASAPI 音訊的 timestamp 在不同基準</text>
+  <text x="75" y="142">混音器用 dequeue 時的 wall-clock 時間擺放樣本</text>
+
+  <text x="75" y="176" class="sub">樣本擺放：</text>
+  <rect x="75" y="188" width="44" height="26" rx="3" fill="#fca5a5" stroke="#b91c1c"/>
+  <rect x="139" y="188" width="44" height="26" rx="3" fill="#fca5a5" stroke="#b91c1c"/>
+  <rect x="171" y="194" width="44" height="26" rx="3" fill="#fca5a5" stroke="#b91c1c" opacity="0.7"/>
+  <rect x="243" y="188" width="44" height="26" rx="3" fill="#fca5a5" stroke="#b91c1c"/>
+  <rect x="311" y="188" width="44" height="26" rx="3" fill="#fca5a5" stroke="#b91c1c"/>
+  <text x="129" y="240" text-anchor="middle" class="bad">空洞</text>
+  <text x="193" y="240" text-anchor="middle" class="bad">重疊</text>
+  <text x="75" y="274" class="bad">每 10 到 30 ms 一次不連續 → 全頻破音</text>
+
+  <rect x="510" y="56" width="400" height="240" rx="10" fill="#f0fdf4" stroke="#bbf7d0"/>
+  <text x="710" y="86" text-anchor="middle" class="heading">之後：同一個時鐘、連續游標</text>
+  <text x="535" y="118">影像與音訊由同一次 QPC 讀數推導（溢位安全）</text>
+  <text x="535" y="142">per-source 連續游標；pts 只用於起始與重新同步</text>
+
+  <text x="535" y="176" class="sub">樣本擺放：</text>
+  <rect x="535" y="188" width="44" height="26" rx="3" fill="#86efac" stroke="#15803d"/>
+  <rect x="579" y="188" width="44" height="26" rx="3" fill="#86efac" stroke="#15803d"/>
+  <rect x="623" y="188" width="44" height="26" rx="3" fill="#86efac" stroke="#15803d"/>
+  <rect x="667" y="188" width="44" height="26" rx="3" fill="#86efac" stroke="#15803d"/>
+  <rect x="711" y="188" width="44" height="26" rx="3" fill="#86efac" stroke="#15803d"/>
+  <text x="535" y="274" class="good">樣本連續 → 破音消失</text>
+
+  <text x="480" y="340" text-anchor="middle" class="sub">先假設 clipping、加 limiter 無效；把實際樣本畫成 spectrogram 才看到滿版的不連續</text>
+</svg>
