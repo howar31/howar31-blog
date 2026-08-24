@@ -1,11 +1,28 @@
+{{- /*
+  JSON search index. `summary` is matched against by the client-side search
+  (never rendered as HTML), so it must be true plain text: strip <style> /
+  <script> blocks, drop tags, and undo entity escaping. The trailing
+  transform.HTMLUnescape is not redundant -- Hugo's `truncate` HTML-escapes
+  whatever it returns, which would otherwise leave &lt; / &amp; in the index.
+  Mirrors layouts/_default/rss.xml; see SPEC.md -> RSS feed.
+*/ -}}
 {{- $posts := where site.RegularPages "Type" "posts" -}}
 [
 {{- range $i, $p := $posts -}}
 {{- if $i }},{{ end }}
+{{- $summary := (or $p.Description $p.Summary)
+  | replaceRE `(?is)<style[^>]*>.*?</style>` " "
+  | replaceRE `(?is)<script[^>]*>.*?</script>` " "
+  | plainify
+  | transform.HTMLUnescape
+  | replaceRE `\s+` " "
+  | replaceRE `^\s+|\s+$` ""
+  | truncate 160 "…"
+  | transform.HTMLUnescape }}
 {"title": {{ $p.Title | jsonify }},
  "url": {{ $p.RelPermalink | jsonify }},
  "date": {{ $p.Date.Format "2006-01-02" | jsonify }},
- "summary": {{ (or $p.Description ($p.Summary | plainify | truncate 160)) | jsonify }},
+ "summary": {{ $summary | jsonify }},
  "tags": {{ (or $p.Params.tags slice) | jsonify }},
  "categories": {{ (or $p.Params.categories slice) | jsonify }}}
 {{- end }}

@@ -67,6 +67,7 @@ howar31-blog/
 │   ├── index.json                # JSON search index → /index.json
 │   ├── _default/
 │   │   ├── baseof.html · single.html · list.html
+│   │   ├── rss.xml               # RSS override → /index.xml (summary-only descriptions)
 │   │   └── _markup/render-image.html  # Wraps captioned images in <figure> cards
 │   ├── partials/                 # head · header · footer · post-meta · post-card · sidebar · back-to-top
 │   └── shortcodes/               # tip · warning  (replace VuePress ::: containers)
@@ -76,6 +77,7 @@ howar31-blog/
 │   ├── images/avatar.png         # Source for sidebar avatar + favicons (Hugo resizes on demand)
 │   └── js/theme.js               # Dark-mode toggle, search, back-to-top, Prism line-numbers, lightbox, figure tilt
 ├── archetypes/default.md         # Template used by `hugo new`
+├── scripts/verify-rss.js         # Optional RSS sanity check (dev-only; not part of the build)
 ├── static/                       # Copied verbatim: CNAME, manifest.json, logo/, fonts/ (Atkinson + JetBrains Mono), SW cleanup shim
 ├── .github/workflows/hugo.yml    # Pages deployment
 ├── README.md / CLAUDE.md / SPEC.md

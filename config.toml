@@ -5,6 +5,18 @@ enableRobotsTXT = true
 enableEmoji = true
 enableGitInfo = true
 
+# CJK word counting. Hugo's .Summary / .WordCount / .ReadingTime are
+# word-based (whitespace-delimited); Chinese prose has almost no spaces, so
+# without this a whole post counted as a handful of "words": .Summary
+# degenerated into the full article and reading time under-reported Chinese
+# posts by roughly 3x. Hugo auto-detects CJK per page, so English posts are
+# unaffected. summaryLength is raised because with CJK counting it means 150
+# *characters*, not 150 words -- the default 70 would leave summaries too
+# short. MUST stay at the root level: appended at the end of the file these
+# keys would be captured by the last TOML table and silently ignored.
+hasCJKLanguage = true
+summaryLength = 150
+
 # Taxonomy term-index pages (/categories/ and /tags/) are disabled — the blog
 # navigates via post cards and the sidebar tag cloud, not browsable indexes.
 # Individual term pages (/tags/<tag>/, /categories/<cat>/) are still generated.
