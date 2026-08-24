@@ -64,6 +64,7 @@
       | replaceRE `(?is)<style[^>]*>.*?</style>` " "
       | replaceRE `(?is)<script[^>]*>.*?</script>` " "
       | plainify
+      | transform.HTMLUnescape
       | replaceRE `\s+` " "
       | replaceRE `^\s+|\s+$` ""
       | truncate 200 "…" }}

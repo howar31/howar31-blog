@@ -70,12 +70,19 @@ hugo new posts/<slug>/index.md
   no humanize transform anywhere. Keep new tags in this form:
   `- dev-notes` ✓, not `- Dev Notes` ✗.
 - **RSS feed**: `layouts/_default/rss.xml` overrides Hugo's embedded
-  template so `<description>` carries a ~200-char plain-text summary, not the
-  full article. **Never set `rssLimit` / `services.rss.limit`** and never
+  template so `<description>` carries a ~200-char summary, not the full
+  article. **Never set `rssLimit` / `services.rss.limit`** and never
   re-introduce the limit block into that template: `howar31.com` reads
   `/index.xml` and uses the `<item>` count as the blog's total post count, so
   a cap would silently corrupt that number with no warning on either side.
-  Every post must always appear in the feed. See SPEC.md → RSS feed.
+  Every post must always appear in the feed. Escaping there is subtle —
+  `plainify` does not decode entities and `truncate` re-escapes its output —
+  so read SPEC.md → RSS feed → Escaping model before touching that pipeline,
+  and re-run `node scripts/verify-rss.js public/index.xml` after.
+- **CJK counting**: `hasCJKLanguage = true` and `summaryLength = 150` live at
+  the **root** of `config.toml`. Moved below any `[table]` header they bind to
+  that table and Hugo ignores them silently — reading time and `.Summary`
+  would regress with no error. See SPEC.md → Config.
 - **Icons**: use the inline-SVG partial, never raw `<i class="fa...">`. The
   Font Awesome CDN was removed; only icons present in `assets/icons/` work.
   To add a new icon, download the FA Free 5.15.4 SVG into the matching
@@ -124,6 +131,7 @@ hugo new posts/<slug>/index.md
 | `layouts/partials/post-card.html` | Reusable post card partial (title, meta, summary, tags, auto thumbnail) |
 | `layouts/partials/sidebar.html` | Sidebar — About / Categories / Tags / Support cards (home + list/taxonomy pages) |
 | `layouts/index.json` | Hugo JSON output template → `/index.json` — feeds front-end search |
+| `scripts/verify-rss.js` | Dev-only RSS check: `node scripts/verify-rss.js public/index.xml` |
 | `layouts/_default/rss.xml` | RSS override → `/index.xml` — short summaries, never full `.Content` |
 | `assets/scss/main.scss` | SCSS entrypoint: 4 variables + `@import` of 12 partials (`_tokens` … `_pagination`) |
 | `assets/scss/_*.scss` | SCSS partials — design tokens, base, layout, navbar, footer, hero, post-list, sidebar, post, search, back-to-top, pagination |

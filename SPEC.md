@@ -32,6 +32,7 @@ external font CSS were removed during the performance pass).
 howar31-blog/
 ├── config.toml                          # Site config (see "Config" below)
 ├── archetypes/default.md                # Template for `hugo new`
+├── scripts/verify-rss.js                # Dev-only RSS escaping/emptiness check
 ├── content/
 │   └── posts/
 │       ├── _index.md                    # Overrides section title → "Recent Posts"
@@ -124,6 +125,17 @@ howar31-blog/
   these; they were removed once icons went inline-SVG, fonts were
   self-hosted, and the avatar moved into the Hugo asset pipeline. Do not
   re-add without first changing the code that would consume them
+- `hasCJKLanguage = true` + `summaryLength = 150` — **root-level keys, and
+  they must stay at the root**. Appended after any `[table]` header TOML
+  would bind them to that table and Hugo would silently ignore them. Hugo's
+  `.Summary` / `.WordCount` / `.ReadingTime` count whitespace-delimited
+  words; Chinese prose has almost no spaces, so without `hasCJKLanguage` a
+  whole post counted as a handful of "words" — `.Summary` degenerated into
+  the entire article and reading time under-reported Chinese posts ~3x
+  (Glimpr 5 → 15 min, Claude Code 3 → 13, slk 8 → 16, Vaultwarden 4 → 9;
+  33 of 58 posts changed). Hugo auto-detects CJK per page, so English posts
+  are unaffected. With CJK counting `summaryLength` means *characters*, so
+  it is raised from the default 70 to 150 to keep auto-summaries useful
 - `[outputs] home = ["HTML", "RSS", "JSON"]` — the JSON output type feeds
   `layouts/index.json` → `/index.json` → front-end search; the RSS output
   type feeds `layouts/_default/rss.xml` → `/index.xml` (see "RSS feed")
@@ -563,13 +575,19 @@ Hugo template that emits `/index.json` (enabled by `[outputs] home =
     "title": "Post title",
     "url": "/posts/slug/",
     "date": "2026年01月02日",
-    "summary": "description or auto-truncated plaintext (≤160 chars)",
+    "summary": "description or auto-truncated plain text (≤160 chars)",
     "tags": ["tag-a", "tag-b"],
     "categories": ["category"]
   },
   ...
 ]
 ```
+
+`summary` is derived with the same pipeline as the RSS description (strip
+`<style>` / `<script>`, `plainify`, `transform.HTMLUnescape`, collapse
+whitespace, `truncate 160`) plus a trailing `transform.HTMLUnescape` to undo
+`truncate`'s HTML escaping — see "RSS feed" → Escaping model. The field is
+only ever matched against in JavaScript, so it must hold true plain text.
 
 ### Search module in `theme.js`
 
@@ -600,38 +618,72 @@ carried over verbatim) with two deliberate differences.
 
 ### 1. `<description>` is a short summary, not the article
 
-Hugo's embedded template already emits `.Summary`, but `hasCJKLanguage` is
-not set and Hugo's auto-summary is **word**-based (`summaryLength`, default
-70 words). Chinese prose contains almost no spaces, so a whole post counted
-as a handful of "words" and `.Summary` degenerated into the full article.
-The feed was 168 KB / 49 KB gzipped for 58 items, and posts that open with
-an inline `<style>` block (the SVG-diagram convention — see CLAUDE.md) leaked
-that CSS into the top of their description.
+Hugo's embedded template already emits `.Summary`, and with
+`hasCJKLanguage = true` (see Config) `.Summary` is now a genuine
+~150-character summary rather than the whole article. The override still
+exists because `.Summary` is *HTML*, and several posts open with an inline
+`<style>` block (the SVG-diagram convention — see CLAUDE.md) that would
+otherwise land at the top of the description.
 
-The override derives each description as:
+Each description is derived as:
 
 1. `.Description` (frontmatter `description:`) when present, else `.Summary`
 2. strip `<style>…</style>` and `<script>…</script>` — `replaceRE` with
    `(?is)` so it is case-insensitive and spans newlines
-3. `plainify` — drop any remaining HTML tags
-4. collapse whitespace runs, then trim
-5. `truncate 200 "…"`
+3. `plainify` — drop remaining HTML tags. **`plainify` does not decode
+   entities**: `&lt;`, `&gt;`, `&hellip;` survive it verbatim
+4. `transform.HTMLUnescape` — decode those entities to real characters.
+   Must come *after* `plainify`; before it, an escaped `&lt;script&gt;` in
+   post text would become a real tag and then be stripped as markup
+5. collapse whitespace runs, then trim
+6. `truncate 200 "…"`
 
-Output still goes through `transform.XMLEscape | safeHTML`, as upstream.
+Output goes through `transform.XMLEscape | safeHTML`, as upstream.
+
+#### Escaping model (do not "simplify" this)
+
+`truncate` **HTML-escapes whatever it returns** — `<` → `&lt;`, `&` →
+`&amp;` — even when the input is short enough that nothing is truncated.
+That is a third escape level on top of Goldmark's and `XMLEscape`'s, and it
+is why the feed originally emitted triple-escaped `&amp;amp;lt;`.
+
+The resulting contract for `<description>` is *HTML-escaped plain text,
+XML-escaped once* — the RSS 2.0 convention, where a reader XML-decodes and
+then renders the description as HTML:
+
+```
+post text            screen -dmS <session_name>
+after plainify       screen -dmS &lt;session_name&gt;      (Goldmark's escape)
+after HTMLUnescape   screen -dmS <session_name>
+after truncate       screen -dmS &lt;session_name&gt;      (truncate re-escapes)
+after XMLEscape      screen -dmS &amp;lt;session_name&amp;gt;   ← on the wire
+reader: XML decode   screen -dmS &lt;session_name&gt;
+reader: HTML render  screen -dmS <session_name>            ← correct
+```
+
+Each escape is paired with exactly one decode, so content that genuinely
+wants to display `&lt;` also survives. A reader that treats the description
+as plain text instead of HTML shows the entity literally for the 6 items
+that contain angle brackets; that is inherent to the RSS 2.0 convention and
+matches how the feed behaved when it shipped full HTML.
+
+`layouts/index.json` runs the same derivation but appends one more
+`transform.HTMLUnescape`, because its `summary` is matched by JavaScript and
+never rendered as HTML — it needs true plain text, not HTML-escaped text.
 
 Notes:
 
 - `truncate` respects word boundaries, so a few descriptions land slightly
-  over 200 characters (observed max 229). This is expected.
+  over 200 characters (observed max 207). This is expected.
 - Step 2 currently never fires on real content — all 8 posts carrying an
   inline `<style>` also carry a frontmatter `description`, so they take the
-  `.Description` branch. It is insurance for future posts, and was verified
-  with a temporary probe post (style + script, no description) whose
-  description came back as clean body text.
-- Result: `/index.xml` is 34 KB / 12 KB gzipped for the same 58 items. About
-  half of what remains is the per-item `<title>`/`<link>`/`<pubDate>`/`<guid>`
-  scaffolding, which is the floor — a zero-description feed would still be
-  ~17 KB.
+  `.Description` branch. It is insurance for future posts, verified with a
+  temporary probe post (style + script, no description) whose description
+  came back as clean body text.
+- Result: `/index.xml` is 34 KB / 12 KB gzipped for 58 items, down from
+  168 KB / 49 KB. About half of what remains is the per-item
+  `<title>`/`<link>`/`<pubDate>`/`<guid>` scaffolding, which is the floor —
+  a zero-description feed would still be ~17 KB.
 
 ### 2. No `rssLimit` block — load-bearing
 
@@ -654,6 +706,20 @@ All four are emitted for every item.
 The `[outputs]` config gives RSS to `home` and `section`, so this one
 template also renders `/posts/index.xml` and every taxonomy term feed
 (`/tags/<tag>/index.xml`, `/categories/<category>/index.xml`).
+
+### Verification
+
+`scripts/verify-rss.js` is a dev-only regression check (the build itself
+still needs no Node.js). After `hugo --minify`:
+
+```bash
+node scripts/verify-rss.js public/index.xml
+# → items=58 literal_entity=0
+```
+
+It double-decodes each description (XML, then the HTML a reader renders) and
+reports any literal entity that survives — the signature of an escape level
+with no matching decode — plus any empty description.
 
 ## Prism pipeline
 
@@ -774,14 +840,6 @@ body to illustrate an icon snippet — that is content, not chrome.
 - **libsass → dartsass** — When Hugo removes libsass, install dart-sass
   (`brew install dart-sass`) and change `head.html`'s `$opts` to
   `"transpiler" "dartsass"`.
-- **Search index shares the summary problem** — `layouts/index.json` derives
-  its `summary` with `(or $p.Description ($p.Summary | plainify | truncate
-  160))`, which has no `<style>` / `<script>` stripping. It is latent today
-  for the same reason as the RSS template (every post with an inline
-  `<style>` also sets `description`), but a future post that omits
-  `description` would put raw CSS into the search index. Fix by reusing the
-  RSS template's strip steps. Note the two also differ in length: 160 chars
-  for search, 200 for RSS.
 - **GitHub Sponsors** — Not enabled on `howar31` account. Global fallback
   `howar31/.github/FUNDING.yml` already covers Ko-fi + PayPal for every
   public repo, so nothing repo-specific is needed here.

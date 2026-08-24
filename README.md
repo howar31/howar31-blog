@@ -77,6 +77,7 @@ howar31-blog/
 │   ├── images/avatar.png         # Source for sidebar avatar + favicons (Hugo resizes on demand)
 │   └── js/theme.js               # Dark-mode toggle, search, back-to-top, Prism line-numbers, lightbox, figure tilt
 ├── archetypes/default.md         # Template used by `hugo new`
+├── scripts/verify-rss.js         # Optional RSS sanity check (dev-only; not part of the build)
 ├── static/                       # Copied verbatim: CNAME, manifest.json, logo/, fonts/ (Atkinson + JetBrains Mono), SW cleanup shim
 ├── .github/workflows/hugo.yml    # Pages deployment
 ├── README.md / CLAUDE.md / SPEC.md
