@@ -69,6 +69,13 @@ hugo new posts/<slug>/index.md
   frontmatter value *equals* the URL slug *equals* the displayed string —
   no humanize transform anywhere. Keep new tags in this form:
   `- dev-notes` ✓, not `- Dev Notes` ✗.
+- **RSS feed**: `layouts/_default/rss.xml` overrides Hugo's embedded
+  template so `<description>` carries a ~200-char plain-text summary, not the
+  full article. **Never set `rssLimit` / `services.rss.limit`** and never
+  re-introduce the limit block into that template: `howar31.com` reads
+  `/index.xml` and uses the `<item>` count as the blog's total post count, so
+  a cap would silently corrupt that number with no warning on either side.
+  Every post must always appear in the feed. See SPEC.md → RSS feed.
 - **Icons**: use the inline-SVG partial, never raw `<i class="fa...">`. The
   Font Awesome CDN was removed; only icons present in `assets/icons/` work.
   To add a new icon, download the FA Free 5.15.4 SVG into the matching
@@ -117,6 +124,7 @@ hugo new posts/<slug>/index.md
 | `layouts/partials/post-card.html` | Reusable post card partial (title, meta, summary, tags, auto thumbnail) |
 | `layouts/partials/sidebar.html` | Sidebar — About / Categories / Tags / Support cards (home + list/taxonomy pages) |
 | `layouts/index.json` | Hugo JSON output template → `/index.json` — feeds front-end search |
+| `layouts/_default/rss.xml` | RSS override → `/index.xml` — short summaries, never full `.Content` |
 | `assets/scss/main.scss` | SCSS entrypoint: 4 variables + `@import` of 12 partials (`_tokens` … `_pagination`) |
 | `assets/scss/_*.scss` | SCSS partials — design tokens, base, layout, navbar, footer, hero, post-list, sidebar, post, search, back-to-top, pagination |
 | `assets/js/theme.js` | Dark-mode toggle, search modal, back-to-top, Prism `line-numbers`, image lightbox, figure tilt |

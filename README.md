@@ -67,6 +67,7 @@ howar31-blog/
 │   ├── index.json                # JSON search index → /index.json
 │   ├── _default/
 │   │   ├── baseof.html · single.html · list.html
+│   │   ├── rss.xml               # RSS override → /index.xml (summary-only descriptions)
 │   │   └── _markup/render-image.html  # Wraps captioned images in <figure> cards
 │   ├── partials/                 # head · header · footer · post-meta · post-card · sidebar · back-to-top
 │   └── shortcodes/               # tip · warning  (replace VuePress ::: containers)

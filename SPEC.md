@@ -45,6 +45,7 @@ howar31-blog/
 │   │   ├── baseof.html                  # HTML skeleton + Prism JS bundle
 │   │   ├── single.html                  # Post page — prose + optional sticky ToC (2-column)
 │   │   ├── list.html                    # /posts/ + taxonomy term pages (2-column, with sidebar)
+│   │   ├── rss.xml                      # RSS output template: /index.xml (summary-only <description>)
 │   │   └── _markup/
 │   │       └── render-image.html        # Goldmark hook: image → figure card
 │   ├── partials/
@@ -124,7 +125,10 @@ howar31-blog/
   self-hosted, and the avatar moved into the Hugo asset pipeline. Do not
   re-add without first changing the code that would consume them
 - `[outputs] home = ["HTML", "RSS", "JSON"]` — the JSON output type feeds
-  `layouts/index.json` → `/index.json` → front-end search
+  `layouts/index.json` → `/index.json` → front-end search; the RSS output
+  type feeds `layouts/_default/rss.xml` → `/index.xml` (see "RSS feed")
+- `[services]` / `rssLimit` is **deliberately absent** and must stay absent —
+  see "RSS feed" for why a feed cap would break `howar31.com`
 
 ## Page layout — home, /posts/, taxonomy term pages
 
@@ -587,6 +591,70 @@ Hugo template that emits `/index.json` (enabled by `[outputs] home =
   cycle within the modal), focus returns to the search trigger on close.
 - **Styled** in `assets/scss/_search.scss`.
 
+## RSS feed
+
+`layouts/_default/rss.xml` overrides Hugo's embedded RSS template. It is
+derived from the embedded template of Hugo v0.160.1 (channel metadata,
+`atom:link rel="self"`, author handling and the `<item>` skeleton are
+carried over verbatim) with two deliberate differences.
+
+### 1. `<description>` is a short summary, not the article
+
+Hugo's embedded template already emits `.Summary`, but `hasCJKLanguage` is
+not set and Hugo's auto-summary is **word**-based (`summaryLength`, default
+70 words). Chinese prose contains almost no spaces, so a whole post counted
+as a handful of "words" and `.Summary` degenerated into the full article.
+The feed was 168 KB / 49 KB gzipped for 58 items, and posts that open with
+an inline `<style>` block (the SVG-diagram convention — see CLAUDE.md) leaked
+that CSS into the top of their description.
+
+The override derives each description as:
+
+1. `.Description` (frontmatter `description:`) when present, else `.Summary`
+2. strip `<style>…</style>` and `<script>…</script>` — `replaceRE` with
+   `(?is)` so it is case-insensitive and spans newlines
+3. `plainify` — drop any remaining HTML tags
+4. collapse whitespace runs, then trim
+5. `truncate 200 "…"`
+
+Output still goes through `transform.XMLEscape | safeHTML`, as upstream.
+
+Notes:
+
+- `truncate` respects word boundaries, so a few descriptions land slightly
+  over 200 characters (observed max 229). This is expected.
+- Step 2 currently never fires on real content — all 8 posts carrying an
+  inline `<style>` also carry a frontmatter `description`, so they take the
+  `.Description` branch. It is insurance for future posts, and was verified
+  with a temporary probe post (style + script, no description) whose
+  description came back as clean body text.
+- Result: `/index.xml` is 34 KB / 12 KB gzipped for the same 58 items. About
+  half of what remains is the per-item `<title>`/`<link>`/`<pubDate>`/`<guid>`
+  scaffolding, which is the floor — a zero-description feed would still be
+  ~17 KB.
+
+### 2. No `rssLimit` block — load-bearing
+
+The embedded template reads `.Site.Config.Services.RSS.Limit` and applies
+`first $limit`. That block is **intentionally not carried over**, and
+`rssLimit` / `services.rss.limit` must never be set in `config.toml`.
+
+`howar31.com` (the separate landing-page project) fetches this feed and uses
+the **number of `<item>` elements** as the blog's total post count on its
+identity card. A feed cap would silently make that number wrong, with no
+error or warning on either side. Dropping the block means the feed cannot be
+truncated even if someone later adds the config key.
+
+Consumer contract — `howar31.com` reads `<title>`, `<link>` and `<pubDate>`
+per item, plus the item count. `<guid>` is kept for generic feed readers.
+All four are emitted for every item.
+
+### Scope
+
+The `[outputs]` config gives RSS to `home` and `section`, so this one
+template also renders `/posts/index.xml` and every taxonomy term feed
+(`/tags/<tag>/index.xml`, `/categories/<category>/index.xml`).
+
 ## Prism pipeline
 
 Built at render time in `baseof.html`:
@@ -706,6 +774,14 @@ body to illustrate an icon snippet — that is content, not chrome.
 - **libsass → dartsass** — When Hugo removes libsass, install dart-sass
   (`brew install dart-sass`) and change `head.html`'s `$opts` to
   `"transpiler" "dartsass"`.
+- **Search index shares the summary problem** — `layouts/index.json` derives
+  its `summary` with `(or $p.Description ($p.Summary | plainify | truncate
+  160))`, which has no `<style>` / `<script>` stripping. It is latent today
+  for the same reason as the RSS template (every post with an inline
+  `<style>` also sets `description`), but a future post that omits
+  `description` would put raw CSS into the search index. Fix by reusing the
+  RSS template's strip steps. Note the two also differ in length: 160 chars
+  for search, 200 for RSS.
 - **GitHub Sponsors** — Not enabled on `howar31` account. Global fallback
   `howar31/.github/FUNDING.yml` already covers Ko-fi + PayPal for every
   public repo, so nothing repo-specific is needed here.
