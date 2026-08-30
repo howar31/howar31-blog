@@ -41,18 +41,18 @@
   </div>
   {{- end }}
 
-  {{- if or $sponsor.kofi $sponsor.paypal }}
+  {{- if or $sponsor.page $sponsor.kofi }}
   <div class="side-card">
     <div class="side-eyebrow">Support This Blog</div>
     <p class="side-bio">If a post here saved you time, consider buying me a coffee.</p>
     <div class="side-support">
+      {{- with $sponsor.page }}
+      <a class="side-support-btn sponsor-page" href="{{ . }}" rel="noopener" target="_blank">
+        {{ partial "icon" "fas fa-heart" }} Sponsor</a>
+      {{- end }}
       {{- with $sponsor.kofi }}
       <a class="side-support-btn sponsor-kofi" href="https://ko-fi.com/{{ . }}" rel="noopener" target="_blank">
         {{ partial "icon" "fas fa-coffee" }} Ko-fi</a>
-      {{- end }}
-      {{- with $sponsor.paypal }}
-      <a class="side-support-btn sponsor-paypal" href="{{ . }}" rel="noopener" target="_blank">
-        {{ partial "icon" "fab fa-paypal" }} PayPal</a>
       {{- end }}
     </div>
   </div>

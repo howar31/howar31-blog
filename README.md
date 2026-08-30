@@ -6,7 +6,7 @@
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Fblog.howar31.com&style=flat-square&label=blog.howar31.com)](https://blog.howar31.com/)
 [![Last commit](https://img.shields.io/github/last-commit/howar31/howar31-blog?style=flat-square)](https://github.com/howar31/howar31-blog/commits/master)
 [![Stars](https://img.shields.io/github/stars/howar31/howar31-blog?style=flat-square)](https://github.com/howar31/howar31-blog/stargazers)
-[![Sponsor on Ko-fi](https://img.shields.io/badge/sponsor-Ko--fi-FF5E5B?style=flat-square&logo=ko-fi&logoColor=white)](https://ko-fi.com/howar31)
+[![Sponsor](https://img.shields.io/badge/Sponsor-donate.howar31.com-b4532c?style=flat-square&logo=data:image/svg%2Bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTIwLjg0IDQuNjFhNS41IDUuNSAwIDAgMC03Ljc4IDBMMTIgNS42N2wtMS4wNi0xLjA2YTUuNSA1LjUgMCAwIDAtNy43OCA3Ljc4bDEuMDYgMS4wNkwxMiAyMS4yM2w3Ljc4LTcuNzggMS4wNi0xLjA2YTUuNSA1LjUgMCAwIDAgMC03Ljc4eiIvPjwvc3ZnPg==)](https://donate.howar31.com/)
 
 Personal blog built with [Hugo](https://gohugo.io/), deployed to GitHub Pages
 under the custom domain `blog.howar31.com`.
@@ -164,8 +164,8 @@ After the first deploy, under repo **Settings → Pages**:
 
 Independent, no ads. If something here saved you time:
 
+- ❤️ [Sponsor page](https://donate.howar31.com/)
 - ☕ [Ko-fi](https://ko-fi.com/howar31)
-- 💸 [PayPal](https://donate.howar31.com)
 
 ## License
 

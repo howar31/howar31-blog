@@ -23,22 +23,22 @@
     </section>
     {{- end }}
 
-    {{- if or $sponsor.kofi $sponsor.paypal }}
+    {{- if or $sponsor.page $sponsor.kofi }}
     <section class="vp-footer-col vp-footer-sponsor">
       <h4 class="vp-footer-heading">Support this blog</h4>
       <p class="vp-footer-sponsor-desc">Independent blog, no ads. If a post here saved you time, consider buying me a coffee.</p>
       <div class="vp-footer-sponsor-buttons">
-        {{- /* Ko-fi first: lower friction (guest checkout, donor messages). */ -}}
+        {{- /* Sponsor page first: it is the primary CTA and routes donors itself. */ -}}
+        {{- with $sponsor.page }}
+        <a class="vp-sponsor-btn sponsor-page" href="{{ . }}" rel="noopener" target="_blank" aria-label="Sponsor Howar31 at donate.howar31.com">
+          {{ partial "icon" "fas fa-heart" }}
+          <span>Sponsor</span>
+        </a>
+        {{- end }}
         {{- with $sponsor.kofi }}
         <a class="vp-sponsor-btn sponsor-kofi" href="https://ko-fi.com/{{ . }}" rel="noopener" target="_blank" aria-label="Buy me a coffee on Ko-fi">
           {{ partial "icon" "fas fa-coffee" }}
           <span>Ko-fi</span>
-        </a>
-        {{- end }}
-        {{- with $sponsor.paypal }}
-        <a class="vp-sponsor-btn sponsor-paypal" href="{{ . }}" rel="noopener" target="_blank" aria-label="Tip via PayPal">
-          {{ partial "icon" "fab fa-paypal" }}
-          <span>PayPal</span>
         </a>
         {{- end }}
       </div>

@@ -117,8 +117,8 @@ howar31-blog/
 - `[[menu.main]]` — **not defined**. The top navbar is intentionally minimal
   (site name + search + theme toggle); `header.html` renders no nav links
 - `[[menu.footer]]`: About column (howar31.com / GitHub / Source Code)
-- `[params.sponsor]`: `kofi = "howar31"`, `paypal = "https://donate.howar31.com"`
-  — verified identifiers only. Do **not** add `githubSponsors`; not enabled
+- `[params.sponsor]`: `page = "https://donate.howar31.com"` (the sponsor page,
+  primary CTA, heart icon), `kofi = "howar31"` — verified identifiers only. Do **not** add `githubSponsors`; not enabled
   on the user's account
 - `[params]` intentionally **does not define** `fontAwesomeCDN` /
   `fontAwesomeIntegrity` / `googleFonts` / `avatar`. Earlier versions kept
@@ -166,7 +166,7 @@ Home page:
         ├── .side-card "About"           # Avatar, name, bio, GitHub + howar31.com links
         ├── .side-card "Categories"      # .vp-pill links to /categories/<cat>/
         ├── .side-card "Tags"            # Count-sized .vp-pill tag cloud
-        └── .side-card "Support"         # Ko-fi + PayPal buttons from [params.sponsor]
+        └── .side-card "Support"         # sponsor-page + Ko-fi buttons from [params.sponsor]
 ```
 
 `list.html` reuses the same `.home-layout` grid and the `sidebar.html`
@@ -272,7 +272,7 @@ must not be. Dates render as ISO `2006-01-02` (post meta, post cards,
   in the sidebar About card and the footer, not the navbar.
 - **`footer.html`** — Two-column grid (`repeat(auto-fit, minmax(14rem, 1fr))`).
   "About" column iterates `site.Menus.footer`; "Support this blog" renders
-  Ko-fi + PayPal buttons when the relevant params are set. Bottom line is
+  sponsor-page + Ko-fi buttons (in that order) when the relevant params are set. Bottom line is
   `© YEAR author. description`.
 - **`single.html`** — `<article>` → `.post-layout` holding `.post-main`
   (`<h1>`, `post-meta`, `.post-content`) and, when the post has ≥ 2 ToC
@@ -303,7 +303,7 @@ must not be. Dates render as ISO `2006-01-02` (post meta, post cards,
   `.side-card` glass cards: About (avatar, name, bio, GitHub + howar31.com
   links), Categories (`.vp-pill` links to `/categories/<cat>/` via
   `site.Taxonomies.categories`), Tags (count-sized `.vp-pill` cloud via
-  `site.Taxonomies.tags`), Support (Ko-fi + PayPal buttons from
+  `site.Taxonomies.tags`), Support (sponsor-page + Ko-fi buttons from
   `[params.sponsor]`). Rendered by both `index.html` and `list.html`. Styled
   in `_sidebar.scss`.
 - **`back-to-top.html`** — Fixed button bottom-right with two concentric
@@ -841,8 +841,8 @@ body to illustrate an icon snippet — that is content, not chrome.
   (`brew install dart-sass`) and change `head.html`'s `$opts` to
   `"transpiler" "dartsass"`.
 - **GitHub Sponsors** — Not enabled on `howar31` account. Global fallback
-  `howar31/.github/FUNDING.yml` already covers Ko-fi + PayPal for every
-  public repo, so nothing repo-specific is needed here.
+  `howar31/.github/FUNDING.yml` already covers the sponsor page + Ko-fi for
+  every public repo, so nothing repo-specific is needed here.
 
 ## Previous stack, for reference
 

@@ -37,12 +37,12 @@ disableKinds = ["taxonomy"]
 # enabled on this account (`howar31`) so do not re-add it without first
 # applying + getting approved via github.com/sponsors.
 #
-# Ko-fi: user-facing `https://ko-fi.com/howar31`
-# PayPal: user-owned short URL → Cloudflare 302 → PayPal hosted button
-#         (hosted_button_id=MLVT3HDZKUZCW). Prefer this over paypal.me.
+# page: the sponsor page `https://donate.howar31.com` — primary CTA, listed
+#       first; it routes Taiwan vs international donors itself.
+# Ko-fi: user-facing `https://ko-fi.com/howar31` — secondary.
 [params.sponsor]
+  page = "https://donate.howar31.com"
   kofi = "howar31"
-  paypal = "https://donate.howar31.com"
 
 # The top navbar is intentionally minimal — site name + search + GitHub +
 # theme toggle. No `[[menu.main]]` entries; `header.html` renders no nav links.
